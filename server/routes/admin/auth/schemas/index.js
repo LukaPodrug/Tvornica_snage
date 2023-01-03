@@ -12,6 +12,12 @@ const registrationSchema = joi.object().keys({
     password: joi.string().required()
 })
 
+const loginSchema = joi.object().keys({
+    username: joi.string().required(),
+    password: joi.string().required()
+})
+
 module.exports = {
-    registrationSchema
+    registrationSchema,
+    loginSchema
 }

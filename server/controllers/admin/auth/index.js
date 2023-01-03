@@ -5,7 +5,7 @@ require('dotenv').config()
 
 const database = require('../../../database')
 
-async function checkUsername(username) {
+async function getByUsername(username) {
     const admin = await database`
         select *
         from coaches
@@ -43,9 +43,14 @@ async function generateJWT(id, username) {
     return token
 }
 
+async function passwordValidation(passwordText, passwordHash) {
+    const passwordValidation = await bcrypt.compare(passwordText, passwordHash)
+    return passwordValidation
+}
 
 module.exports = {
-    checkUsername,
+    getByUsername,
     addNew,
-    generateJWT
+    generateJWT,
+    passwordValidation
 }
