@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 require('dotenv').config()
+const { SALT_ROUNDS, JWT_SECRET } = process.env
 
 const database = require('../../../database')
 
@@ -27,17 +28,16 @@ async function addNew(admin) {
 }
 
 async function generatePasswordHash(passwordText) {
-    const { SALT_ROUNDS } = process.env
     const salt = await bcrypt.genSalt(parseInt(SALT_ROUNDS))
     const passwordHash = await bcrypt.hash(passwordText, salt)
     return passwordHash
 }
 
 async function generateJWT(id, username) {
-    const { JWT_SECRET } = process.env
     const payload = {
         id,
-        username
+        username,
+        role: 'coach'
     }
     const token = jwt.sign(payload, JWT_SECRET)
     return token

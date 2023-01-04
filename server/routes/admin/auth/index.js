@@ -23,6 +23,10 @@ router.post('/registration', async(req, res) => {
         return
     }
     const token = await authController.generateJWT(newAdmin.id, newAdmin.username)
+    if(!token) {
+        res.status(500).json('Error with creating JWT')
+        return
+    }
     res.setHeader('Authorization', token).status(200).json('Admin successfully registrated')
 })
 
@@ -43,6 +47,10 @@ router.post('/login', async(req, res) => {
         return
     }
     const token = await authController.generateJWT(admin.id, admin.username)
+    if(!token) {
+        res.status(500).json('Error with creating JWT')
+        return
+    }
     res.setHeader('Authorization', token).status(200).json('Admin successfully logged in')
 })
 
