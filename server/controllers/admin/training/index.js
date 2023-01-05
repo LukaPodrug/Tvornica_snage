@@ -12,6 +12,25 @@ async function addNew(training) {
     return newTraining[0]
 }
 
+async function getById(id) {
+    const training = await database`
+        select *
+        from trainings
+        where id = ${id}`
+    return training[0]
+}
+
+async function editDetails(training) {
+    const updatedTraining = await database`
+        update trainings
+        set coach_id = ${training.coach_id}, start = ${training.start}, finish = ${training.finish}, room = ${training.room}, capacity = ${training.capacity}, level = ${training.level}, description = ${training.description}
+        where id = ${training.id}
+        returning *`
+    return updatedTraining[0]
+}
+
 module.exports = {
-    addNew
+    addNew,
+    getById,
+    editDetails
 }
