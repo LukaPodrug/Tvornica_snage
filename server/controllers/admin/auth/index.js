@@ -7,24 +7,34 @@ const { SALT_ROUNDS, JWT_SECRET } = process.env
 const database = require('../../../database')
 
 async function getByUsername(username) {
-    const admin = await database`
-        select *
-        from coaches
-        where username = ${username}`
-    return admin[0]
+    try {
+        const admin = await database`
+            select *
+            from coaches
+            where username = ${username}`
+        return admin[0]
+    }
+    catch(error) {
+        return error
+    }
 }
 
 async function addNew(admin) {
-    const passwordHash = await generatePasswordHash(admin.password)
-    const registration = await database`
-        insert into coaches (
-            first_name, last_name, date_of_birth, image, username, password
-        ) 
-        values (
-            ${admin.firstName}, ${admin.lastName}, ${admin.dateOfBirth}, ${admin.image}, ${admin.username}, ${passwordHash}
-        )
-        returning *`
-    return registration[0]
+    try {
+        const passwordHash = await generatePasswordHash(admin.password)
+        const registration = await database`
+            insert into coaches (
+                first_name, last_name, date_of_birth, image, username, password
+            ) 
+            values (
+                ${admin.firstName}, ${admin.lastName}, ${admin.dateOfBirth}, ${admin.image}, ${admin.username}, ${passwordHash}
+            )
+            returning *`
+        return registration[0]
+    }
+    catch(error) {
+        return error
+    }
 }
 
 async function generatePasswordHash(passwordText) {

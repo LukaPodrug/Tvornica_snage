@@ -1,7 +1,7 @@
 const express = require('express')
 
-const generalController = require('../../../controllers/admin/general')
 const trainingController = require('../../../controllers/admin/training')
+const generalController = require('../../../controllers/admin/general')
 
 const { newTrainingSchema, editTrainingSchema } = require('./schemas')
 
@@ -10,7 +10,7 @@ const router = express.Router()
 router.post('/', async(req, res) => {
     const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
     if(!tokenValidation) {
-        res.status(401).json('JWT not valid')
+        res.status(400).json('JWT not valid')
         return
     }
     const dataValidation = newTrainingSchema.validate(req.body)
@@ -19,6 +19,11 @@ router.post('/', async(req, res) => {
         return
     }
     const newTraining = await trainingController.addNew(req.body)
+    const databaseConnection = await generalController.checkDatabaseConnection(newTraining)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
     if(!newTraining) {
         res.status(500).json('Error with adding new training')
         return
@@ -29,7 +34,7 @@ router.post('/', async(req, res) => {
 router.patch('/', async(req, res) => {
     const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
     if(!tokenValidation) {
-        res.status(401).json('JWT not valid')
+        res.status(400).json('JWT not valid')
         return
     }
     const dataValidation = editTrainingSchema.validate(req.body)
@@ -38,11 +43,21 @@ router.patch('/', async(req, res) => {
         return
     }
     const training = await trainingController.getById(req.body.id)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(training)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
     if(!training) {
-        res.status(404).json('Training not found')
+        res.status(400).json('Training not found')
         return
     }
     const updatedTraining = await trainingController.editDetails(req.body)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(updatedTraining)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
     if(!updatedTraining) {
         res.status(500).json('Error with editing training details')
     }

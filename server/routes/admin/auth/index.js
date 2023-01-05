@@ -1,6 +1,7 @@
 const express = require('express')
 
 const authController = require('../../../controllers/admin/auth')
+const generalController = require('../../../controllers/admin/general')
 
 const { registrationSchema, loginSchema } = require('./schemas')
 
@@ -13,11 +14,21 @@ router.post('/registration', async(req, res) => {
         return
     }
     const admin = await authController.getByUsername(req.body.username)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(admin)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
     if(admin) {
-        res.status(409).json('Username already in use')
+        res.status(400).json('Username already in use')
         return
     }
     const newAdmin = await authController.addNew(req.body)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(newAdmin)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
     if(!newAdmin) {
         res.status(500).json('Error with registering new admin')
         return
@@ -37,6 +48,11 @@ router.post('/login', async(req, res) => {
         return
     }
     const admin = await authController.getByUsername(req.body.username)
+    const databaseConnection = await generalController.checkDatabaseConnection(admin)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
     if(!admin) {
         res.status(400).json('Wrong login data')
         return

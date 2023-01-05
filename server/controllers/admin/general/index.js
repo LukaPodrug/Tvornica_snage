@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const { PostgresError } = require('postgres')
 
 require('dotenv').config()
 const { JWT_SECRET } = process.env
@@ -14,6 +15,14 @@ async function verifyJWT(token) {
     return true
 }
 
+async function checkDatabaseConnection(data) {
+    if(data instanceof PostgresError) {
+        return false
+    }
+    return true
+}
+
 module.exports = {
-    verifyJWT
+    verifyJWT,
+    checkDatabaseConnection
 }
