@@ -3,7 +3,7 @@ const express = require('express')
 const trainingController = require('../../../controllers/admin/training')
 const generalController = require('../../../controllers/admin/general')
 
-const { newTrainingSchema, editTrainingSchema } = require('./schemas')
+const { newTrainingSchema, editTrainingSchema, getTrainingsByDateSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -62,6 +62,26 @@ router.patch('/', async(req, res) => {
         res.status(500).json('Error with editing training details')
     }
     res.status(200).json('Training details successfully edited')
+})
+
+router.get('/byDate', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const dataValidation = getTrainingsByDateSchema.validate(new Date(req.query.date))
+    if(dataValidation.error) {
+        res.status(400).json('Invalid date')
+        return
+    }
+    const trainings = await trainingController.getByDate(req.query.date)
+    const databaseConnection = await generalController.checkDatabaseConnection(trainings)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(trainings)
 })
 
 module.exports = router

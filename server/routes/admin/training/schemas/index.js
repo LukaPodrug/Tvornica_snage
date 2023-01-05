@@ -24,7 +24,12 @@ const editTrainingSchema = joi.object().keys({
     description: joi.string().required()
 })
 
+const getTrainingsByDateSchema = joi.object().keys({
+    date: joi.date().format('YYYY-MM-DD')
+})
+
 module.exports = {
     newTrainingSchema,
-    editTrainingSchema
+    editTrainingSchema,
+    getTrainingsByDateSchema
 }
