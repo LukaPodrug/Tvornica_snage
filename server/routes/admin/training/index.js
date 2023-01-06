@@ -3,7 +3,7 @@ const express = require('express')
 const trainingController = require('../../../controllers/admin/training')
 const generalController = require('../../../controllers/admin/general')
 
-const { newTrainingSchema, editTrainingSchema, getTrainingsByDateSchema } = require('./schemas')
+const { newTrainingSchema, editTrainingSchema, getTrainingsByDateSchema, deleteTrainingSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -60,6 +60,7 @@ router.patch('/', async(req, res) => {
     }
     if(!updatedTraining) {
         res.status(500).json('Error with editing training details')
+        return
     }
     res.status(200).json('Training details successfully edited')
 })
@@ -82,6 +83,30 @@ router.get('/byDate', async(req, res) => {
         return
     }
     res.status(200).json(trainings)
+})
+
+router.delete('/', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const dataValidation = deleteTrainingSchema.validate(req.body)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid date')
+        return
+    }
+    const deletedTraining = await trainingController.remove(req.body.id)
+    const databaseConnection = await generalController.checkDatabaseConnection(deletedTraining)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!deletedTraining) {
+        res.status(400).json('Training not found')
+        return
+    }
+    res.status(200).json('Training successfully deleted')
 })
 
 module.exports = router

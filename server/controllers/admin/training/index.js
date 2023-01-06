@@ -59,9 +59,24 @@ async function getByDate(date) {
     }
 }
 
+async function remove(id) {
+    try {
+        const removedTraining = await database`
+            delete
+            from trainings
+            where id = ${id}
+            returning *`
+        return removedTraining[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     addNew,
     getById,
     editDetails,
-    getByDate
+    getByDate,
+    remove
 }
