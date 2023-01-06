@@ -3,7 +3,7 @@ const express = require('express')
 const authController = require('../../../controllers/user/auth')
 const generalController = require('../../../controllers/user/general')
 
-const { registrationSchema } = require('./schemas')
+const { registrationSchema, loginSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -39,6 +39,35 @@ router.post('/registration', async(req, res) => {
         return
     }
     res.setHeader('Authorization', token).status(200).json('User successfully registrated')
+})
+
+router.post('/login', async(req, res) => {
+    const dataValidation = loginSchema.validate(req.body)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid login data')
+        return
+    }
+    const user = await authController.getByUsername(req.body.username)
+    const databaseConnection = await generalController.checkDatabaseConnection(user)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!user) {
+        res.status(400).json('Wrong login data')
+        return
+    }
+    const passwordValidation = await authController.passwordValidation(req.body.password, user.password)
+    if(!passwordValidation) {
+        res.status(400).json('Wrong login data')
+        return
+    }
+    const token = await authController.generateJWT(user.id, user.username)
+    if(!token) {
+        res.status(500).json('Error with creating JWT')
+        return
+    }
+    res.setHeader('Authorization', token).status(200).json('User successfully logged in')
 })
 
 module.exports = router

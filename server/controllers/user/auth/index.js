@@ -55,8 +55,14 @@ async function generateJWT(id, username) {
     return token
 }
 
+async function passwordValidation(passwordText, passwordHash) {
+    const passwordValidation = await bcrypt.compare(passwordText, passwordHash)
+    return passwordValidation
+}
+
 module.exports = {
     getByUsername,
     addNew,
-    generateJWT
+    generateJWT,
+    passwordValidation
 }
