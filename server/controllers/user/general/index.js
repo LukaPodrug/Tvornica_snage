@@ -12,7 +12,7 @@ async function verifyJWT(token) {
     if(tokenValidation.role !== 'user') {
         return false
     }
-    return true
+    return tokenValidation
 }
 
 async function checkDatabaseConnection(data) {

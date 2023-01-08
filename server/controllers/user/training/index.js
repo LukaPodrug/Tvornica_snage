@@ -15,6 +15,20 @@ async function getByDate(date) {
     }
 }
 
+async function getById(id) {
+    try {
+        const training = await database`
+            select *
+            from trainings
+            where id = ${id}`
+        return training[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
-    getByDate
+    getByDate,
+    getById
 }
