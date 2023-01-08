@@ -4,7 +4,7 @@ const joiDate = require('@joi/date')
 const joi = joiImport.extend(joiDate)
 
 const newTrainingSchema = joi.object().keys({
-    coach_id: joi.number().integer().min(0).required(),
+    coachId: joi.number().integer().min(0).required(),
     start: joi.date().format('YYYY-MM-DD HH:mm'),
     finish: joi.date().min(joi.ref('start')).format('YYYY-MM-DD HH:mm'),
     room: joi.number().integer().min(1).max(3).required(),
@@ -15,7 +15,7 @@ const newTrainingSchema = joi.object().keys({
 
 const editTrainingSchema = joi.object().keys({
     id: joi.number().integer().min(0).required(),
-    coach_id: joi.number().integer().min(0).required(),
+    coachId: joi.number().integer().min(0).required(),
     start: joi.date().format('YYYY-MM-DD HH:mm'),
     finish: joi.date().min(joi.ref('start')).format('YYYY-MM-DD HH:mm'),
     room: joi.number().integer().min(1).max(3).required(),
