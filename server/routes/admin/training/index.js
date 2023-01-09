@@ -18,7 +18,7 @@ router.post('/', async(req, res) => {
         res.status(400).json('Invalid training data')
         return
     }
-    const roomOccupation = await trainingController.checkRoomOccupation(req.body.room, req.body.start, req.body.finish)
+    const roomOccupation = await trainingController.checkRoomOccupationNew(req.body.room, req.body.start, req.body.finish)
     const databaseConnection1 = await generalController.checkDatabaseConnection(roomOccupation)
     if(!databaseConnection1) {
         res.status(500).json('Error with database')
@@ -62,7 +62,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Training not found')
         return
     }
-    const roomOccupation = await trainingController.checkRoomOccupation(req.body.room, req.body.start, req.body.finish)
+    const roomOccupation = await trainingController.checkRoomOccupationEdit(req.body.id ,req.body.room, req.body.start, req.body.finish)
     const databaseConnection2 = await generalController.checkDatabaseConnection(roomOccupation)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')

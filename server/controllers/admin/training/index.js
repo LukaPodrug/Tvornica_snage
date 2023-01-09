@@ -73,7 +73,7 @@ async function remove(id) {
     }
 }
 
-async function checkRoomOccupation(room, start, finish) {
+async function checkRoomOccupationNew(room, start, finish) {
     try {
         const roomOccupation = await database`
             select
@@ -87,11 +87,26 @@ async function checkRoomOccupation(room, start, finish) {
     }
 }
 
+async function checkRoomOccupationEdit(id, room, start, finish) {
+    try {
+        const roomOccupation = await database`
+            select
+            from trainings
+            where (room = ${room} and ${start} >= start and ${start} < finish and id != ${id})
+            or (room = ${room} and ${finish} >= start and ${finish} < finish and id != ${id})`
+        return roomOccupation[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     addNew,
     getById,
     editDetails,
     getByDate,
     remove,
-    checkRoomOccupation
+    checkRoomOccupationNew,
+    checkRoomOccupationEdit
 }
