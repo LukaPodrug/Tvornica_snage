@@ -50,7 +50,7 @@ router.post('/', async(req, res) => {
         res.status(500).json('Error with database')
         return
     }
-    if(new Date(user.membership.getTime() + 7*3600*1000*24) < training.start) {
+    if(new Date(user.membership.getTime() + 3600*1000*24*7) < training.start) {
         res.status(400).json('Membership expired for this training')
         return
     }

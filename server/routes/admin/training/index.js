@@ -116,9 +116,22 @@ router.delete('/', async(req, res) => {
         res.status(400).json('Invalid date')
         return
     }
+    const training = await trainingController.getById(req.body.id)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(training)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!training) {
+        res.status(400).json('Training does not exist')
+        return
+    }
+    if(new Date(Date.now()) > training.start) {
+        res.status(400).json('Can not delete training that already started')
+    }
     const deletedTraining = await trainingController.remove(req.body.id)
-    const databaseConnection = await generalController.checkDatabaseConnection(deletedTraining)
-    if(!databaseConnection) {
+    const databaseConnection2 = await generalController.checkDatabaseConnection(deletedTraining)
+    if(!databaseConnection2) {
         res.status(500).json('Error with database')
         return
     }
