@@ -32,7 +32,22 @@ async function addNew(userId, trainingId) {
     }
 }
 
+async function remove(userId, trainingId) {
+    try {
+        const removedReservation = await database`
+            delete
+            from reservations
+            where training_id = ${trainingId} and user_id = ${userId}
+            returning *`
+        return removedReservation[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getByUserIdAndTrainingId,
-    addNew
+    addNew,
+    remove
 }
