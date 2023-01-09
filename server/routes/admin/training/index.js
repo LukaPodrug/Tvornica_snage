@@ -1,6 +1,7 @@
 const express = require('express')
 
 const trainingController = require('../../../controllers/admin/training')
+const reservationController = require('../../../controllers/admin/reservation')
 const generalController = require('../../../controllers/admin/general')
 
 const { newTrainingSchema, editTrainingSchema, getTrainingsByDateSchema, deleteTrainingSchema } = require('./schemas')
@@ -129,9 +130,15 @@ router.delete('/', async(req, res) => {
     if(new Date(Date.now()) > training.start) {
         res.status(400).json('Can not delete training that already started')
     }
-    const deletedTraining = await trainingController.remove(req.body.id)
-    const databaseConnection2 = await generalController.checkDatabaseConnection(deletedTraining)
+    const deletedReservations = await reservationController.removeByTrainingId(req.body.id)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(deletedReservations)
     if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
+    const deletedTraining = await trainingController.remove(req.body.id)
+    const databaseConnection3 = await generalController.checkDatabaseConnection(deletedTraining)
+    if(!databaseConnection3) {
         res.status(500).json('Error with database')
         return
     }
