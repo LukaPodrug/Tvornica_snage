@@ -5,6 +5,7 @@ require('dotenv').config()
 
 const adminAuthRoute = require('./routes/admin/auth')
 const adminTrainingRoute = require('./routes/admin/training')
+const adminReservationRoute = require('./routes/admin/reservation')
 const adminUserRoute = require('./routes/admin/user')
 
 const userAuthRoute = require('./routes/user/auth')
@@ -19,6 +20,7 @@ app.use(bodyParser.json({limit: '5mb'}))
 
 app.use('/api/admin/auth', adminAuthRoute)
 app.use('/api/admin/training', adminTrainingRoute)
+app.use('/api/admin/reservation', adminReservationRoute)
 app.use('/api/admin/user', adminUserRoute)
 
 app.use('/api/user/auth', userAuthRoute)
