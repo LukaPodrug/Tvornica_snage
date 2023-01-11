@@ -5,7 +5,7 @@ const trainingController = require('../../../controllers/admin/training')
 const reservationController = require('../../../controllers/admin/reservation')
 const generalController = require('../../../controllers/admin/general')
 
-const { newReservationSchema } = require('./schemas')
+const { newReservationSchema, editReservationSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -61,6 +61,44 @@ router.post('/', async(req, res) => {
         return
     }
     res.status(200).json('Reservation added successfully')
+})
+
+router.patch('/', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const dataValidation = editReservationSchema.validate(req.body)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid reservation data')
+        return
+    }
+    const reservation = await reservationController.getByUserIdAndTrainingId(req.body.userId, req.body.trainingId)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(reservation)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!reservation) {
+        res.status(400).json('Reservation not found')
+        return
+    }
+    if(reservation.completion === req.body.completion) {
+        res.status(400).json('Old reservation completion same as new')
+        return
+    }
+    const updatedReservation = await reservationController.editCompletion(req.body.userId, req.body.trainingId, req.body.completion)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(updatedReservation)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!updatedReservation) {
+        res.status(500).json('Error with updating reservation completion')
+        return
+    }
+    res.status(200).json('Reservation completion updated successfully')
 })
 
 module.exports = router
