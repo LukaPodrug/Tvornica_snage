@@ -114,7 +114,7 @@ router.delete('/', async(req, res) => {
     }
     const dataValidation = deleteTrainingSchema.validate(req.body)
     if(dataValidation.error) {
-        res.status(400).json('Invalid date')
+        res.status(400).json('Invalid training data')
         return
     }
     const training = await trainingController.getById(req.body.id)
@@ -129,11 +129,16 @@ router.delete('/', async(req, res) => {
     }
     if(new Date(Date.now()) > training.start) {
         res.status(400).json('Can not delete training that already started')
+        return
     }
     const deletedReservations = await reservationController.removeByTrainingId(req.body.id)
     const databaseConnection2 = await generalController.checkDatabaseConnection(deletedReservations)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
+        return
+    }
+    if(!deletedReservations) {
+        res.status(500).json('Error with deleting reservations')
         return
     }
     const deletedTraining = await trainingController.remove(req.body.id)
@@ -143,7 +148,7 @@ router.delete('/', async(req, res) => {
         return
     }
     if(!deletedTraining) {
-        res.status(400).json('Training not found')
+        res.status(500).json('Error with deleting training')
         return
     }
     res.status(200).json('Training successfully deleted')

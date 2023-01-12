@@ -113,7 +113,7 @@ router.delete('/', async(req, res) => {
         return
     }
     if(!removedReservation) {
-        res.status(400).json('Reservation not removed')
+        res.status(500).json('Error with removing reservation')
         return
     }
     res.status(200).json('Reservation successfully removed')
