@@ -119,4 +119,19 @@ router.delete('/', async(req, res) => {
     res.status(200).json('Reservation successfully removed')
 })
 
+router.get('/', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const reservations = await reservationController.getActiveByUserId(tokenValidation.id)
+    const databaseConnection = await generalController.checkDatabaseConnection(reservations)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(reservations)
+})
+
 module.exports = router

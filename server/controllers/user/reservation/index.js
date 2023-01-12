@@ -46,8 +46,22 @@ async function remove(userId, trainingId) {
     }
 }
 
+async function getActiveByUserId(userId) {
+    try {
+        const reservations = await database`
+            select *
+            from reservations join trainings on training_id = id
+            where user_id = ${userId} and start > ${new Date(Date.now())}`
+        return reservations
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getByUserIdAndTrainingId,
     addNew,
-    remove
+    remove,
+    getActiveByUserId
 }
