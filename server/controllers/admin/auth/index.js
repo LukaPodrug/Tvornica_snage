@@ -19,15 +19,15 @@ async function getByUsername(username) {
     }
 }
 
-async function addNew(admin) {
+async function addNew(firstName, lastName, dateOfBirth, image, username, password) {
     try {
-        const passwordHash = await generatePasswordHash(admin.password)
+        const passwordHash = await generatePasswordHash(password)
         const registration = await database`
             insert into coaches (
                 first_name, last_name, date_of_birth, image, username, password
             ) 
             values (
-                ${admin.firstName}, ${admin.lastName}, ${admin.dateOfBirth}, ${admin.image}, ${admin.username}, ${passwordHash}
+                ${firstName}, ${lastName}, ${dateOfBirth}, ${image}, ${username}, ${passwordHash}
             )
             returning *`
         return registration[0]

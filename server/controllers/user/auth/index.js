@@ -19,9 +19,9 @@ async function getByUsername(username) {
     }
 }
 
-async function addNew(user) {
+async function addNew(firstName, lastName, dateOfBirth, image, username, password) {
     try {
-        const passwordHash = await generatePasswordHash(user.password)
+        const passwordHash = await generatePasswordHash(password)
         const membership = new Date(Date.now() + 3600*1000*24*30)
         const level = 1
         const registration = await database`
@@ -29,7 +29,7 @@ async function addNew(user) {
                 first_name, last_name, date_of_birth, image, username, password, membership, level
             ) 
             values (
-                ${user.firstName}, ${user.lastName}, ${user.dateOfBirth}, ${user.image}, ${user.username}, ${passwordHash}, ${membership}, ${level}
+                ${firstName}, ${lastName}, ${dateOfBirth}, ${image}, ${username}, ${passwordHash}, ${membership}, ${level}
             )
             returning *`
         return registration[0]

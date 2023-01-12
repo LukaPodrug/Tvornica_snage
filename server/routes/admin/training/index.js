@@ -29,7 +29,7 @@ router.post('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const newTraining = await trainingController.addNew(req.body)
+    const newTraining = await trainingController.addNew(req.body.coachId, req.body.start, req.body.finish, req.body.room, req.body.capacity, req.body.level, req.body.description)
     const databaseConnection2 = await generalController.checkDatabaseConnection(newTraining)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
@@ -73,7 +73,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const updatedTraining = await trainingController.editDetails(req.body)
+    const updatedTraining = await trainingController.editDetails(training.id, req.body.coachId, req.body.start, req.body.finish, req.body.room, req.body.capacity, req.body.level, req.body.description)
     const databaseConnection3 = await generalController.checkDatabaseConnection(updatedTraining)
     if(!databaseConnection3) {
         res.status(500).json('Error with database')
