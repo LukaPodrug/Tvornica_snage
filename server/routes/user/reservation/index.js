@@ -58,9 +58,19 @@ router.post('/', async(req, res) => {
         res.status(400).json('Level not high enough for this training')
         return
     }
-    const newReservation = await reservationController.addNew(tokenValidation.id, req.body.trainingId)
-    const databaseConnection4 = await generalController.checkDatabaseConnection(newReservation)
+    const numberOfReservations = await reservationController.getCountByTrainingId(req.body.trainingId)
+    const databaseConnection4 = await generalController.checkDatabaseConnection(numberOfReservations)
     if(!databaseConnection4) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(numberOfReservations >= training.capacity) {
+        res.status(400).json('No available space for this training')
+        return
+    }
+    const newReservation = await reservationController.addNew(tokenValidation.id, req.body.trainingId)
+    const databaseConnection5 = await generalController.checkDatabaseConnection(newReservation)
+    if(!databaseConnection5) {
         res.status(500).json('Error with database')
         return
     }

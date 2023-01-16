@@ -13,6 +13,19 @@ async function getByUserIdAndTrainingId(userId, trainingId) {
     }
 }
 
+async function getCountByTrainingId(trainingId) {
+    try {
+        const reservation = await database`
+            select cast(count(*) as integer)
+            from reservations
+            where training_id = ${trainingId}`
+        return reservation[0].count
+    }
+    catch(error) {
+        return error
+    }
+}
+
 async function addNew(userId, trainingId) {
     try {
         const completion = true
@@ -77,6 +90,7 @@ async function getStatisticsByUserId(userId) {
 
 module.exports = {
     getByUserIdAndTrainingId,
+    getCountByTrainingId,
     addNew,
     remove,
     getActiveByUserId,
