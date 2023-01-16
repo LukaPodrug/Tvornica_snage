@@ -40,8 +40,23 @@ async function getByName(firstName, lastName) {
     }
 }
 
+async function getByPage(page) {
+    try {
+        const users = await database`
+            select *
+            from users
+            offset ${(page - 1) * 10} rows
+            fetch first 10 row only`
+        return users
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getById,
     editDetails,
-    getByName
+    getByName,
+    getByPage
 }

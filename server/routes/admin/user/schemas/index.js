@@ -14,7 +14,12 @@ const getUserByNameSchema = joi.object().keys({
     lastName: joi.string().required().allow('')
 })
 
+const getUsersByPageSchema = joi.object().keys({
+    page: joi.number().integer().min(1).required()
+})
+
 module.exports = {
     editUserSchema,
-    getUserByNameSchema
+    getUserByNameSchema,
+    getUsersByPageSchema
 }
