@@ -1,4 +1,5 @@
 const express = require('express')
+const util = require('util')
 
 const trainingController = require('../../../controllers/admin/training')
 const reservationController = require('../../../controllers/admin/reservation')
@@ -63,6 +64,10 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Training not found')
         return
     }
+    if(req.body.coachId === training.coach_id && new Date(req.body.start).getTime() === training.start.getTime() && new Date(req.body.finish).getTime() === training.finish.getTime() && req.body.room === training.room && req.body.capacity === training.capacity && req.body.level === training.level && req.body.description === training.description) {
+        res.status(400).json('New training data same as old')
+        return
+    }
     const roomOccupation = await trainingController.checkRoomOccupationEdit(req.body.id ,req.body.room, new Date(req.body.start), new Date(req.body.finish))
     const databaseConnection2 = await generalController.checkDatabaseConnection(roomOccupation)
     if(!databaseConnection2) {
@@ -73,7 +78,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const updatedTraining = await trainingController.editDetails(training.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.description)
+    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.description)
     const databaseConnection3 = await generalController.checkDatabaseConnection(updatedTraining)
     if(!databaseConnection3) {
         res.status(500).json('Error with database')
