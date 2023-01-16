@@ -22,7 +22,7 @@ async function getByUsername(username) {
 async function addNew(firstName, lastName, dateOfBirth, image, username, password) {
     try {
         const passwordHash = await generatePasswordHash(password)
-        const membership = new Date(Date.now() + 3600*1000*24*30)
+        const membership = new Date(Date.now() + 3600*1000*24*7)
         const level = 1
         const registration = await database`
             insert into users (

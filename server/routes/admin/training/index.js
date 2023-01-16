@@ -19,7 +19,7 @@ router.post('/', async(req, res) => {
         res.status(400).json('Invalid training data')
         return
     }
-    const roomOccupation = await trainingController.checkRoomOccupationNew(req.body.room, req.body.start, req.body.finish)
+    const roomOccupation = await trainingController.checkRoomOccupationNew(req.body.room, new Date(req.body.start), new Date(req.body.finish))
     const databaseConnection1 = await generalController.checkDatabaseConnection(roomOccupation)
     if(!databaseConnection1) {
         res.status(500).json('Error with database')
@@ -29,7 +29,7 @@ router.post('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const newTraining = await trainingController.addNew(req.body.coachId, req.body.start, req.body.finish, req.body.room, req.body.capacity, req.body.level, req.body.description)
+    const newTraining = await trainingController.addNew(req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.description)
     const databaseConnection2 = await generalController.checkDatabaseConnection(newTraining)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
@@ -63,7 +63,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Training not found')
         return
     }
-    const roomOccupation = await trainingController.checkRoomOccupationEdit(req.body.id ,req.body.room, req.body.start, req.body.finish)
+    const roomOccupation = await trainingController.checkRoomOccupationEdit(req.body.id ,req.body.room, new Date(req.body.start), new Date(req.body.finish))
     const databaseConnection2 = await generalController.checkDatabaseConnection(roomOccupation)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
@@ -73,7 +73,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const updatedTraining = await trainingController.editDetails(training.id, req.body.coachId, req.body.start, req.body.finish, req.body.room, req.body.capacity, req.body.level, req.body.description)
+    const updatedTraining = await trainingController.editDetails(training.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.description)
     const databaseConnection3 = await generalController.checkDatabaseConnection(updatedTraining)
     if(!databaseConnection3) {
         res.status(500).json('Error with database')
@@ -97,7 +97,7 @@ router.get('/byDate', async(req, res) => {
         res.status(400).json('Invalid date')
         return
     }
-    const trainings = await trainingController.getByDate(req.query.date)
+    const trainings = await trainingController.getByDate(new Date(req.query.date))
     const databaseConnection = await generalController.checkDatabaseConnection(trainings)
     if(!databaseConnection) {
         res.status(500).json('Error with database')

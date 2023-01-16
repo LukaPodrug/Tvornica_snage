@@ -44,14 +44,13 @@ async function editDetails(id, coachId, start, finish, room, capacity, level, de
     }
 }
 
-async function getByDate(date) {
-    const start = new Date(date)
-    const finish = new Date(start.getTime() + 3600*1000*24)
+async function getByDate(startOfDay) {
+    const finishOfDay = new Date(startOfDay.getTime() + 3600*1000*24)
     try {
         const trainings = await database`
             select *
             from trainings
-            where start between ${start} and ${finish}`
+            where start between ${startOfDay} and ${finishOfDay}`
         return trainings
     }
     catch(error) {

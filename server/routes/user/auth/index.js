@@ -23,7 +23,7 @@ router.post('/registration', async(req, res) => {
         res.status(400).json('Username already in use')
         return
     }
-    const newUser = await authController.addNew(req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.image, req.body.username, req.body.password)
+    const newUser = await authController.addNew(req.body.firstName, req.body.lastName, new Date(req.body.dateOfBirth), req.body.image, req.body.username, req.body.password)
     const databaseConnection2 = await generalController.checkDatabaseConnection(newUser)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
