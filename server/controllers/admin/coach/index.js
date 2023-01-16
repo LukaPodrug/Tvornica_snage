@@ -12,6 +12,20 @@ async function getAll() {
     }
 }
 
+async function getById(id) {
+    try {
+        const coaches = await database`
+            select *
+            from coaches
+            where id = ${id}`
+        return coaches
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
-    getAll
+    getAll,
+    getById
 }
