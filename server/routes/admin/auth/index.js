@@ -70,4 +70,14 @@ router.post('/login', async(req, res) => {
     res.setHeader('Authorization', token).status(200).json('Admin successfully logged in')
 })
 
+router.post('/verify', async(req, res) => {
+    const token = req.header('Authorization')
+    const tokenValidation = await generalController.verifyJWT(token)
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    res.status(200).json(token)
+})
+
 module.exports = router
