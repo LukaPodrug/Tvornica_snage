@@ -27,7 +27,21 @@ async function editDetails(id, membership, level) {
     }
 }
 
+async function getByName(firstName, lastName) {
+    try {
+        const users = await database`
+            select *
+            from users
+            where first_name like ${'%' + firstName + '%'} and last_name like ${'%' + lastName + '%'}`
+        return users
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getById,
-    editDetails
+    editDetails,
+    getByName
 }

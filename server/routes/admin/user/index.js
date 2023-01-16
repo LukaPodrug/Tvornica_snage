@@ -3,7 +3,7 @@ const express = require('express')
 const userController = require('../../../controllers/admin/user')
 const generalController = require('../../../controllers/admin/general')
 
-const { editUserSchema } = require('./schemas')
+const { editUserSchema, getUserByNameSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -43,6 +43,30 @@ router.patch('/', async(req, res) => {
         return
     }
     res.status(200).json('User level and membership successfully updated')
+})
+
+router.get('/byName', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const searchFilter = {
+        firstName: req.query.firstName,
+        lastName: req.query.lastName
+    }
+    const dataValidation = getUserByNameSchema.validate(searchFilter)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid name')
+        return
+    }
+    const users = await userController.getByName(searchFilter.firstName, searchFilter.lastName)
+    const databaseConnection = await generalController.checkDatabaseConnection(users)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(users)
 })
 
 module.exports = router

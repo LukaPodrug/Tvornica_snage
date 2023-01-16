@@ -9,6 +9,12 @@ const editUserSchema = joi.object().keys({
     level: joi.number().integer().min(1).required()
 })
 
+const getUserByNameSchema = joi.object().keys({
+    firstName: joi.string().required().allow(''),
+    lastName: joi.string().required().allow('')
+})
+
 module.exports = {
-    editUserSchema
+    editUserSchema,
+    getUserByNameSchema
 }
