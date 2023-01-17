@@ -77,7 +77,7 @@ router.post('/verify', async(req, res) => {
         res.status(400).json('JWT not valid')
         return
     }
-    res.status(200).json(token)
+    res.setHeader('Authorization', token).status(200).json('Admin successfully logged in')
 })
 
 module.exports = router
