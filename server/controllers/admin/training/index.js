@@ -100,6 +100,19 @@ async function checkRoomOccupationEdit(id, room, start, finish) {
     }
 }
 
+async function getByCoachId(coachId) {
+    try {
+        const trainings = await database`
+            select *
+            from trainings
+            where coach_id = ${coachId}`
+        return trainings
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     addNew,
     getById,
@@ -107,5 +120,6 @@ module.exports = {
     getByDate,
     remove,
     checkRoomOccupationNew,
-    checkRoomOccupationEdit
+    checkRoomOccupationEdit,
+    getByCoachId
 }

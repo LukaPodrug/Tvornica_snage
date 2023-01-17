@@ -159,4 +159,19 @@ router.delete('/', async(req, res) => {
     res.status(200).json('Training successfully deleted')
 })
 
+router.get('/own', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const trainings = await trainingController.getByCoachId(tokenValidation.id)
+    const databaseConnection = await generalController.checkDatabaseConnection(trainings)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(trainings)
+})
+
 module.exports = router
