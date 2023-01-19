@@ -7,6 +7,7 @@ function SideMenuIcon({ icon }) {
         >
             <img
                 src={icon}
+                alt='icon'
             />
         </div>
     )

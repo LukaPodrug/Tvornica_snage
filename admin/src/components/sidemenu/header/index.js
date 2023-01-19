@@ -12,6 +12,7 @@ function SideMenuHeader() {
             >
                 <img
                     src={logo}
+                    alt='logo'
                 />
             </div>
             <div
