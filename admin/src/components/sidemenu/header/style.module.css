@@ -1,0 +1,21 @@
+.wrapper {
+    margin: 2em 1em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logo img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5em;
+}
