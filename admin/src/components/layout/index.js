@@ -1,11 +1,17 @@
 import { Outlet } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 
-import SideMenu from '../sidemenu'
+import store from '../../store'
+import { SideMenuLoggedIn, SideMenuLoggedOut } from '../sidemenu'
 
 function Layout() {
+    const [loggedIn] = useRecoilState(store.loggedIn)
+
     return (
         <>
-            <SideMenu/>
+            {
+                loggedIn ? <SideMenuLoggedIn/> : <SideMenuLoggedOut/>
+            }
             <Outlet/>
         </>
     )

@@ -7,8 +7,12 @@ import styles from './style.module.css'
 
 import registration from '../../assets/icons/registration.png'
 import login from '../../assets/icons/login.png'
+import profile from '../../assets/icons/profile.png'
+import trainings from '../../assets/icons/trainings.png'
+import users from '../../assets/icons/users.png'
+import logout from '../../assets/icons/logout.png'
 
-function SideMenu() {
+function SideMenuLoggedIn() {
     const location = useLocation()
 
     return (
@@ -20,15 +24,64 @@ function SideMenu() {
                 <MenuItem
                     className={styles.menuItem}
                     component={ <Link 
-                        to="/registration"
+                        to="/profile"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={registration}
+                        icon={profile}
                     /> }
-                    active={location.pathname.includes('registration')}
+                    active={location.pathname.includes('profile')}
                 >
-                    Registration
+                    Profile
                 </MenuItem>
+                <MenuItem
+                    className={styles.menuItem}
+                    component={ <Link 
+                        to="/trainings"
+                    /> }
+                    icon={ <SideMenuIcon
+                        icon={trainings}
+                    /> }
+                    active={location.pathname.includes('trainings')}
+                >
+                    Trainings
+                </MenuItem>
+                <MenuItem
+                    className={styles.menuItem}
+                    component={ <Link 
+                        to="/users"
+                    /> }
+                    icon={ <SideMenuIcon
+                        icon={users}
+                    /> }
+                    active={location.pathname.includes('users')}
+                >
+                    Users
+                </MenuItem>
+                <MenuItem
+                    className={styles.menuItem}
+                    component={ <Link 
+                        to="/login"
+                    /> }
+                    icon={ <SideMenuIcon
+                        icon={logout}
+                    /> }
+                >
+                    Logout
+                </MenuItem>
+            </Menu>
+        </Sidebar>
+    )
+}
+
+function SideMenuLoggedOut() {
+    const location = useLocation()
+
+    return (
+        <Sidebar
+            className={styles.sidebar}
+        >
+            <SideMenuHeader/>
+            <Menu>
                 <MenuItem
                     className={styles.menuItem}
                     component={ <Link 
@@ -41,9 +94,24 @@ function SideMenu() {
                 >
                     Login
                 </MenuItem>
+                <MenuItem
+                    className={styles.menuItem}
+                    component={ <Link 
+                        to="/registration"
+                    /> }
+                    icon={ <SideMenuIcon
+                        icon={registration}
+                    /> }
+                    active={location.pathname.includes('registration')}
+                >
+                    Registration
+                </MenuItem>
             </Menu>
         </Sidebar>
     )
 }
 
-export default SideMenu
+export {
+    SideMenuLoggedIn,
+    SideMenuLoggedOut
+}
