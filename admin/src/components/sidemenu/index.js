@@ -35,7 +35,7 @@ function SideMenuLoggedIn() {
                     /> }
                     active={location.pathname.includes('profile')}
                 >
-                    Profile
+                    PROFILE
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
@@ -47,7 +47,7 @@ function SideMenuLoggedIn() {
                     /> }
                     active={location.pathname.includes('trainings')}
                 >
-                    Trainings
+                    TRAININGS
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
@@ -59,7 +59,7 @@ function SideMenuLoggedIn() {
                     /> }
                     active={location.pathname.includes('users')}
                 >
-                    Users
+                    USERS
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
@@ -71,7 +71,7 @@ function SideMenuLoggedIn() {
                     /> }
                     onClick={() => setLoggedIn(false)}
                 >
-                    Logout
+                    LOGOUT
                 </MenuItem>
             </Menu>
         </Sidebar>
@@ -97,7 +97,7 @@ function SideMenuLoggedOut() {
                     /> }
                     active={location.pathname.includes('login')}
                 >
-                    Login
+                    LOGIN
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
@@ -109,7 +109,7 @@ function SideMenuLoggedOut() {
                     /> }
                     active={location.pathname.includes('registration')}
                 >
-                    Registration
+                    REGISTRATION
                 </MenuItem>
             </Menu>
         </Sidebar>

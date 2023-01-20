@@ -1,0 +1,26 @@
+.field {
+    display: grid;
+    grid-template-areas: 'field';
+
+    justify-items: end;
+    align-items: center;
+}
+
+.input {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+
+    padding: 1em;
+    border: none;
+    border-radius: 10px;
+
+    background-color: #e6e6e6;
+
+    grid-area: field;
+}
+
+.error {
+    grid-area: field;
+
+    margin-right: 10px;
+}

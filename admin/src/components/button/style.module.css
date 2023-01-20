@@ -1,0 +1,10 @@
+.wrapper {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    text-align: center;
+    text-transform: uppercase;
+
+    padding: 1em 2em;
+    border-radius: 10px;
+}
