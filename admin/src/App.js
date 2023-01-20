@@ -19,24 +19,24 @@ function App() {
             element={ <Layout/> }
           >
             <Route
-              path={ loggedIn ? '/profile' : '/registration' }
-              element={ <div>REGISTRATION</div> }
+              path='/registration'
+              element={ !loggedIn ? <div>REGISTRATION</div> : <Navigate to='/profile'/> }
             />
             <Route
-              path={ loggedIn ? '/profile' : '/login' }
-              element={ <div>LOGIN</div> }
+              path='/login'
+              element={ !loggedIn ? <div>LOGIN</div> : <Navigate to='/profile'/> }
             />
             <Route
-              path={ loggedIn ? '/profile' : '/login' }
-              element={ <div>PROFILE</div> }
+              path='/profile'
+              element={ loggedIn ? <div>PROFILE</div> : <Navigate to='/login'/> }
             />
             <Route
-              path={ loggedIn ? '/trainings' : '/login' }
-              element={ <div>TRAININGS</div> }
+              path='/trainings'
+              element={ loggedIn ? <div>TRAININGS</div> : <Navigate to='/login'/> }
             />
             <Route
-              path={ loggedIn ? '/users' : '/login' }
-              element={ <div>USERS</div> }
+              path='/users'
+              element={ loggedIn ? <div>USERS</div> : <Navigate to='/login'/> }
             />
             <Route
               path='/'

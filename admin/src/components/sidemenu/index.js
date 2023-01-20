@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar'
+import { useRecoilState } from 'recoil'
 
+import store from '../../store'
 import SideMenuHeader from './header'
 import SideMenuIcon from './icon'
 import styles from './style.module.css'
@@ -13,6 +15,8 @@ import users from '../../assets/icons/users.png'
 import logout from '../../assets/icons/logout.png'
 
 function SideMenuLoggedIn() {
+    const [, setLoggedIn] = useRecoilState(store.loggedIn)
+
     const location = useLocation()
 
     return (
@@ -65,6 +69,7 @@ function SideMenuLoggedIn() {
                     icon={ <SideMenuIcon
                         icon={logout}
                     /> }
+                    onClick={() => setLoggedIn(false)}
                 >
                     Logout
                 </MenuItem>
