@@ -20,7 +20,10 @@ const { PORT } = process.env
 
 const app = express()
 
-app.use(cors())
+const corsOptions = {
+  exposedHeaders: 'Authorization'
+}
+app.use(cors(corsOptions))
 app.use(bodyParser.json({limit: '5mb'}))
 
 app.use('/api/admin/auth', adminAuthRoute)
