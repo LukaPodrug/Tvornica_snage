@@ -1,21 +1,39 @@
 import { Outlet } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
+import PuffLoader from "react-spinners/PuffLoader"
 
 import store from '../../store'
 import { SideMenuLoggedIn, SideMenuLoggedOut } from '../sidemenu'
+import styles from './style.module.css'
 
-function Layout() {
+function Layout({ loading }) {
     const [loggedIn] = useRecoilState(store.loggedIn)
 
     return (
         <>
             {
-                loggedIn ? 
-                    <SideMenuLoggedIn/> 
-                    : 
-                    <SideMenuLoggedOut/>
+                loading && 
+                    <div
+                        className={styles.loading}
+                    >
+                        <PuffLoader
+                            color='#90EE90'
+                            size={150}
+                        />
+                    </div>
             }
-            <Outlet/>
+            {
+                !loading &&
+                    <>
+                        {
+                            loggedIn ? 
+                                <SideMenuLoggedIn/> 
+                                : 
+                                <SideMenuLoggedOut/>
+                        }
+                        <Outlet/>
+                    </>
+            }
         </>
     )
 }
