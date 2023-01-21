@@ -10,7 +10,10 @@ function Layout() {
     return (
         <>
             {
-                loggedIn ? <SideMenuLoggedIn/> : <SideMenuLoggedOut/>
+                loggedIn ? 
+                    <SideMenuLoggedIn/> 
+                    : 
+                    <SideMenuLoggedOut/>
             }
             <Outlet/>
         </>

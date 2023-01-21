@@ -5,8 +5,14 @@ const loggedIn = atom({
     default: false
 })
 
+const token = atom({
+    key: 'token',
+    default: null
+})
+
 const atoms = {
-    loggedIn
+    loggedIn,
+    token
 }
 
 export default atoms

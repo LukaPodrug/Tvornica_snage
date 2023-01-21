@@ -73,9 +73,7 @@
     outline: none;
 }
 
-.button {
-    margin: 2em;
-    
+.button {    
     min-width: 210px;
 
     background-color: #90EE90;

@@ -1,4 +1,10 @@
 .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.button {
     font-family: 'Ubuntu', sans-serif;
     font-weight: 700;
     font-size: 1em;
@@ -7,4 +13,28 @@
 
     padding: 1em 2em;
     border-radius: 10px;
+}
+
+.message {
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+
+    padding: 0.5em 1em;
+
+    width: fit-content;
+    min-height: 18.5px;
+
+    border-radius: 10px;
+
+    margin: 0 auto;
+
+    background-color: #E04F5F;
+
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
 }

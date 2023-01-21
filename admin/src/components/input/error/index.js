@@ -1,6 +1,6 @@
 import styles from './style.module.css'
 
-import error from '../../../assets/icons/error.png'
+import errorIcon from '../../../assets/icons/error.png'
 
 function ErrorInput({ input, message, changeError, style }) {
     function removeError() {
@@ -17,7 +17,7 @@ function ErrorInput({ input, message, changeError, style }) {
                 onClick={() => removeError()}
             >
                 <img
-                    src={error}
+                    src={errorIcon}
                     alt='error'
                 />
             </div>

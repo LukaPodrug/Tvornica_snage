@@ -7,17 +7,24 @@ import SideMenuHeader from './header'
 import SideMenuIcon from './icon'
 import styles from './style.module.css'
 
-import registration from '../../assets/icons/registration.png'
-import login from '../../assets/icons/login.png'
-import profile from '../../assets/icons/profile.png'
-import trainings from '../../assets/icons/trainings.png'
-import users from '../../assets/icons/users.png'
-import logout from '../../assets/icons/logout.png'
+import registrationIcon from '../../assets/icons/registration.png'
+import loginIcon from '../../assets/icons/login.png'
+import profileIcon from '../../assets/icons/profile.png'
+import trainingsIcon from '../../assets/icons/trainings.png'
+import usersIcon from '../../assets/icons/users.png'
+import logoutIcon from '../../assets/icons/logout.png'
 
 function SideMenuLoggedIn() {
     const [, setLoggedIn] = useRecoilState(store.loggedIn)
+    const [, setToken] = useRecoilState(store.token)
 
     const location = useLocation()
+
+    function logout() {
+        setLoggedIn(false)
+        setToken(null)
+        localStorage.removeItem('token')
+    }
 
     return (
         <Sidebar
@@ -31,7 +38,7 @@ function SideMenuLoggedIn() {
                         to="/profile"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={profile}
+                        icon={profileIcon}
                     /> }
                     active={location.pathname.includes('profile')}
                 >
@@ -43,7 +50,7 @@ function SideMenuLoggedIn() {
                         to="/trainings"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={trainings}
+                        icon={trainingsIcon}
                     /> }
                     active={location.pathname.includes('trainings')}
                 >
@@ -55,7 +62,7 @@ function SideMenuLoggedIn() {
                         to="/users"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={users}
+                        icon={usersIcon}
                     /> }
                     active={location.pathname.includes('users')}
                 >
@@ -67,9 +74,9 @@ function SideMenuLoggedIn() {
                         to="/login"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={logout}
+                        icon={logoutIcon}
                     /> }
-                    onClick={() => setLoggedIn(false)}
+                    onClick={() => logout()}
                 >
                     LOGOUT
                 </MenuItem>
@@ -93,7 +100,7 @@ function SideMenuLoggedOut() {
                         to="/login"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={login}
+                        icon={loginIcon}
                     /> }
                     active={location.pathname.includes('login')}
                 >
@@ -105,7 +112,7 @@ function SideMenuLoggedOut() {
                         to="/registration"
                     /> }
                     icon={ <SideMenuIcon
-                        icon={registration}
+                        icon={registrationIcon}
                     /> }
                     active={location.pathname.includes('registration')}
                 >

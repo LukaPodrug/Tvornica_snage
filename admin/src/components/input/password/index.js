@@ -3,13 +3,15 @@ import { useRef } from 'react'
 import ErrorInput from '../error'
 import styles from './style.module.css'
 
-function PasswordInput({ label, text, changeText, error, changeError, labelStyle, inputStyle }) {
+function PasswordInput({ label, text, changeText, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
     const passwordInputRef = useRef(null)
 
-
-    function removeError() {
+    function focus() {
         if(error) {
             changeError(false)
+        }
+        if(message) {
+            changeMessage(null)
         }
     }
 
@@ -29,7 +31,7 @@ function PasswordInput({ label, text, changeText, error, changeError, labelStyle
                     ref={passwordInputRef}
                     value={text}
                     onChange={(e) => changeText(e.target.value)}
-                    onFocus={() => removeError()}
+                    onFocus={() => focus()}
                 />
                 {
                     error && 
