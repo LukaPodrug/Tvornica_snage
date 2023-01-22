@@ -53,7 +53,7 @@ function LoginPage() {
                 <div
                     className={styles.header}
                 >
-                    LOGIN
+                    login
                 </div>
                 <form
                     className={styles.form}

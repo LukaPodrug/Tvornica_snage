@@ -11,8 +11,10 @@
     display: flex;
     align-items: center;
 
-    width: 80%;
-    height: 80%;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 20px 0;
 
     border-radius: 10px;
 

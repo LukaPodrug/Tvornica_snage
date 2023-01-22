@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-async function getOwnAPI(token) {
-    const getOwnResponse = await axios.get('http://localhost:3000/api/admin/coach/own', {
+async function getOwnDataAPI(token) {
+    const getOwnDataResponse = await axios.get('http://localhost:3000/api/admin/coach/own', {
         headers: {
             'Authorization': token
         }
     })
-    return getOwnResponse
+    return getOwnDataResponse
 }
 
 export {
-    getOwnAPI
+    getOwnDataAPI
 }

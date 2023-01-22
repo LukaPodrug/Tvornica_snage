@@ -5,47 +5,59 @@ import moment from 'moment'
 import store from '../../store'
 import LoadingPage from '../loading'
 import Profile from './profile'
-import { getOwnAPI } from '../../API/coach'
+import Trainings from './trainings'
+import { getOwnDataAPI } from '../../API/coach'
+import { getOwnTrainingsAPI } from '../../API/training'
 import styles from './style.module.css'
 
 function ProfilePage() {
     const [token] = useRecoilState(store.token)
     const [ownData, setOwnData] = useRecoilState(store.ownData)
+    const [ownTrainings, setOwnTrainings] = useRecoilState(store.ownTrainings)
 
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        async function getOwn() {
+        async function getOwnData() {
             if(ownData) {
-                setTimeout(() => {
-                    setLoading(false)
-                }, 1000)
                 return
             }
             try {
-                const getOwnResponse = await getOwnAPI(token)
-                setOwnData(getOwnResponse.data[0])
-                setTimeout(() => {
-                    setLoading(false)
-                }, 1000)
+                const getOwnDataResponse = await getOwnDataAPI(token)
+                setOwnData(getOwnDataResponse.data[0])
             }
             catch(error) {
-                setTimeout(() => {
-                    setLoading(false)
-                }, 1000)
+                return
             }
         }
 
-        getOwn()
+        async function getOwnTrainings() {
+            try {
+                const getOwnTrainingsResponse = await getOwnTrainingsAPI(token)
+                setOwnTrainings(getOwnTrainingsResponse.data)
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            await getOwnData()
+            await getOwnTrainings()
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
+        }
+
+        fetchAPI()
     }, [])
 
     return (
         <>
             {
-                loading && <LoadingPage/>
-            }
-            {
-                !loading &&
+                loading ?
+                    <LoadingPage/>
+                    :
                     <div
                         className={styles.wrapper}
                     >
@@ -59,10 +71,9 @@ function ProfilePage() {
                                 username={ownData.username}
                                 dateOfBirth={moment(ownData.date_of_birth).format('DD/MM/YYYY')}
                             />
-                            <div
-                                className={styles.trainingsWindow}
-                            >
-                            </div>
+                            <Trainings
+                                trainings={ownTrainings}
+                            />
                         </div>
                     </div>
             }

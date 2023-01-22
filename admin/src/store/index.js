@@ -15,10 +15,16 @@ const ownData = atom({
     default: null
 })
 
+const ownTrainings = atom({
+    key: 'ownTrainings',
+    default: null
+})
+
 const atoms = {
     loggedIn,
     token,
-    ownData
+    ownData,
+    ownTrainings
 }
 
 export default atoms
