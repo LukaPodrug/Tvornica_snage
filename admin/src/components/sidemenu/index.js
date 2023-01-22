@@ -17,12 +17,14 @@ import logoutIcon from '../../assets/icons/logout.png'
 function SideMenuLoggedIn() {
     const [, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
+    const [, setOwnData] = useRecoilState(store.ownData)
 
     const location = useLocation()
 
     function logout() {
         setLoggedIn(false)
         setToken(null)
+        setOwnData(null)
         localStorage.removeItem('token')
     }
 

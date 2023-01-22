@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil'
 import store from './store'
 import Layout from './components/layout'
 import LoginPage from './pages/login'
+import ProfilePage from './pages/profile'
 import { verifyTokenAPI } from './API/auth'
 import './App.css'
 
@@ -39,7 +40,7 @@ function App() {
     }
 
     verifyToken()
-  })
+  }, [])
 
   return (
     <div 
@@ -61,7 +62,7 @@ function App() {
             />
             <Route
               path='/profile'
-              element={ loggedIn ? <div>PROFILE</div> : <Navigate to='/login'/> }
+              element={ loggedIn ? <ProfilePage/> : <Navigate to='/login'/> }
             />
             <Route
               path='/trainings'

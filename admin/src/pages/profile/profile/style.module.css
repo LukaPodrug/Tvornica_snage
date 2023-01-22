@@ -1,0 +1,57 @@
+.wrapper {
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    margin: 0 20px;
+
+    padding: 0 20px;
+
+    background-color: #e6e6e6;
+}
+
+.image {
+    padding-top: 50px;
+    padding-bottom: 25px;
+}
+
+.image img {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 75px;
+}
+
+.data {
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+
+    padding-top: 25px;
+    padding-bottom: 50px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.key {
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.7em;
+}
+
+.value {
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.3em;
+}

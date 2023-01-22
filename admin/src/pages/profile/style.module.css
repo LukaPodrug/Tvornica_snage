@@ -1,0 +1,28 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window {
+    display: flex;
+    align-items: center;
+
+    width: 80%;
+    height: 80%;
+
+    border-radius: 10px;
+
+    background-color: #ffffff;
+}
+
+.trainingsWindow {
+    flex-grow: 1;
+
+    margin: 0 20px;
+
+    border-radius: 10px;
+}
