@@ -1,3 +1,5 @@
+import Info from './info'
+
 import styles from './style.module.css'
 
 function Profile({ image, firstName, lastName, username, dateOfBirth }) {
@@ -16,62 +18,22 @@ function Profile({ image, firstName, lastName, username, dateOfBirth }) {
             <div
                 className={styles.data}
             >
-                <div
-                    className={styles.info}
-                >
-                    <div
-                        className={styles.key}
-                    >
-                        first name
-                    </div>
-                    <div 
-                        className={styles.value}
-                    >
-                        {firstName}
-                    </div>
-                </div>
-                <div
-                    className={styles.info}
-                >
-                    <div
-                        className={styles.key}
-                    >
-                        last name
-                    </div>
-                    <div 
-                        className={styles.value}
-                    >
-                        {lastName}
-                    </div>
-                </div>
-                <div
-                    className={styles.info}
-                >
-                    <div
-                        className={styles.key}
-                    >
-                        username
-                    </div>
-                    <div 
-                        className={styles.value}
-                    >
-                        {username}
-                    </div>
-                </div>
-                <div
-                    className={styles.info}
-                >
-                    <div
-                        className={styles.key}
-                    >
-                        date of birth
-                    </div>
-                    <div 
-                        className={styles.value}
-                    >
-                        {dateOfBirth}
-                    </div>
-                </div>
+                <Info
+                    property='first name'
+                    value={firstName}
+                />
+                <Info
+                    property='last name'
+                    value={lastName}
+                />
+                <Info
+                    property='username'
+                    value={username}
+                />
+                <Info
+                    property='date of birth'
+                    value={dateOfBirth}
+                />
             </div>
         </div>
     )

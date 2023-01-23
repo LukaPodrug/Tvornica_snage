@@ -38,20 +38,3 @@
     padding-top: 25px;
     padding-bottom: 50px;
 }
-
-.info {
-    display: flex;
-    flex-direction: column;
-}
-
-.key {
-    font-family: 'Ubuntu', sans-serif;
-    text-transform: uppercase;
-    font-size: 0.7em;
-}
-
-.value {
-    font-family: 'Ubuntu', sans-serif;
-    text-transform: uppercase;
-    font-size: 1.3em;
-}

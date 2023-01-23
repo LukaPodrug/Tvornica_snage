@@ -1,7 +1,6 @@
 import styles from './style.module.css'
 
 function Section({ image, property, value, button }) {
-    console.log(property)
     return (
         <div 
             className={styles.wrapper + ' ' + (button && styles.button)}
