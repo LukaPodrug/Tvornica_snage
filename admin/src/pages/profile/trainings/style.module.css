@@ -26,4 +26,20 @@
     gap: 1em;
     
     flex-grow: 1;
+
+    width: 100%;
+}
+
+.message {
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.2em;
+
+    width: fit-content;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    background-color: #efefef;
 }

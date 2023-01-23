@@ -52,6 +52,14 @@ function Trainings({ dateShow, date, setDate, trainings, page, setPage, maxPage,
                             )
                         })
                     }
+                    {
+                        trainings.length === 0 &&
+                            <label
+                                className={styles.message}
+                            >
+                                no scheduled trainings for this date
+                            </label>
+                    }
                     </div>
             }
             <Pagination
