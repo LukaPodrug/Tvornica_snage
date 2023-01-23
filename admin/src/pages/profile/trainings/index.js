@@ -13,9 +13,10 @@ function Trainings({ trainings }) {
             className={styles.wrapper}
         >
             {
-                trainings.map(training => {
+                trainings.map((training, index) => {
                     return (
                         <Training
+                            key={index}
                             id={training.id}
                             coachId={training.coach_id}
                             coachImage={ownData.image}
