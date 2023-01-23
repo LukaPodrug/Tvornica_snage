@@ -1,8 +1,13 @@
+import { useState } from 'react'
+
 import Button from '../../../components/button'
 import DatePicker from '../../../components/datePicker'
+import AddTrainingModal from '../../../pages/modals/addTraining'
 import styles from './style.module.css'
 
 function TrainingsSectionHeader({ title, dateShow, date, setDate }) {
+    const [addTrainingModalOpen, setAddTrainingModalOpen] = useState(false)
+
     return (
         <div
             className={styles.wrapper}
@@ -17,7 +22,7 @@ function TrainingsSectionHeader({ title, dateShow, date, setDate }) {
                 </label>
                 <Button
                     text='add new'
-                    method={() => {}}
+                    method={() => setAddTrainingModalOpen(true)}
                     loading={false}
                     showMessage={false}
                     message={null}
@@ -29,6 +34,10 @@ function TrainingsSectionHeader({ title, dateShow, date, setDate }) {
                 dateShow={dateShow}
                 date={date}
                 setDate={setDate}
+            />
+            <AddTrainingModal
+                isOpen={addTrainingModalOpen}
+                setIsOpen={setAddTrainingModalOpen}
             />
         </div>
     )

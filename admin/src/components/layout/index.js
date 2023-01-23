@@ -11,10 +11,9 @@ function Layout({ loading }) {
     return (
         <>
             {
-                loading && <LoadingPage/>
-            }
-            {
-                !loading &&
+                loading ? 
+                    <LoadingPage/>
+                    :
                     <>
                         {
                             loggedIn ? 

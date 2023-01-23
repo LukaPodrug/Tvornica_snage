@@ -19,6 +19,7 @@ function SideMenuLoggedIn() {
     const [, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
     const [, setOwnData] = useRecoilState(store.ownData)
+    const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
     const [collapsed, setCollapsed] = useState(false)
 
@@ -28,6 +29,7 @@ function SideMenuLoggedIn() {
         setLoggedIn(false)
         setToken(null)
         setOwnData(null)
+        setAllCoachesData(null)
         localStorage.removeItem('token')
     }
 
@@ -42,48 +44,32 @@ function SideMenuLoggedIn() {
             <Menu>
                 <MenuItem
                     className={styles.menuItem}
-                    component={ <Link 
-                        to="/profile"
-                    /> }
-                    icon={ <SideMenuIcon
-                        icon={profileIcon}
-                    /> }
+                    component={ <Link to="/profile"/> }
+                    icon={ <SideMenuIcon icon={profileIcon}/> }
                     active={location.pathname.includes('profile')}
                 >
                     profile
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
-                    component={ <Link 
-                        to="/trainings"
-                    /> }
-                    icon={ <SideMenuIcon
-                        icon={trainingsIcon}
-                    /> }
+                    component={ <Link to="/trainings"/> }
+                    icon={ <SideMenuIcon icon={trainingsIcon}/> }
                     active={location.pathname.includes('trainings')}
                 >
                     trainings
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
-                    component={ <Link 
-                        to="/users"
-                    /> }
-                    icon={ <SideMenuIcon
-                        icon={usersIcon}
-                    /> }
+                    component={ <Link to="/users"/> }
+                    icon={ <SideMenuIcon icon={usersIcon}/> }
                     active={location.pathname.includes('users')}
                 >
                     users
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
-                    component={ <Link 
-                        to="/login"
-                    /> }
-                    icon={ <SideMenuIcon
-                        icon={logoutIcon}
-                    /> }
+                    component={ <Link to="/login"/> }
+                    icon={ <SideMenuIcon icon={logoutIcon}/> }
                     onClick={() => logout()}
                 >
                     logout
@@ -109,24 +95,16 @@ function SideMenuLoggedOut() {
             <Menu>
                 <MenuItem
                     className={styles.menuItem}
-                    component={ <Link 
-                        to="/login"
-                    /> }
-                    icon={ <SideMenuIcon
-                        icon={loginIcon}
-                    /> }
+                    component={ <Link to="/login"/> }
+                    icon={ <SideMenuIcon icon={loginIcon}/> }
                     active={location.pathname.includes('login')}
                 >
                     login
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
-                    component={ <Link 
-                        to="/registration"
-                    /> }
-                    icon={ <SideMenuIcon
-                        icon={registrationIcon}
-                    /> }
+                    component={ <Link to="/registration"/> }
+                    icon={ <SideMenuIcon icon={registrationIcon}/> }
                     active={location.pathname.includes('registration')}
                 >
                     registration
