@@ -9,6 +9,16 @@ async function getOwnDataAPI(token) {
     return getOwnDataResponse
 }
 
+async function getAllCoachesDataAPI(token) {
+    const getAllCoachesDataResponse = await axios.get('http://localhost:3000/api/admin/coach/all', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return getAllCoachesDataResponse
+}
+
 export {
-    getOwnDataAPI
+    getOwnDataAPI,
+    getAllCoachesDataAPI
 }

@@ -15,7 +15,7 @@ function ProfilePage() {
     const [ownData, setOwnData] = useRecoilState(store.ownData)
 
     const [date, setDate] = useState(Date.now())
-    const [ownTrainings, setOwnTrainings] = useState(null)
+    const [ownTrainingsByDate, setOwnTrainingsByDate] = useState(null)
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
 
@@ -37,11 +37,11 @@ function ProfilePage() {
             }
         }
 
-        async function getOwnTrainings() {
+        async function getOwnTrainingsByDate() {
             try {
                 const getOwnTrainingsByDateResponse = await getOwnTrainingsByDateAPI(token, date)
                 const ownTrainingsByDateSorted = getOwnTrainingsByDateResponse.data.sort((training1, training2) => new Date(training1.start) - new Date(training2.start))
-                setOwnTrainings(ownTrainingsByDateSorted)
+                setOwnTrainingsByDate(ownTrainingsByDateSorted)
                 setMaxPage(Math.ceil(ownTrainingsByDateSorted.length / 3))
             }
             catch(error) {
@@ -52,7 +52,7 @@ function ProfilePage() {
         async function fetchAPI() {
             await getOwnData()
             setTrainingsLoading(true)
-            await getOwnTrainings()
+            await getOwnTrainingsByDate()
             setTimeout(() => {
                 setLoading(false)
                 setTrainingsLoading(false)
@@ -90,7 +90,7 @@ function ProfilePage() {
                                 dateShow={dateShow}
                                 date={date}
                                 setDate={setDate}
-                                trainings={ownTrainings.slice((page - 1) * 3, (page - 1) * 3 + 3)}
+                                trainings={ownTrainingsByDate.slice((page - 1) * 3, (page - 1) * 3 + 3)}
                                 page={page}
                                 setPage={setPage}
                                 maxPage={maxPage}

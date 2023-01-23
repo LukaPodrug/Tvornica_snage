@@ -6,6 +6,7 @@ import store from './store'
 import Layout from './components/layout'
 import LoginPage from './pages/login'
 import ProfilePage from './pages/profile'
+import TrainingsPage from './pages/trainings'
 import { verifyTokenAPI } from './API/auth'
 import './App.css'
 
@@ -66,7 +67,7 @@ function App() {
             />
             <Route
               path='/trainings'
-              element={ loggedIn ? <div>TRAININGS</div> : <Navigate to='/login'/> }
+              element={ loggedIn ? <TrainingsPage/> : <Navigate to='/login'/> }
             />
             <Route
               path='/users'

@@ -88,6 +88,7 @@ function LoginPage() {
                         text='submit'
                         method={() => login()}
                         loading={loading}
+                        showMessage={true}
                         message={message}
                         changeMessage={setMessage}
                         style={styles.button}

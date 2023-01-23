@@ -1,0 +1,31 @@
+.wrapper {
+    width: 100%;
+    margin: 0 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.button {
+    background-color: #90EE90;
+}
+
+.button:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}

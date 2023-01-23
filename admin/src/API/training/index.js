@@ -13,6 +13,19 @@ async function getOwnTrainingsByDateAPI(token, date) {
     return getOwnTrainingsByDateResponse
 }
 
+async function getTrainingsByDateAPI(token, date) {
+    const getTrainingsByDateResponse = await axios.get('http://localhost:3000/api/admin/training/byDate', {
+        params: {
+            'date': moment(date).format('YYYY-MM-DD')
+        },
+        headers: {
+            'Authorization': token
+        }
+    })
+    return getTrainingsByDateResponse
+}
+
 export {
-    getOwnTrainingsByDateAPI
+    getOwnTrainingsByDateAPI,
+    getTrainingsByDateAPI
 }
