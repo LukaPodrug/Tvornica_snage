@@ -9,10 +9,9 @@
 
 .window {
     display: flex;
-    align-items: center;
 
+    min-width: 980px;
     width: fit-content;
-    height: fit-content;
 
     padding: 20px 0;
 

@@ -12,7 +12,7 @@ import levelIcon from '../../assets/icons/level.png'
 import moreIcon from '../../assets/icons/more.png'
 import editIcon from '../../assets/icons/edit.png'
 
-function Training({ id, coachImage, coachId, coachLastName, start, finish, room, capacity, level, description }) {
+function Training({ id, showCoach, coachImage, coachId, coachLastName, start, finish, room, capacity, level, description }) {
     return (
         <div
             className={styles.wrapper}
@@ -23,12 +23,15 @@ function Training({ id, coachImage, coachId, coachLastName, start, finish, room,
                 value={moment(start).format('DD/MM/YYYY')}
                 button={false}
             />
-            <Section
-                image={coachImage}
-                property='coach'
-                value={coachLastName}
-                button={false}
-            />
+            {
+                showCoach && 
+                    <Section
+                        image={coachImage}
+                        property='coach'
+                        value={coachLastName}
+                        button={false}
+                    />
+            }
             <Section
                 image={startIcon}
                 property='start'

@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.date {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.2em;
+}
+
+.arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 5px;
+
+    background-color: #90EE90;
+
+    border-radius: 1em;
+}
+
+.arrow:hover {
+    cursor: pointer;
+
+    opacity: 0.5
+}
+
+.arrow img {
+    width: 1em;
+    height: 1em;
+}

@@ -50,11 +50,11 @@ function LoginPage() {
             <div
                 className={styles.window}
             >
-                <div
+                <label
                     className={styles.header}
                 >
                     login
-                </div>
+                </label>
                 <form
                     className={styles.form}
                 >

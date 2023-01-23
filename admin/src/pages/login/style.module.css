@@ -80,5 +80,5 @@
 .button:hover {
     cursor: pointer;
 
-    background-color: #237523;
+    opacity: 0.5;
 }
