@@ -4,8 +4,11 @@ import moment from 'moment'
 
 import store from '../../store'
 import LoadingPage from '../loading'
-import Profile from './profile'
-import Trainings from './trainings'
+import DataSection from '../../sections/data'
+import LoadingSection from '../../sections/loading'
+import TrainingsSectionHeader from '../../sections/trainings/header'
+import TrainingsSection from '../../sections/trainings'
+import Pagination from '../../components/pagination'
 import { getOwnDataAPI } from '../../API/coach'
 import { getOwnTrainingsByDateAPI } from '../../API/training'
 import styles from './style.module.css'
@@ -79,23 +82,37 @@ function ProfilePage() {
                         <div
                             className={styles.window}
                         >
-                            <Profile
+                            <DataSection
                                 image={ownData.image}
                                 firstName={ownData.first_name}
                                 lastName={ownData.last_name}
                                 username={ownData.username}
                                 dateOfBirth={moment(ownData.date_of_birth).format('DD/MM/YYYY')}
                             />
-                            <Trainings
-                                dateShow={dateShow}
-                                date={date}
-                                setDate={setDate}
-                                trainings={ownTrainingsByDate.slice((page - 1) * 3, (page - 1) * 3 + 3)}
-                                page={page}
-                                setPage={setPage}
-                                maxPage={maxPage}
-                                loading={trainingsLoading}
-                            />
+                            <div
+                                className={styles.trainings}
+                            >
+                                <TrainingsSectionHeader
+                                    title='my trainings'
+                                    dateShow={dateShow}
+                                    date={date}
+                                    setDate={setDate}
+                                />
+                                {
+                                    trainingsLoading ? 
+                                        <LoadingSection/>
+                                        :
+                                        <TrainingsSection
+                                            trainings={ownTrainingsByDate.slice((page - 1) * 3, (page - 1) * 3 + 3)}
+                                            showCoach={false}
+                                        />
+                                }
+                                <Pagination
+                                    page={page}
+                                    setPage={setPage}
+                                    maxPage={maxPage}
+                                />
+                            </div>
                         </div>
                     </div>
             }

@@ -1,5 +1,6 @@
 .wrapper {
-    width: 100%;
+    width: fill-available;
+
     margin: 0 20px;
 
     display: flex;

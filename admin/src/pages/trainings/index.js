@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
-import MoonLoader from 'react-spinners/MoonLoader'
 
 import store from '../../store'
 import LoadingPage from '../loading'
-import Header from './header'
-import Training from '../../components/training'
+import LoadingSection from '../../sections/loading'
+import TrainingsSectionHeader from '../../sections/trainings/header'
+import TrainingsSection from '../../sections/trainings'
 import Pagination from '../../components/pagination'
 import { getAllCoachesDataAPI } from '../../API/coach'
 import { getTrainingsByDateAPI } from '../../API/training'
@@ -90,53 +90,20 @@ function TrainingsPage() {
                         <div 
                             className={styles.window}
                         >
-                            <Header
+                            <TrainingsSectionHeader
+                                title='all trainings'
                                 dateShow={dateShow}
                                 date={date}
                                 setDate={setDate}
                             />
                             {
                                 trainingsLoading ? 
-                                    <div
-                                        className={styles.loading}
-                                    >
-                                        <MoonLoader
-                                            color='#90EE90'
-                                        />
-                                    </div>
+                                    <LoadingSection/>
                                     :
-                                    <div
-                                        className={styles.trainings}
-                                    >
-                                        {
-                                            trainingsByDate.slice((page - 1) * 5, (page - 1) * 5 + 5).map((training, index) => {
-                                                return (
-                                                    <Training
-                                                        key={index}
-                                                        id={training.id}
-                                                        showCoach={true}
-                                                        coachId={training.coach_id}
-                                                        coachImage={training.coachImage}
-                                                        coachLastName={training.coachLastName}
-                                                        start={training.start}
-                                                        finish={training.finish}
-                                                        room={training.room}
-                                                        capacity={training.capacity}
-                                                        level={training.level}
-                                                        description={training.description}
-                                                    />
-                                                )
-                                            })
-                                        }
-                                        {
-                                            trainingsByDate.length === 0 &&
-                                                <label
-                                                    className={styles.message}
-                                                >
-                                                    no scheduled trainings for this date
-                                                </label>
-                                        }
-                                    </div>
+                                    <TrainingsSection
+                                        trainings={trainingsByDate.slice((page - 1) * 5, (page - 1) * 5 + 5)}
+                                        showCoach={true}
+                                    />
                             }
                             <Pagination
                                 page={page}

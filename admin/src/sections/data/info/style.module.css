@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-.key {
+.property {
     font-family: 'Ubuntu', sans-serif;
     text-transform: uppercase;
     font-size: 0.7em;

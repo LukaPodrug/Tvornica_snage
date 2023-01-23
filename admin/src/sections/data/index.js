@@ -1,8 +1,7 @@
-import Info from './info'
-
+import DataSectionInfo from './info'
 import styles from './style.module.css'
 
-function Profile({ image, firstName, lastName, username, dateOfBirth }) {
+function DataSection({ image, firstName, lastName, username, dateOfBirth }) {
     return (
         <div
             className={styles.wrapper}
@@ -18,19 +17,19 @@ function Profile({ image, firstName, lastName, username, dateOfBirth }) {
             <div
                 className={styles.data}
             >
-                <Info
+                <DataSectionInfo
                     property='first name'
                     value={firstName}
                 />
-                <Info
+                <DataSectionInfo
                     property='last name'
                     value={lastName}
                 />
-                <Info
+                <DataSectionInfo
                     property='username'
                     value={username}
                 />
-                <Info
+                <DataSectionInfo
                     property='date of birth'
                     value={dateOfBirth}
                 />
@@ -39,4 +38,4 @@ function Profile({ image, firstName, lastName, username, dateOfBirth }) {
     )
 }
 
-export default Profile
+export default DataSection

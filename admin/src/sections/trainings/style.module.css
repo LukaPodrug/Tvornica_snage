@@ -1,26 +1,4 @@
 .wrapper {
-    width: 100%;
-
-    margin: 0 20px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1em;
-}
-
-.loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 100%;
-
-    flex-grow: 1;
-}
-
-.trainings {
     display: flex;
     flex-direction: column;
     gap: 1em;

@@ -2,7 +2,7 @@ import Button from '../../../components/button'
 import DatePicker from '../../../components/datePicker'
 import styles from './style.module.css'
 
-function Header({ dateShow, date, setDate }) {
+function TrainingsSectionHeader({ title, dateShow, date, setDate }) {
     return (
         <div
             className={styles.wrapper}
@@ -13,7 +13,7 @@ function Header({ dateShow, date, setDate }) {
                 <label
                     className={styles.text}
                 >
-                    all trainings
+                    {title}
                 </label>
                 <Button
                     text='add new'
@@ -34,4 +34,4 @@ function Header({ dateShow, date, setDate }) {
     )
 }
 
-export default Header
+export default TrainingsSectionHeader

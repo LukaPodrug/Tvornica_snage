@@ -1,12 +1,12 @@
 import styles from './style.module.css'
 
-function Info({ property, value }) {
+function DataSectionInfo({ property, value }) {
     return (
         <div
             className={styles.wrapper}
         >
             <div
-                className={styles.key}
+                className={styles.property}
             >
                 {property}
             </div>
@@ -19,4 +19,4 @@ function Info({ property, value }) {
     )
 }
 
-export default Info
+export default DataSectionInfo
