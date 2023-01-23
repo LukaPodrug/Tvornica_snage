@@ -61,36 +61,28 @@ function LoginPage() {
                     <div
                         className={styles.inputs}
                     >
-                        <div
-                            className={styles.field}
-                        >
-                            <TextInput
-                                label='username'
-                                text={username}
-                                changeText={setUsername}
-                                error={usernameError}
-                                changeError={setUsernameError}
-                                message={message}
-                                changeMessage={setMessage}
-                                labelStyle={styles.label}
-                                inputStyle={styles.input}
-                            />
-                        </div>
-                        <div
-                            className={styles.field}
-                        >
-                            <PasswordInput
-                                label='password'
-                                text={password}
-                                changeText={setPassword}
-                                error={passwordError}
-                                changeError={setPasswordError}
-                                message={message}
-                                changeMessage={setMessage}
-                                labelStyle={styles.label}
-                                inputStyle={styles.input}
-                            />
-                        </div>
+                        <TextInput
+                            label='username'
+                            text={username}
+                            changeText={setUsername}
+                            error={usernameError}
+                            changeError={setUsernameError}
+                            message={message}
+                            changeMessage={setMessage}
+                            labelStyle={styles.label}
+                            inputStyle={styles.input}
+                        />
+                        <PasswordInput
+                            label='password'
+                            text={password}
+                            changeText={setPassword}
+                            error={passwordError}
+                            changeError={setPasswordError}
+                            message={message}
+                            changeMessage={setMessage}
+                            labelStyle={styles.label}
+                            inputStyle={styles.input}
+                        />
                     </div>
                     <Button
                         text='submit'

@@ -16,7 +16,9 @@ function TextInput({ label, text, changeText, error, changeError, message, chang
     }
 
     return (
-        <>
+        <div
+            className={styles.wrapper}
+        >
             <label
                 className={labelStyle}
             >
@@ -43,7 +45,7 @@ function TextInput({ label, text, changeText, error, changeError, message, chang
                         />
                 }
             </div>
-        </>
+        </div>
     )
 }
 

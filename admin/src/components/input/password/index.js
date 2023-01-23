@@ -16,7 +16,9 @@ function PasswordInput({ label, text, changeText, error, changeError, message, c
     }
 
     return (
-        <>
+        <div
+            className={styles.wrapper}
+        >
             <label
                 className={labelStyle}
             >
@@ -43,7 +45,7 @@ function PasswordInput({ label, text, changeText, error, changeError, message, c
                         />
                 }
             </div>
-        </>
+        </div>
     )
 }
 
