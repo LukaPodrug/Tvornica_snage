@@ -113,6 +113,20 @@ async function getByCoachId(coachId) {
     }
 }
 
+async function getByCoachIdAndDate(coachId, startOfDay) {
+    const finishOfDay = new Date(startOfDay.getTime() + 3600*1000*24)
+    try {
+        const trainings = await database`
+            select *
+            from trainings
+            where coach_id = ${coachId} and start between ${startOfDay} and ${finishOfDay}`
+        return trainings
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     addNew,
     getById,
@@ -121,5 +135,6 @@ module.exports = {
     remove,
     checkRoomOccupationNew,
     checkRoomOccupationEdit,
-    getByCoachId
+    getByCoachId,
+    getByCoachIdAndDate
 }
