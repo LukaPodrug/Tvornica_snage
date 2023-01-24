@@ -39,4 +39,5 @@
 
 .disabled:hover {
     cursor: not-allowed;
+    opacity: 1;
 }

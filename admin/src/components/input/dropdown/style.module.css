@@ -1,0 +1,54 @@
+.wrapper {
+    min-width: 242px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    display: grid;
+    grid-template-areas: 'field';
+
+    justify-items: end;
+    align-items: center;
+
+    border-radius: 10px;
+
+    background-color: #e6e6e6;
+}
+
+.input {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+
+    margin-right: 18px;
+
+    padding: 1em;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #e6e6e6;
+
+    grid-area: field;
+}
+
+.input:hover {
+    cursor: pointer;
+}
+
+.input:focus {
+    outline: none;
+}
+
+select {
+    width: fill-available;
+
+    padding-right: 30px;
+}
+
+.error {
+    grid-area: field;
+
+    margin-right: 10px;
+}

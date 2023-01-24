@@ -1,50 +1,32 @@
 .wrapper {
-    max-width: calc(100vw - 250px);
-    width: calc(100% - 250px);
+    width: fit-content;
+    height: fit-content;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.window {
-    min-width: 500px;
-    min-height: 600px;
+    padding: 30px;
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
 
     background-color: #ffffff;
 
     border-radius: 10px;
 }
 
-.header {
-    margin: 2em;
-
-    width: calc(100% - 4em);
-
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 2em;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-}
-
 .form {
-    flex-grow: 1;
+    width: fit-content;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 3em;
+    gap: 1em;
 }
 
 .inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
 }
 
 .label {
@@ -63,7 +45,7 @@
     box-shadow: 0 0 10px #90EE90;
 }
 
-.input:focus {
+.input:focus {    
     outline: none;
 }
 

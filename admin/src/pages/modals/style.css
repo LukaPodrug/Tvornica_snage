@@ -1,0 +1,24 @@
+.ReactModal__Content, .ReactModal__Content--after-open {
+    margin-left: 250px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: calc(100vw - 250px);
+    height: 100vh;
+
+    margin-left: 250px;
+
+    padding: 0 !important;
+
+    inset: 0 !important;
+
+    background-color: transparent !important;
+
+    border: 0 !important;
+}
+
+.ReactModal__Overlay, .ReactModal__Overlay--after-open {
+    background-color: #121212 !important;
+}
