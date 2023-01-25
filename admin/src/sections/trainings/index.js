@@ -29,7 +29,9 @@ function TrainingsSection({ trainings, showCoach }) {
                             room={training.room}
                             capacity={training.capacity}
                             level={training.level}
-                            description={training.description}
+                            title={training.title}
+                            regime={training.regime}
+                            exercises={training.exercises}
                         />
                     )
                 })

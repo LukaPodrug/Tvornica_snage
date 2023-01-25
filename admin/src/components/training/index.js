@@ -14,7 +14,7 @@ import levelIcon from '../../assets/icons/level.png'
 import moreIcon from '../../assets/icons/more.png'
 import editIcon from '../../assets/icons/edit.png'
 
-function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, description }) {
+function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, title, regime, exercises }) {
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
 
     return (
@@ -94,9 +94,9 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 room={room}
                 capacity={capacity}
                 level={level}
-                title={description}
-                regime={description}
-                exercises={description}
+                title={title}
+                regime={regime}
+                exercises={exercises}
             />
         </div>
     )

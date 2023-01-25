@@ -34,7 +34,9 @@ async function addTrainingAPI(token, coachId, start, finish, room, capacity, lev
         room,
         capacity,
         level,
-        description: title + 'end' + regime + 'end' + exercises
+        title,
+        regime,
+        exercises
     },
     {
         headers: {
