@@ -8,11 +8,14 @@ import LoginPage from './pages/login'
 import ProfilePage from './pages/profile'
 import TrainingsPage from './pages/trainings'
 import { verifyTokenAPI } from './API/auth'
+import { getOwnDataAPI, getAllCoachesDataAPI } from './API/coach'
 import './App.css'
 
 function App() {
   const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
-  const [, setToken] = useRecoilState(store.token)
+  const [token, setToken] = useRecoilState(store.token)
+  const [ownData, setOwnData] = useRecoilState(store.ownData)
+  const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
   const [loading, setLoading] = useState(true)
 
@@ -42,6 +45,37 @@ function App() {
 
     verifyToken()
   }, [])
+
+  useEffect(() => {
+    if(loggedIn) {
+      async function getOwnData() {
+        try {
+            const getOwnDataResponse = await getOwnDataAPI(token)
+            setOwnData(getOwnDataResponse.data[0])
+        }
+        catch(error) {
+            return
+        }
+      }
+
+      async function getAllCoachesData() {
+        try {
+            const getAllCoachesDataResponse = await getAllCoachesDataAPI(token)
+            setAllCoachesData(getAllCoachesDataResponse.data)
+        }
+        catch(error) {
+            return
+        }
+      }
+
+      async function fetchStoreData() {
+        getOwnData()
+        getAllCoachesData()
+      }
+
+      fetchStoreData()
+    }
+  }, [loggedIn])
 
   return (
     <div 

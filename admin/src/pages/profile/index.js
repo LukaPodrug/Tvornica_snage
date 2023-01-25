@@ -9,13 +9,12 @@ import LoadingSection from '../../sections/loading'
 import TrainingsSectionHeader from '../../sections/trainings/header'
 import TrainingsSection from '../../sections/trainings'
 import Pagination from '../../components/pagination'
-import { getOwnDataAPI } from '../../API/coach'
 import { getOwnTrainingsByDateAPI } from '../../API/training'
 import styles from './style.module.css'
 
 function ProfilePage() {
     const [token] = useRecoilState(store.token)
-    const [ownData, setOwnData] = useRecoilState(store.ownData)
+    const [ownData] = useRecoilState(store.ownData)
 
     const [date, setDate] = useState(Date.now())
     const [ownTrainingsByDate, setOwnTrainingsByDate] = useState(null)
@@ -28,19 +27,6 @@ function ProfilePage() {
     const [trainingsLoading, setTrainingsLoading] = useState(true)
 
     useEffect(() => {
-        async function getOwnData() {
-            if(ownData) {
-                return
-            }
-            try {
-                const getOwnDataResponse = await getOwnDataAPI(token)
-                setOwnData(getOwnDataResponse.data[0])
-            }
-            catch(error) {
-                return
-            }
-        }
-
         async function getOwnTrainingsByDate() {
             try {
                 const getOwnTrainingsByDateResponse = await getOwnTrainingsByDateAPI(token, date)
@@ -54,7 +40,7 @@ function ProfilePage() {
         }
 
         async function fetchAPI() {
-            await getOwnData()
+            setLoading(true)
             setTrainingsLoading(true)
             await getOwnTrainingsByDate()
             setTimeout(() => {

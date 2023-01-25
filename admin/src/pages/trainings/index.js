@@ -8,13 +8,12 @@ import LoadingSection from '../../sections/loading'
 import TrainingsSectionHeader from '../../sections/trainings/header'
 import TrainingsSection from '../../sections/trainings'
 import Pagination from '../../components/pagination'
-import { getAllCoachesDataAPI } from '../../API/coach'
 import { getTrainingsByDateAPI } from '../../API/training'
 import styles from './style.module.css'
 
 function TrainingsPage() {
     const [token] = useRecoilState(store.token)
-    const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
+    const [allCoachesData] = useRecoilState(store.allCoachesData)
 
     const [date, setDate] = useState(Date.now())
     const [trainingsByDate, setTrainingsByDate] = useState(null)
@@ -27,19 +26,6 @@ function TrainingsPage() {
     const [trainingsLoading, setTrainingsLoading] = useState(true)
 
     useEffect(() => {
-        async function getAllCoachesData() {
-            if(allCoachesData) {
-                return
-            }
-            try {
-                const getAllCoachesDataResponse = await getAllCoachesDataAPI(token)
-                setAllCoachesData(getAllCoachesDataResponse.data)
-            }
-            catch(error) {
-                return
-            }
-        }
-
         async function getTrainingsByDate() {
             try {
                 const getTrainingsByDateResponse = await getTrainingsByDateAPI(token, date)
@@ -62,7 +48,7 @@ function TrainingsPage() {
         }
 
         async function fetchAPI() {
-            await getAllCoachesData()
+            setLoading(true)
             setTrainingsLoading(true)
             await getTrainingsByDate()
             setTimeout(() => {
