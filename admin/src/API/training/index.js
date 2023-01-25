@@ -26,7 +26,6 @@ async function getTrainingsByDateAPI(token, date) {
 }
 
 async function addTrainingAPI(token, coachId, start, finish, room, capacity, level, title, regime, exercises) {
-    console.log(coachId)
     const addTrainingResponse = await axios.post('http://localhost:3000/api/admin/training', {
         coachId,
         start,

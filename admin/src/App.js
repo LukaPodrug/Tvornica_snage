@@ -14,8 +14,8 @@ import './App.css'
 function App() {
   const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
   const [token, setToken] = useRecoilState(store.token)
-  const [ownData, setOwnData] = useRecoilState(store.ownData)
-  const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
+  const [, setOwnData] = useRecoilState(store.ownData)
+  const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
   const [loading, setLoading] = useState(true)
 
