@@ -4,7 +4,7 @@ async function addNew(coachId, start, finish, room, capacity, level, title, regi
     try {
         const newTraining = await database`
             insert into trainings (
-                "coachId", start, finish, room, capacity, level, title, regime, exercisesption
+                "coachId", start, finish, room, capacity, level, title, regime, exercises
             ) 
             values (
                 ${coachId}, ${start}, ${finish}, ${room}, ${capacity}, ${level}, ${title}, ${regime}, ${exercises}
