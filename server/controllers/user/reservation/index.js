@@ -5,7 +5,7 @@ async function getByUserIdAndTrainingId(userId, trainingId) {
         const reservation = await database`
             select *
             from reservations
-            where userId = ${userId} and trainingId = ${trainingId}`
+            where "userId" = ${userId} and "trainingId" = ${trainingId}`
         return reservation[0]
     }
     catch(error) {
@@ -18,7 +18,7 @@ async function getCountByTrainingId(trainingId) {
         const reservation = await database`
             select cast(count(*) as integer)
             from reservations
-            where trainingId = ${trainingId}`
+            where "trainingId" = ${trainingId}`
         return reservation[0].count
     }
     catch(error) {
@@ -32,7 +32,7 @@ async function addNew(userId, trainingId) {
         const manual = false
         const newReservation = await database`
             insert into reservations (
-                trainingId, userId, completion, manual
+                "trainingId", "userId", completion, manual
             )
             values (
                 ${trainingId}, ${userId}, ${completion}, ${manual}
@@ -50,7 +50,7 @@ async function remove(userId, trainingId) {
         const removedReservation = await database`
             delete
             from reservations
-            where trainingId = ${trainingId} and userId = ${userId}
+            where "trainingId" = ${trainingId} and "userId" = ${userId}
             returning *`
         return removedReservation[0]
     }
@@ -63,8 +63,8 @@ async function getActiveByUserId(userId) {
     try {
         const reservations = await database`
             select *
-            from reservations join trainings on trainingId = id
-            where userId = ${userId} and start > ${new Date(Date.now())}`
+            from reservations join trainings on "trainingId" = id
+            where "userId" = ${userId} and start > ${new Date(Date.now())}`
         return reservations
     }
     catch(error) {
@@ -79,8 +79,8 @@ async function getStatisticsByUserId(userId) {
             cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as reservationsDone,
             cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as reservationsSkipped,
             cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as nonReservationsDone
-            from reservations join trainings on trainingId = id
-            where userId = ${userId} and finish > ${new Date(Date.now())}`
+            from reservations join trainings on "trainingId" = id
+            where "userId" = ${userId} and finish > ${new Date(Date.now())}`
         return statistics
     }
     catch(error) {

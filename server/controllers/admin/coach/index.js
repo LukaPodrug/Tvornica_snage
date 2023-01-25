@@ -3,7 +3,7 @@ const database = require('../../../database')
 async function getAll() {
     try {
         const coaches = await database`
-            select id, firstName, lastName, image
+            select id, "firstName", "lastName", image
             from coaches`
         return coaches
     }

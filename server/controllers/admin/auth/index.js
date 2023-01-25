@@ -24,7 +24,7 @@ async function addNew(firstName, lastName, dateOfBirth, image, username, passwor
         const passwordHash = await generatePasswordHash(password)
         const registration = await database`
             insert into coaches (
-                firstName, lastName, dateOfBirth, image, username, password
+                "firstName", "lastName", "dateOfBirth", image, username, password
             ) 
             values (
                 ${firstName}, ${lastName}, ${dateOfBirth}, ${image}, ${username}, ${passwordHash}

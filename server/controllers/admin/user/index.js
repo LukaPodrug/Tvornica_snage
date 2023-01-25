@@ -32,7 +32,7 @@ async function getByName(firstName, lastName) {
         const users = await database`
             select *
             from users
-            where firstName like ${'%' + firstName + '%'} and lastName like ${'%' + lastName + '%'}`
+            where "firstName" like ${'%' + firstName + '%'} and "lastName" like ${'%' + lastName + '%'}`
         return users
     }
     catch(error) {
