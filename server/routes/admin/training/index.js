@@ -30,7 +30,7 @@ router.post('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const newTraining = await trainingController.addNew(req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.description)
+    const newTraining = await trainingController.addNew(req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.title, req.body.regime, req.body.exercises)
     const databaseConnection2 = await generalController.checkDatabaseConnection(newTraining)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')

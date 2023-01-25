@@ -1,13 +1,13 @@
 const database = require('../../../database')
 
-async function addNew(coachId, start, finish, room, capacity, level, description) {
+async function addNew(coachId, start, finish, room, capacity, level, title, regime, exercises) {
     try {
         const newTraining = await database`
             insert into trainings (
-                coach_id, start, finish, room, capacity, level, description
+                coach_id, start, finish, room, capacity, level, title, regime, exercisesption
             ) 
             values (
-                ${coachId}, ${start}, ${finish}, ${room}, ${capacity}, ${level}, ${description}
+                ${coachId}, ${start}, ${finish}, ${room}, ${capacity}, ${level}, ${title}, ${regime}, ${exercises}
             )
             returning *`
         return newTraining[0]
@@ -30,11 +30,11 @@ async function getById(id) {
     }
 }
 
-async function editDetails(id, coachId, start, finish, room, capacity, level, description) {
+async function editDetails(id, coachId, start, finish, room, capacity, level, title, regime, exercises) {
     try {
         const updatedTraining = await database`
             update trainings
-            set coach_id = ${coachId}, start = ${start}, finish = ${finish}, room = ${room}, capacity = ${capacity}, level = ${level}, description = ${description}
+            set coach_id = ${coachId}, start = ${start}, finish = ${finish}, room = ${room}, capacity = ${capacity}, level = ${level}, title = ${title}, regime = ${regime}, exercises = ${exercises}
             where id = ${id}
             returning *`
         return updatedTraining[0]
