@@ -64,7 +64,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Training not found')
         return
     }
-    if(req.body.coachId === training.coach_id && new Date(req.body.start).getTime() === training.start.getTime() && new Date(req.body.finish).getTime() === training.finish.getTime() && req.body.room === training.room && req.body.capacity === training.capacity && req.body.level === training.level && req.body.description === training.description) {
+    if(req.body.coachId === training.coach_id && new Date(req.body.start).getTime() === training.start.getTime() && new Date(req.body.finish).getTime() === training.finish.getTime() && req.body.room === training.room && req.body.capacity === training.capacity && req.body.level === training.level && req.body.title === training.title && req.body.regime === training.regime && req.body.exercises === training.exercises) {
         res.status(400).json('New training data same as old')
         return
     }
@@ -78,7 +78,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Room is occupied at that period')
         return
     }
-    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.description)
+    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.title, req.body.regime, req.body.exercises)
     const databaseConnection3 = await generalController.checkDatabaseConnection(updatedTraining)
     if(!databaseConnection3) {
         res.status(500).json('Error with database')
