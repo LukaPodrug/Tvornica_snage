@@ -32,8 +32,8 @@ function ProfilePage() {
                 const getOwnTrainingsByDateResponse = await getOwnTrainingsByDateAPI(token, date)
                 const ownTrainingsByDateSorted = getOwnTrainingsByDateResponse.data.sort((training1, training2) => new Date(training1.start) - new Date(training2.start))
                 ownTrainingsByDateSorted.forEach(training => {
-                    training.coachFirstName = ownData.first_name
-                    training.coachLastName = ownData.last_name
+                    training.coachFirstName = ownData.firstName
+                    training.coachLastName = ownData.lastName
                 })
                 setOwnTrainingsByDate(ownTrainingsByDateSorted)
                 setMaxPage(Math.ceil(ownTrainingsByDateSorted.length / 3))
@@ -74,10 +74,10 @@ function ProfilePage() {
                         >
                             <DataSection
                                 image={ownData.image}
-                                firstName={ownData.first_name}
-                                lastName={ownData.last_name}
+                                firstName={ownData.firstName}
+                                lastName={ownData.lastName}
                                 username={ownData.username}
-                                dateOfBirth={moment(ownData.date_of_birth).format('DD/MM/YYYY')}
+                                dateOfBirth={moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
                             />
                             <div
                                 className={styles.trainings}

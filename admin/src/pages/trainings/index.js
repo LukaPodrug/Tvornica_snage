@@ -32,10 +32,10 @@ function TrainingsPage() {
                 const trainingsByDateSorted = getTrainingsByDateResponse.data.sort((training1, training2) => new Date(training1.start) - new Date(training2.start))
                 trainingsByDateSorted.forEach(training => {
                     allCoachesData.forEach(coach => {
-                        if(training.coach_id === coach.id) {
+                        if(training.coachId === coach.id) {
                             training.coachImage = coach.image
-                            training.coachFirstName = coach.first_name
-                            training.coachLastName = coach.last_name
+                            training.coachFirstName = coach.firstName
+                            training.coachLastName = coach.lastName
                             return
                         }
                     })

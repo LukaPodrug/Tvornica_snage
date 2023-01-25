@@ -20,7 +20,7 @@ function TrainingsSection({ trainings, showCoach }) {
                             key={index}
                             id={training.id}
                             showCoach={showCoach}
-                            coachId={training.coach_id}
+                            coachId={training.coachId}
                             coachImage={training.coachImage}
                             coachFirstName={training.coachFirstName}
                             coachLastName={training.coachLastName}

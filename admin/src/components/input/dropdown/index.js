@@ -49,7 +49,7 @@ function DropdownInput({ label, person, choices, value, changeValue, error, chan
                                     {
                                         person ?
                                             <>
-                                                {choice.first_name} {choice.last_name}
+                                                {choice.firstName} {choice.lastName}
                                             </>
                                             :
                                             <>
