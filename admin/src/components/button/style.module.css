@@ -18,7 +18,6 @@
 .message {
     font-family: 'Ubuntu', sans-serif;
     text-align: center;
-    color: #ffffff;
     text-transform: uppercase;
 
     padding: 0.5em 1em;
@@ -29,8 +28,6 @@
     border-radius: 10px;
 
     margin: 0 auto;
-
-    background-color: #E04F5F;
 
     visibility: hidden;
 }

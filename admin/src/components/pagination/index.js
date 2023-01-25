@@ -3,15 +3,15 @@ import styles from './style.module.css'
 import leftIcon from '../../assets/icons/left.png'
 import rightIcon from '../../assets/icons/right.png'
 
-function Pagination({ page, setPage, maxPage }) {
-    function changePage(value) {
+function Pagination({ page, changePage, maxPage }) {
+    function changePageValue(value) {
         if(page === 1 && value === -1) {
             return
         }
         if((page === maxPage || maxPage === 0) && value === 1) {
             return
         }
-        setPage(page + value)
+        changePage(page + value)
     }
 
     return (
@@ -20,7 +20,7 @@ function Pagination({ page, setPage, maxPage }) {
         >
             <div
                 className={styles.arrow + ' ' + (page === 1 && styles.disabled)}
-                onClick={() => changePage(-1)}
+                onClick={() => changePageValue(-1)}
             >
                 <img
                     src={leftIcon}
@@ -34,7 +34,7 @@ function Pagination({ page, setPage, maxPage }) {
             </label>
             <div
                 className={styles.arrow + ' ' + ((page === maxPage || maxPage === 0) && styles.disabled)}
-                onClick={() => changePage(1)}
+                onClick={() => changePageValue(1)}
             >
                 <img
                     src={rightIcon}

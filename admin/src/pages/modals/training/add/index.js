@@ -1,24 +1,24 @@
 import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import Modal from 'react-modal'
+import moment from 'moment'
 
 import store from '../../../../store'
 import ModalHeader from '../../../../sections/modals/header'
-import DateInput from '../../../../components/input/date'
-import NumberInput from '../../../../components/input/number'
-import TimeInput from '../../../../components/input/time'
 import DropdownInput from '../../../../components/input/dropdown'
 import TextInput from '../../../../components/input/text'
+import NumberInput from '../../../../components/input/number'
 import TextareaInput from '../../../../components/input/textarea'
 import Button from '../../../../components/button'
+import { addTrainingAPI } from '../../../../API/training'
 import styles from './style.module.css'
 import '../../style.css'
 
-function AddTrainingModal({ isOpen, setIsOpen }) {
+function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTrainingAdded }) {
     const [token] = useRecoilState(store.token)
     const [allCoachesData] = useRecoilState(store.allCoachesData)
 
-    const [coach, setCoach] = useState('')
+    const [coachId, setCoachId] = useState('')
     const [date, setDate] = useState('')
     const [start, setStart] = useState('')
     const [finish, setFinish] = useState('')
@@ -29,22 +29,23 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
     const [regime, setRegime] = useState('')
     const [exercises, setExercises] = useState('')
 
-    const [coachError, setCoachError] = useState(false)
+    const [coachIdError, setCoachIdError] = useState(false)
     const [dateError, setDateError] = useState(false)
     const [startError, setStartError] = useState(false)
     const [finishError, setFinishError] = useState(false)
     const [roomError, setRoomError] = useState(false)
     const [capacityError, setCapacityError] = useState(false)
     const [levelError, setLevelError] = useState(false)
-    const [titleError, setTitleError] = useState(null)
-    const [regimeError, setRegimeError] = useState(null)
-    const [exercisesError, setExercisesError] = useState(null)
+    const [titleError, setTitleError] = useState(false)
+    const [regimeError, setRegimeError] = useState(false)
+    const [exercisesError, setExercisesError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState(null)
+    const [success, setSuccess] = useState(false)
 
-    function addTraining() {
-        if(coach === '') {
-            setCoachError(true)
+    async function addTraining() {
+        if(coachId === '') {
+            setCoachIdError(true)
         }
         if(date === '') {
             setDateError(true)
@@ -73,11 +74,29 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
         if(exercises === '') {
             setExercisesError(true)
         }
+        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
+            const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
+            const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
+            setLoading(true)
+            try {
+                const addTrainingResponse = await addTrainingAPI(token, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
+                setMessage(addTrainingResponse.data)
+                setSuccess(true)
+                clearForm()
+                setLoading(false)
+                changeNewTrainingAdded(!newTrainingAdded)
+            }
+            catch(error) {
+                setSuccess(false)
+                setMessage(error.response.data)
+                setLoading(false)
+            }
+        }
     }
 
-    function closeModal() {
-        setCoach('')
-        setCoachError(false)
+    function clearForm() {
+        setCoachId('')
+        setCoachIdError(false)
         setDate('')
         setDateError(false)
         setStart('')
@@ -96,7 +115,11 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
         setRegimeError(false)
         setExercises('')
         setExercisesError(false)
-        setIsOpen(false)
+    }
+
+    function closeModal() {
+        clearForm()
+        changeIsOpen(false)
     }
 
     return (
@@ -111,7 +134,7 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
                     title='add new training'
                     closeModal={closeModal}
                 />
-                <div
+                <form
                     className={styles.form}
                 >
                     <div 
@@ -121,19 +144,21 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
                             label='coach'
                             person={true}
                             choices={allCoachesData}
-                            value={coach}
-                            changeValue={setCoach}
-                            error={coachError}
-                            changeError={setCoachError}
+                            value={coachId}
+                            changeValue={setCoachId}
+                            error={coachIdError}
+                            changeError={setCoachIdError}
                             message={message}
                             changeMessage={setMessage}
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <DateInput
+                        <TextInput
                             label='date'
-                            date={date}
-                            changeDate={setDate}
+                            showPlaceholder={true}
+                            placeholder='dd/mm/yyyy'
+                            text={date}
+                            changeText={setDate}
                             error={dateError}
                             changeError={setDateError}
                             message={message}
@@ -141,10 +166,12 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TimeInput
+                        <TextInput
                             label='start'
-                            time={start}
-                            changeTime={setStart}
+                            showPlaceholder={true}
+                            placeholder='hh:mm'
+                            text={start}
+                            changeText={setStart}
                             error={startError}
                             changeError={setStartError}
                             message={message}
@@ -152,10 +179,12 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TimeInput
+                        <TextInput
                             label='finish'
-                            time={finish}
-                            changeTime={setFinish}
+                            showPlaceholder={true}
+                            placeholder='hh:mm'
+                            text={finish}
+                            changeText={setFinish}
                             error={finishError}
                             changeError={setFinishError}
                             message={message}
@@ -200,6 +229,8 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
                         />
                         <TextInput
                             label='title'
+                            showPlaceholder={false}
+                            placeholder=''
                             text={title}
                             changeText={setTitle}
                             error={titleError}
@@ -232,16 +263,17 @@ function AddTrainingModal({ isOpen, setIsOpen }) {
                             inputStyle={styles.input}
                         />
                     </div>
-                </div>
-                <Button
-                    text='submit'
-                    method={() => addTraining()}
-                    loading={loading}
-                    showMessage={true}
-                    message={message}
-                    changeMessage={setMessage}
-                    style={styles.button}
-                />
+                    <Button
+                        text='submit'
+                        method={() => addTraining()}
+                        loading={loading}
+                        showMessage={true}
+                        message={message}
+                        changeMessage={setMessage}
+                        buttonStyle={styles.button}
+                        messageStyle={success ? styles.messageSuccess : styles.messageFail}
+                    />
+                </form>
             </div>
         </Modal>
     )

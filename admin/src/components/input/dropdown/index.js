@@ -44,6 +44,7 @@ function DropdownInput({ label, person, choices, value, changeValue, error, chan
                             return (
                                 <option
                                     key={index}
+                                    value={choice.id}
                                 >
                                     {
                                         person ?

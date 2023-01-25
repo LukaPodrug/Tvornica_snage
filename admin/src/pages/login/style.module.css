@@ -65,6 +65,8 @@
 
 .input:focus {
     outline: none;
+
+    box-shadow: 0 0 10px #35c135;
 }
 
 .button {    
@@ -79,4 +81,10 @@
     cursor: pointer;
 
     opacity: 0.5;
+}
+
+.message {
+    background-color: #E04F5F;
+
+    color: #ffffff;
 }

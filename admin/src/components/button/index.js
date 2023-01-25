@@ -2,7 +2,7 @@ import ClipLoader from "react-spinners/ClipLoader"
 
 import styles from './style.module.css'
 
-function Button({ text, method, loading, showMessage, message, changeMessage, style }) {
+function Button({ text, method, loading, showMessage, message, changeMessage, buttonStyle, messageStyle }) {
     function work() {
         method()
         changeMessage(null)
@@ -13,7 +13,7 @@ function Button({ text, method, loading, showMessage, message, changeMessage, st
             className={styles.wrapper}
         >
             <div
-                className={styles.button + ' ' + style}
+                className={styles.button + ' ' + buttonStyle}
                 onClick={() => work()}
             >
                 {
@@ -28,7 +28,7 @@ function Button({ text, method, loading, showMessage, message, changeMessage, st
             {
                 showMessage && 
                     <div
-                        className={styles.message + ' ' + (message && styles.visible)}
+                        className={styles.message + ' ' + messageStyle + ' ' + (message && styles.visible)}
                     >
                         {message}
                     </div>

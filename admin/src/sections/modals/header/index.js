@@ -18,7 +18,8 @@ function ModalHeader({ title, closeModal }) {
                 showMessage={false}
                 message={null}
                 changeMessage={() => {}}
-                style={styles.button}
+                buttonStyle={styles.button}
+                messageStyle={null}
             />
         </div>
     )   

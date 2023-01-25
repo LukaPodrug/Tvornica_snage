@@ -21,6 +21,7 @@ function ProfilePage() {
     const [ownTrainingsByDate, setOwnTrainingsByDate] = useState(null)
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
+    const [newTrainingAdded, setNewTrainingAdded] = useState(false)
 
     const [dateShow, setDateShow] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
     const [loading, setLoading] = useState(true)
@@ -63,7 +64,7 @@ function ProfilePage() {
         }
 
         fetchAPI()
-    }, [date])
+    }, [date, newTrainingAdded])
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
@@ -96,7 +97,9 @@ function ProfilePage() {
                                     title='my trainings'
                                     dateShow={dateShow}
                                     date={date}
-                                    setDate={setDate}
+                                    changeDate={setDate}
+                                    newTrainingAdded={newTrainingAdded}
+                                    changeNewTrainingAdded={setNewTrainingAdded}
                                 />
                                 {
                                     trainingsLoading ? 
@@ -109,7 +112,7 @@ function ProfilePage() {
                                 }
                                 <Pagination
                                     page={page}
-                                    setPage={setPage}
+                                    changePage={setPage}
                                     maxPage={maxPage}
                                 />
                             </div>

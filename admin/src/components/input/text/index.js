@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import ErrorInput from '../error'
 import styles from './style.module.css'
 
-function TextInput({ label, text, changeText, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
+function TextInput({ label, showPlaceholder, placeholder, text, changeText, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
     const textInputRef = useRef(null)
 
     function focus() {
@@ -30,6 +30,7 @@ function TextInput({ label, text, changeText, error, changeError, message, chang
                 <input
                     className={styles.input + ' ' + inputStyle}
                     type='text'
+                    placeholder={showPlaceholder ? placeholder : false}
                     ref={textInputRef}
                     value={text}
                     onChange={(e) => changeText(e.target.value)}

@@ -63,6 +63,8 @@ function LoginPage() {
                     >
                         <TextInput
                             label='username'
+                            showPlaceholder={false}
+                            placeholder=''
                             text={username}
                             changeText={setUsername}
                             error={usernameError}
@@ -91,7 +93,8 @@ function LoginPage() {
                         showMessage={true}
                         message={message}
                         changeMessage={setMessage}
-                        style={styles.button}
+                        buttonStyle={styles.button}
+                        messageStyle={styles.message}
                     />
                 </form>
             </div>

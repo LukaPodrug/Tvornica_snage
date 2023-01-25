@@ -25,7 +25,27 @@ async function getTrainingsByDateAPI(token, date) {
     return getTrainingsByDateResponse
 }
 
+async function addTrainingAPI(token, coachId, start, finish, room, capacity, level, title, regime, exercises) {
+    console.log(coachId)
+    const addTrainingResponse = await axios.post('http://localhost:3000/api/admin/training', {
+        coachId,
+        start,
+        finish,
+        room,
+        capacity,
+        level,
+        description: title + 'end' + regime + 'end' + exercises
+    },
+    {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return addTrainingResponse
+}
+
 export {
     getOwnTrainingsByDateAPI,
-    getTrainingsByDateAPI
+    getTrainingsByDateAPI,
+    addTrainingAPI
 }
