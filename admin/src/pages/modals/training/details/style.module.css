@@ -1,0 +1,23 @@
+.wrapper {
+    min-width: 500px;
+    min-height: 550px;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 2em;
+
+    background-color: #ffffff;
+
+    border-radius: 10px;
+}
+
+.data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+}

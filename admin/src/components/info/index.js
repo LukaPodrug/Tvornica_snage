@@ -1,6 +1,6 @@
 import styles from './style.module.css'
 
-function DataSectionInfo({ property, value }) {
+function Info({ property, value }) {
     return (
         <div
             className={styles.wrapper}
@@ -19,4 +19,4 @@ function DataSectionInfo({ property, value }) {
     )
 }
 
-export default DataSectionInfo
+export default Info

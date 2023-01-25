@@ -22,6 +22,7 @@ function TrainingsSection({ trainings, showCoach }) {
                             showCoach={showCoach}
                             coachId={training.coach_id}
                             coachImage={training.coachImage}
+                            coachFirstName={training.coachFirstName}
                             coachLastName={training.coachLastName}
                             start={training.start}
                             finish={training.finish}

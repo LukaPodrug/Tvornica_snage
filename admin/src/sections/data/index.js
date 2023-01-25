@@ -1,4 +1,4 @@
-import DataSectionInfo from './info'
+import Info from '../../components/info'
 import styles from './style.module.css'
 
 function DataSection({ image, firstName, lastName, username, dateOfBirth }) {
@@ -17,19 +17,19 @@ function DataSection({ image, firstName, lastName, username, dateOfBirth }) {
             <div
                 className={styles.data}
             >
-                <DataSectionInfo
+                <Info
                     property='first name'
                     value={firstName}
                 />
-                <DataSectionInfo
+                <Info
                     property='last name'
                     value={lastName}
                 />
-                <DataSectionInfo
+                <Info
                     property='username'
                     value={username}
                 />
-                <DataSectionInfo
+                <Info
                     property='date of birth'
                     value={dateOfBirth}
                 />

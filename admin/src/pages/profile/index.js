@@ -31,6 +31,10 @@ function ProfilePage() {
             try {
                 const getOwnTrainingsByDateResponse = await getOwnTrainingsByDateAPI(token, date)
                 const ownTrainingsByDateSorted = getOwnTrainingsByDateResponse.data.sort((training1, training2) => new Date(training1.start) - new Date(training2.start))
+                ownTrainingsByDateSorted.forEach(training => {
+                    training.coachFirstName = ownData.first_name
+                    training.coachLastName = ownData.last_name
+                })
                 setOwnTrainingsByDate(ownTrainingsByDateSorted)
                 setMaxPage(Math.ceil(ownTrainingsByDateSorted.length / 3))
             }
@@ -40,7 +44,6 @@ function ProfilePage() {
         }
 
         async function fetchAPI() {
-            setLoading(true)
             setTrainingsLoading(true)
             await getOwnTrainingsByDate()
             setTimeout(() => {

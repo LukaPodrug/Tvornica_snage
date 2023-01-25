@@ -34,6 +34,7 @@ function TrainingsPage() {
                     allCoachesData.forEach(coach => {
                         if(training.coach_id === coach.id) {
                             training.coachImage = coach.image
+                            training.coachFirstName = coach.first_name
                             training.coachLastName = coach.last_name
                             return
                         }
@@ -48,7 +49,6 @@ function TrainingsPage() {
         }
 
         async function fetchAPI() {
-            setLoading(true)
             setTrainingsLoading(true)
             await getTrainingsByDate()
             setTimeout(() => {

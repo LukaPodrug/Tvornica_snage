@@ -118,6 +118,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
     }
 
     function closeModal() {
+        setMessage(null)
         clearForm()
         changeIsOpen(false)
     }
