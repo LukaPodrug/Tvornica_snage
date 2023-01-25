@@ -5,7 +5,7 @@ async function removeByTrainingId(trainingId) {
         const removedReservations = await database`
             delete
             from reservations
-            where training_id = ${trainingId}
+            where trainingId = ${trainingId}
             returning *`
         return removedReservations
     }
@@ -19,7 +19,7 @@ async function getByUserIdAndTrainingId(userId, trainingId) {
         const reservation = await database`
             select *
             from reservations
-            where user_id = ${userId} and training_id = ${trainingId}`
+            where userId = ${userId} and trainingId = ${trainingId}`
         return reservation[0]
     }
     catch(error) {
@@ -33,7 +33,7 @@ async function addNew(userId, trainingId) {
         const manual = true
         const newReservation = await database`
             insert into reservations (
-                training_id, user_id, completion, manual
+                trainingId, userId, completion, manual
             )
             values (
                 ${trainingId}, ${userId}, ${completion}, ${manual}
@@ -51,7 +51,7 @@ async function editCompletion(userId, trainingId, completion) {
         const updatedReservation = await database`
             update reservations
             set completion = ${completion}
-            where user_id = ${userId} and training_id = ${trainingId}
+            where userId = ${userId} and trainingId = ${trainingId}
             returning *`
         return updatedReservation[0]
     }

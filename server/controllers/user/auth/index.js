@@ -26,7 +26,7 @@ async function addNew(firstName, lastName, dateOfBirth, image, username, passwor
         const level = 1
         const registration = await database`
             insert into users (
-                first_name, last_name, date_of_birth, image, username, password, membership, level
+                firstName, lastName, dateOfBirth, image, username, password, membership, level
             ) 
             values (
                 ${firstName}, ${lastName}, ${dateOfBirth}, ${image}, ${username}, ${passwordHash}, ${membership}, ${level}

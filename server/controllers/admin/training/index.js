@@ -4,7 +4,7 @@ async function addNew(coachId, start, finish, room, capacity, level, title, regi
     try {
         const newTraining = await database`
             insert into trainings (
-                coach_id, start, finish, room, capacity, level, title, regime, exercisesption
+                coachId, start, finish, room, capacity, level, title, regime, exercisesption
             ) 
             values (
                 ${coachId}, ${start}, ${finish}, ${room}, ${capacity}, ${level}, ${title}, ${regime}, ${exercises}
@@ -34,7 +34,7 @@ async function editDetails(id, coachId, start, finish, room, capacity, level, ti
     try {
         const updatedTraining = await database`
             update trainings
-            set coach_id = ${coachId}, start = ${start}, finish = ${finish}, room = ${room}, capacity = ${capacity}, level = ${level}, title = ${title}, regime = ${regime}, exercises = ${exercises}
+            set coachId = ${coachId}, start = ${start}, finish = ${finish}, room = ${room}, capacity = ${capacity}, level = ${level}, title = ${title}, regime = ${regime}, exercises = ${exercises}
             where id = ${id}
             returning *`
         return updatedTraining[0]
@@ -105,7 +105,7 @@ async function getByCoachId(coachId) {
         const trainings = await database`
             select *
             from trainings
-            where coach_id = ${coachId}`
+            where coachId = ${coachId}`
         return trainings
     }
     catch(error) {
@@ -119,7 +119,7 @@ async function getByCoachIdAndDate(coachId, startOfDay) {
         const trainings = await database`
             select *
             from trainings
-            where coach_id = ${coachId} and start between ${startOfDay} and ${finishOfDay}`
+            where coachId = ${coachId} and start between ${startOfDay} and ${finishOfDay}`
         return trainings
     }
     catch(error) {

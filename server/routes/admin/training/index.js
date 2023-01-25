@@ -64,7 +64,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Training not found')
         return
     }
-    if(req.body.coachId === training.coach_id && new Date(req.body.start).getTime() === training.start.getTime() && new Date(req.body.finish).getTime() === training.finish.getTime() && req.body.room === training.room && req.body.capacity === training.capacity && req.body.level === training.level && req.body.title === training.title && req.body.regime === training.regime && req.body.exercises === training.exercises) {
+    if(req.body.coachId === training.coachId && new Date(req.body.start).getTime() === training.start.getTime() && new Date(req.body.finish).getTime() === training.finish.getTime() && req.body.room === training.room && req.body.capacity === training.capacity && req.body.level === training.level && req.body.title === training.title && req.body.regime === training.regime && req.body.exercises === training.exercises) {
         res.status(400).json('New training data same as old')
         return
     }
