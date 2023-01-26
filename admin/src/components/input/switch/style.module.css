@@ -1,0 +1,41 @@
+.input {
+    display: none;
+}
+
+.switch {
+    width: 40px;
+    height: 20px;
+
+    padding: 5px;
+
+    border-radius: 20px;
+}
+
+.switchOn {
+    background-color: #90EE90;
+}
+
+.switchOff {
+    background-color: #e6e6e6;
+}
+
+.toggle {
+    width: 50%;
+    height: 100%;
+
+    border-radius: 20px;
+
+    position: relative;
+
+    background-color: #ffffff;
+
+    transition: all ease 0.5s;
+}
+
+.toggleOn {
+    left: 50%;
+}
+
+.toggleOff {
+    left: 0;
+}

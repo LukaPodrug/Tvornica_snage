@@ -55,7 +55,7 @@ function TrainingsPage() {
             setTimeout(() => {
                 setLoading(false)
                 setTrainingsLoading(false)
-            }, 1000)
+            }, 500)
         }
 
         fetchAPI()

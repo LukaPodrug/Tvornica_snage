@@ -5,6 +5,7 @@ import styles from './style.module.css'
 import '../../../style.css'
 
 function EditTrainingAttendanceModal({ isOpen, changeIsOpen }) {
+
     return (
         <Modal
             isOpen={isOpen}
