@@ -121,7 +121,6 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                 changeTrainingEdited(!trainingEdited)
             }
             catch(error) {
-                console.log(error)
                 setSuccess(false)
                 setMessage(error.response.data)
                 setLoading(false)

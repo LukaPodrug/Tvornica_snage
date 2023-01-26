@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import moment from 'moment'
 
-import Section from './section'
+import Section from '../section'
 import TrainingDetailsModal from '../../pages/modals/training/details'
 import EditTrainingDetailsModal from '../../pages/modals/training/edit/details'
 import EditTrainingAttendanceModal from '../../pages/modals/training/edit/attendance'

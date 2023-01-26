@@ -1,0 +1,29 @@
+.wrapper {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    text-align: center;
+    text-transform: uppercase;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 10px;
+
+    background-color: #e6e6e6;
+
+    padding: 0 15px;
+}
+
+.wrapper:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+
+    box-shadow: 0 0 10px #90EE90;
+}
+
+.active {
+    background-color: #90EE90;
+}
