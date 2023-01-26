@@ -1,5 +1,4 @@
 const express = require('express')
-const util = require('util')
 
 const trainingController = require('../../../controllers/admin/training')
 const reservationController = require('../../../controllers/admin/reservation')
