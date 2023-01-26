@@ -78,7 +78,7 @@ async function checkRoomOccupationNew(room, start, finish) {
             select
             from trainings
             where (room = ${room} and ${start} >= start and ${start} < finish)
-            or (room = ${room} and ${finish} >= start and ${finish} < finish)`
+            or (room = ${room} and ${finish} > start and ${finish} <= finish)`
         return roomOccupation[0]
     }
     catch(error) {
@@ -92,7 +92,7 @@ async function checkRoomOccupationEdit(id, room, start, finish) {
             select
             from trainings
             where (room = ${room} and ${start} >= start and ${start} < finish and id != ${id})
-            or (room = ${room} and ${finish} >= start and ${finish} < finish and id != ${id})`
+            or (room = ${room} and ${finish} > start and ${finish} <= finish and id != ${id})`
         return roomOccupation[0]
     }
     catch(error) {
