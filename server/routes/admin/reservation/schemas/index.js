@@ -11,7 +11,12 @@ const editReservationSchema = joi.object().keys({
     completion: joi.boolean().required()
 })
 
+const getReservationsByTrainingIdSchema = joi.object().keys({
+    trainingId: joi.number().integer().min(0).required()
+})
+
 module.exports = {
     newReservationSchema,
-    editReservationSchema
+    editReservationSchema,
+    getReservationsByTrainingIdSchema
 }

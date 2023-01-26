@@ -60,9 +60,23 @@ async function editCompletion(userId, trainingId, completion) {
     }
 }
 
+async function getByTrainingId(trainingId) {
+    try {
+        const reservations = await database`
+            select *
+            from reservations
+            where "trainingId" = ${trainingId}`
+        return reservations
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     removeByTrainingId,
     getByUserIdAndTrainingId,
     addNew,
-    editCompletion
+    editCompletion,
+    getByTrainingId
 }

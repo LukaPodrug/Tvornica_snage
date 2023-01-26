@@ -5,7 +5,7 @@ const trainingController = require('../../../controllers/admin/training')
 const reservationController = require('../../../controllers/admin/reservation')
 const generalController = require('../../../controllers/admin/general')
 
-const { newReservationSchema, editReservationSchema } = require('./schemas')
+const { newReservationSchema, editReservationSchema, getReservationsByTrainingIdSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -99,6 +99,36 @@ router.patch('/', async(req, res) => {
         return
     }
     res.status(200).json('Reservation completion updated successfully')
+})
+
+router.get('/byTrainingId', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const dataValidation = getReservationsByTrainingIdSchema.validate(req.query)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid training id')
+        return
+    }
+    const training = await trainingController.getById(req.query.trainingId)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(training)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!training) {
+        res.status(400).json('Training not found')
+        return
+    }
+    const reservations = await reservationController.getByTrainingId(req.query.trainingId)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(reservations)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(reservations)
 })
 
 module.exports = router
