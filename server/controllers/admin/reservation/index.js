@@ -64,7 +64,7 @@ async function getByTrainingId(trainingId) {
     try {
         const reservations = await database`
             select *
-            from reservations
+            from reservations join users on "userId" = id
             where "trainingId" = ${trainingId}`
         return reservations
     }

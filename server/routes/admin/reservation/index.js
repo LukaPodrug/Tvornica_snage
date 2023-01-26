@@ -128,6 +128,10 @@ router.get('/byTrainingId', async(req, res) => {
         res.status(500).json('Error with database')
         return
     }
+    reservations.forEach(reservation => {
+        delete reservation.username
+        delete reservation.password
+    })
     res.status(200).json(reservations)
 })
 
