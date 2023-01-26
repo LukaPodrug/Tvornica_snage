@@ -14,8 +14,8 @@ import './App.css'
 function App() {
   const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
   const [token, setToken] = useRecoilState(store.token)
-  const [, setOwnData] = useRecoilState(store.ownData)
-  const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
+  const [ownData, setOwnData] = useRecoilState(store.ownData)
+  const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
   const [loading, setLoading] = useState(true)
 
@@ -97,11 +97,11 @@ function App() {
             />
             <Route
               path='/profile'
-              element={ loggedIn ? <ProfilePage/> : <Navigate to='/login'/> }
+              element={ (loggedIn && ownData) ? <ProfilePage/> : <Navigate to='/login'/> }
             />
             <Route
               path='/trainings'
-              element={ loggedIn ? <TrainingsPage/> : <Navigate to='/login'/> }
+              element={ (loggedIn && allCoachesData) ? <TrainingsPage/> : <Navigate to='/login'/> }
             />
             <Route
               path='/users'
