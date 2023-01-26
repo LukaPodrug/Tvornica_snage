@@ -2,7 +2,7 @@ import ClipLoader from "react-spinners/ClipLoader"
 
 import styles from './style.module.css'
 
-function Button({ text, method, loading, showMessage, message, changeMessage, buttonStyle, messageStyle }) {
+function Button({ disabled, text, method, loading, showMessage, message, changeMessage, buttonStyle, messageStyle }) {
     function work() {
         method()
         changeMessage(null)
@@ -13,8 +13,8 @@ function Button({ text, method, loading, showMessage, message, changeMessage, bu
             className={styles.wrapper}
         >
             <div
-                className={styles.button + ' ' + buttonStyle}
-                onClick={() => work()}
+                className={styles.button + ' ' + buttonStyle + ' ' + (disabled && styles.disabled)}
+                onClick={disabled ? () => {} : () => work()}
             >
                 {
                     loading ? 

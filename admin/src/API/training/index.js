@@ -45,8 +45,30 @@ async function addTrainingAPI(token, coachId, start, finish, room, capacity, lev
     return addTrainingResponse
 }
 
+async function editTrainingAPI(token, id, coachId, start, finish, room, capacity, level, title, regime, exercises) {
+    const editTrainingResponse = await axios.patch('http://localhost:3000/api/admin/training', {
+        id,
+        coachId,
+        start,
+        finish,
+        room,
+        capacity,
+        level,
+        title,
+        regime,
+        exercises
+    },
+    {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return editTrainingResponse
+}
+
 export {
     getOwnTrainingsByDateAPI,
     getTrainingsByDateAPI,
-    addTrainingAPI
+    addTrainingAPI,
+    editTrainingAPI
 }

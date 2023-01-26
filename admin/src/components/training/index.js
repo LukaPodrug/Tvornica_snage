@@ -3,6 +3,8 @@ import moment from 'moment'
 
 import Section from './section'
 import TrainingDetailsModal from '../../pages/modals/training/details'
+import EditTrainingDetailsModal from '../../pages/modals/training/edit/details'
+import EditTrainingAttendanceModal from '../../pages/modals/training/edit/attendance'
 import styles from './style.module.css'
 
 import calendarIcon from '../../assets/icons/calendar.png'
@@ -14,8 +16,10 @@ import levelIcon from '../../assets/icons/level.png'
 import moreIcon from '../../assets/icons/more.png'
 import editIcon from '../../assets/icons/edit.png'
 
-function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, title, regime, exercises }) {
+function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, title, regime, exercises, trainingEdited, changeTrainingEdited }) {
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
+    const [editTrainingDetailsModalOpen, setEditTrainingDetailsModalOpen] = useState(false)
+    const [editTrainingAttendanceModalOpen, setEditTrainingAttendanceModalOpen] = useState(false)
 
     return (
         <div
@@ -26,7 +30,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='date'
                 value={moment(start).format('DD/MM/YYYY')}
                 button={false}
-                method={null}
+                openModal={null}
             />
             {
                 showCoach && 
@@ -35,7 +39,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                         property='coach'
                         value={coachLastName}
                         button={false}
-                        method={null}
+                        openModal={null}
                     />
             }
             <Section
@@ -43,35 +47,35 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='start'
                 value={moment(start).format('HH:mm')}
                 button={false}
-                method={null}
+                openModal={null}
             />
             <Section
                 image={finishIcon}
                 property='finish'
                 value={moment(finish).format('HH:mm')}
                 button={false}
-                method={null}
+                openModal={null}
             />
             <Section
                 image={roomIcon}
                 property='room'
                 value={room}
                 button={false}
-                method={null}
+                openModal={null}
             />
             <Section
                 image={capacityIcon}
                 property='capacity'
                 value={capacity}
                 button={false}
-                method={null}
+                openModal={null}
             />
             <Section
                 image={levelIcon}
                 property='level'
                 value={level}
                 button={false}
-                method={null}
+                openModal={null}
             />
             <Section
                 image={moreIcon}
@@ -81,7 +85,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
             <Section
                 image={editIcon}
                 button={true}
-                method={null}
+                openModal={(new Date(Date.now()) < new Date(start)) ? setEditTrainingDetailsModalOpen : setEditTrainingAttendanceModalOpen}
             />
             <TrainingDetailsModal
                 isOpen={trainingDetailsModalOpen}
@@ -98,6 +102,33 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 regime={regime}
                 exercises={exercises}
             />
+            {
+                editTrainingDetailsModalOpen &&
+                    <EditTrainingDetailsModal
+                        isOpen={true}
+                        changeIsOpen={setEditTrainingDetailsModalOpen}
+                        id={id}
+                        coachIdOld={coachId}
+                        dateOld={moment(start).format('DD/MM/YYYY')}
+                        startOld={moment(start).format('HH:mm')}
+                        finishOld={moment(finish).format('HH:mm')}
+                        roomOld={room}
+                        capacityOld={capacity}
+                        levelOld={level}
+                        titleOld={title}
+                        regimeOld={regime}
+                        exercisesOld={exercises}
+                        trainingEdited={trainingEdited}
+                        changeTrainingEdited={changeTrainingEdited}
+                    />
+            }
+            {
+                editTrainingAttendanceModalOpen &&
+                    <EditTrainingAttendanceModal
+                        isOpen={true}
+                        changeIsOpen={setEditTrainingAttendanceModalOpen}
+                    />
+            }
         </div>
     )
 }

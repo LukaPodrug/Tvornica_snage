@@ -31,7 +31,7 @@ function DropdownInput({ label, person, choices, value, changeValue, error, chan
                     className={styles.input}
                     ref={dropdownInputRef}
                     value={value}
-                    onChange={(e) => changeValue(e.target.value)}
+                    onChange={(e) => changeValue(parseInt(e.target.value))}
                     onFocus={() => focus()}
                 >
                     <option 

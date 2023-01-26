@@ -15,6 +15,16 @@
     border-radius: 10px;
 }
 
+.disabled {
+    background-color: #e6e6e6 !important;
+}
+
+.disabled:hover {
+    cursor: not-allowed !important;
+
+    opacity: 1 !important;
+}
+
 .message {
     font-family: 'Ubuntu', sans-serif;
     text-align: center;

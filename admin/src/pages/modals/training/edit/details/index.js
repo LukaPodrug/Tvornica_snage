@@ -1,33 +1,44 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import Modal from 'react-modal'
 import moment from 'moment'
 
-import store from '../../../../store'
-import ModalHeader from '../../../../sections/modals/header'
-import DropdownInput from '../../../../components/input/dropdown'
-import TextInput from '../../../../components/input/text'
-import NumberInput from '../../../../components/input/number'
-import TextareaInput from '../../../../components/input/textarea'
-import Button from '../../../../components/button'
-import { addTrainingAPI } from '../../../../API/training'
+import store from '../../../../../store'
+import ModalHeader from '../../../../../sections/modals/header'
+import DropdownInput from '../../../../../components/input/dropdown'
+import TextInput from '../../../../../components/input/text'
+import NumberInput from '../../../../../components/input/number'
+import TextareaInput from '../../../../../components/input/textarea'
+import Button from '../../../../../components/button'
+import { editTrainingAPI } from '../../../../../API/training'
 import styles from './style.module.css'
-import '../../style.css'
+import '../../../style.css'
 
-function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTrainingAdded }) {
+function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOld, startOld, finishOld, roomOld, capacityOld, levelOld, titleOld, regimeOld, exercisesOld, trainingEdited, changeTrainingEdited }) {
     const [token] = useRecoilState(store.token)
     const [allCoachesData] = useRecoilState(store.allCoachesData)
 
-    const [coachId, setCoachId] = useState('')
-    const [date, setDate] = useState('')
-    const [start, setStart] = useState('')
-    const [finish, setFinish] = useState('')
-    const [room, setRoom] = useState('')
-    const [capacity, setCapacity] = useState('')
-    const [level, setLevel] = useState('')
-    const [title, setTitle] = useState('')
-    const [regime, setRegime] = useState('')
-    const [exercises, setExercises] = useState('')
+    const [coachIdRecieved, setCoachIdRecieved] = useState(coachIdOld)
+    const [dateRecieved, setDateRecieved] = useState(dateOld)
+    const [startRecieved, setStartRecieved] = useState(startOld)
+    const [finishRecieved, setFinishRecieved] = useState(finishOld)
+    const [roomRecieved, setRoomRecieved] = useState(roomOld)
+    const [capacityRecieved, setCapacityRecieved] = useState(capacityOld)
+    const [levelRecieved, setLevelRecieved] = useState(levelOld)
+    const [titleRecieved, setTitleRecieved] = useState(titleOld)
+    const [regimeRecieved, setRegimeRecieved] = useState(regimeOld)
+    const [exercisesRecieved, setExercisesRecieved] = useState(exercisesOld)
+
+    const [coachId, setCoachId] = useState(coachIdOld)
+    const [date, setDate] = useState(dateOld)
+    const [start, setStart] = useState(startOld)
+    const [finish, setFinish] = useState(finishOld)
+    const [room, setRoom] = useState(roomOld)
+    const [capacity, setCapacity] = useState(capacityOld)
+    const [level, setLevel] = useState(levelOld)
+    const [title, setTitle] = useState(titleOld)
+    const [regime, setRegime] = useState(regimeOld)
+    const [exercises, setExercises] = useState(exercisesOld)
 
     const [coachIdError, setCoachIdError] = useState(false)
     const [dateError, setDateError] = useState(false)
@@ -39,11 +50,34 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
     const [titleError, setTitleError] = useState(false)
     const [regimeError, setRegimeError] = useState(false)
     const [exercisesError, setExercisesError] = useState(false)
+    const [disabled, setDisabled] = useState(true)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState(null)
     const [success, setSuccess] = useState(false)
 
-    async function addTraining() {
+    useEffect(() => {
+        if(coachId === coachIdRecieved && date === dateRecieved && start === startRecieved && finish === finishRecieved && room === roomRecieved && capacity === capacityRecieved && level === levelRecieved && title === titleRecieved && regime === regimeRecieved && exercises === exercisesRecieved) {
+            setDisabled(true)
+        }
+        else {
+            setDisabled(false)
+        }
+    }, [coachId, date, start, finish, room, capacity, level, title, regime, exercises])
+
+    function resetRecievedValues() {
+        setCoachIdRecieved(coachId)
+        setDateRecieved(date)
+        setStartRecieved(start)
+        setFinishRecieved(finish)
+        setRoomRecieved(room)
+        setCapacityRecieved(capacity)
+        setLevelRecieved(level)
+        setTitleRecieved(title)
+        setRegimeRecieved(regime)
+        setExercisesRecieved(exercises)
+    }
+
+    async function editTraining() {
         if(coachId === '') {
             setCoachIdError(true)
         }
@@ -79,14 +113,15 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
             const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
             setLoading(true)
             try {
-                const addTrainingResponse = await addTrainingAPI(token, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
+                const addTrainingResponse = await editTrainingAPI(token, id, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
                 setMessage(addTrainingResponse.data)
                 setSuccess(true)
-                clearForm()
+                resetRecievedValues()
                 setLoading(false)
-                changeNewTrainingAdded(!newTrainingAdded)
+                changeTrainingEdited(!trainingEdited)
             }
             catch(error) {
+                console.log(error)
                 setSuccess(false)
                 setMessage(error.response.data)
                 setLoading(false)
@@ -132,7 +167,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                 className={styles.wrapper}
             >
                 <ModalHeader
-                    title='add new training'
+                    title='edit training details'
                     closeModal={closeModal}
                 />
                 <form
@@ -265,9 +300,9 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                         />
                     </div>
                     <Button
-                        disabled={false}
+                        disabled={disabled}
                         text='submit'
-                        method={() => addTraining()}
+                        method={() => editTraining()}
                         loading={loading}
                         showMessage={true}
                         message={message}
@@ -281,4 +316,4 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
     )
 }
 
-export default AddTrainingModal
+export default EditTrainingDetailsModal

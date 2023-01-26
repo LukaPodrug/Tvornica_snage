@@ -20,6 +20,7 @@ function TrainingsPage() {
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
     const [newTrainingAdded, setNewTrainingAdded] = useState(false)
+    const [trainingEdited, setTrainingEdited] = useState(false)
 
     const [dateShow, setDateShow] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
     const [loading, setLoading] = useState(true)
@@ -58,7 +59,7 @@ function TrainingsPage() {
         }
 
         fetchAPI()
-    }, [date, newTrainingAdded])
+    }, [date, newTrainingAdded, trainingEdited])
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
@@ -92,6 +93,8 @@ function TrainingsPage() {
                                     <TrainingsSection
                                         trainings={trainingsByDate.slice((page - 1) * 5, (page - 1) * 5 + 5)}
                                         showCoach={true}
+                                        trainingEdited={trainingEdited}
+                                        changeTrainingEdited={setTrainingEdited}
                                     />
                             }
                             <Pagination

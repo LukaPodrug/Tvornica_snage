@@ -21,6 +21,7 @@ function TrainingsSectionHeader({ title, dateShow, date, changeDate, newTraining
                     {title}
                 </label>
                 <Button
+                    disabled={false}
                     text='add new'
                     method={() => setAddTrainingModalOpen(true)}
                     loading={false}

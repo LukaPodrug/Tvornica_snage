@@ -5,7 +5,7 @@ import styles from './style.module.css'
 
 function TextInput({ label, showPlaceholder, placeholder, text, changeText, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
     const textInputRef = useRef(null)
-
+    
     function focus() {
         if(error) {
             changeError(false)

@@ -12,6 +12,7 @@ function ModalHeader({ title, closeModal }) {
                 {title}
             </label>
             <Button
+                disabled={false}
                 text='close'
                 method={() => closeModal()}
                 loading={false}

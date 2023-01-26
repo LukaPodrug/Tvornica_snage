@@ -1,7 +1,7 @@
 import Training from '../../components/training'
 import styles from './style.module.css'
 
-function TrainingsSection({ trainings, showCoach }) {
+function TrainingsSection({ trainings, showCoach, trainingEdited, changeTrainingEdited }) {
     return (
         <div
             className={styles.wrapper}
@@ -32,6 +32,8 @@ function TrainingsSection({ trainings, showCoach }) {
                             title={training.title}
                             regime={training.regime}
                             exercises={training.exercises}
+                            trainingEdited={trainingEdited}
+                            changeTrainingEdited={changeTrainingEdited}
                         />
                     )
                 })

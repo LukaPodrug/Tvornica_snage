@@ -32,7 +32,7 @@ function NumberInput({ label, number, changeNumber, error, changeError, message,
                     type='number'
                     ref={numberInputRef}
                     value={number}
-                    onChange={(e) => changeNumber(e.target.value)}
+                    onChange={(e) => changeNumber(parseInt(e.target.value))}
                     onFocus={() => focus()}
                 />
                 {
