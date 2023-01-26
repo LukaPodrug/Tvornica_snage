@@ -1,9 +1,9 @@
 import styles from './style.module.css'
 
-function SwitchInput({ switchedOn, changeSwitchedOn }) {
+function SwitchInput({ switchedOn, changeSwitchedOn, index }) {
     return (
         <div
-            onClick={() => changeSwitchedOn(!switchedOn)}
+            onClick={() => changeSwitchedOn(index)}
         >
             <input
                 className={styles.input}

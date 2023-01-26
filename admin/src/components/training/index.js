@@ -30,6 +30,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='date'
                 value={moment(start).format('DD/MM/YYYY')}
                 button={false}
+                showText={true}
                 openModal={null}
             />
             {
@@ -39,6 +40,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                         property='coach'
                         value={coachLastName}
                         button={false}
+                        showText={true}
                         openModal={null}
                     />
             }
@@ -47,6 +49,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='start'
                 value={moment(start).format('HH:mm')}
                 button={false}
+                showText={true}
                 openModal={null}
             />
             <Section
@@ -54,6 +57,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='finish'
                 value={moment(finish).format('HH:mm')}
                 button={false}
+                showText={true}
                 openModal={null}
             />
             <Section
@@ -61,6 +65,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='room'
                 value={room}
                 button={false}
+                showText={true}
                 openModal={null}
             />
             <Section
@@ -68,6 +73,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='capacity'
                 value={capacity}
                 button={false}
+                showText={true}
                 openModal={null}
             />
             <Section
@@ -75,16 +81,23 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 property='level'
                 value={level}
                 button={false}
+                showText={true}
                 openModal={null}
             />
             <Section
                 image={moreIcon}
+                property={null}
+                value={null}
                 button={true}
+                showText={false}
                 openModal={setTrainingDetailsModalOpen}
             />
             <Section
                 image={editIcon}
+                property={null}
+                value={null}
                 button={true}
+                showText={false}
                 openModal={(new Date(Date.now()) < new Date(start)) ? setEditTrainingDetailsModalOpen : setEditTrainingAttendanceModalOpen}
             />
             <TrainingDetailsModal
@@ -127,6 +140,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                     <EditTrainingAttendanceModal
                         isOpen={true}
                         changeIsOpen={setEditTrainingAttendanceModalOpen}
+                        id={id}
                     />
             }
         </div>
