@@ -18,8 +18,13 @@ const getUsersByPageSchema = joi.object().keys({
     page: joi.number().integer().min(1).required()
 })
 
+const getUsersByIdsSchema = joi.object().keys({
+    ids: joi.array().items(joi.number().integer().min(0)).required()
+})
+
 module.exports = {
     editUserSchema,
     getUserByNameSchema,
-    getUsersByPageSchema
+    getUsersByPageSchema,
+    getUsersByIdsSchema
 }

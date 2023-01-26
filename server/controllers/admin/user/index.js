@@ -3,7 +3,7 @@ const database = require('../../../database')
 async function getById(id) {
     try {
         const user = await database`
-            select *
+            select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
             where id = ${id}`
         return user[0]
@@ -30,7 +30,7 @@ async function editDetails(id, membership, level) {
 async function getByName(firstName, lastName) {
     try {
         const users = await database`
-            select *
+            select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
             where "firstName" like ${'%' + firstName + '%'} and "lastName" like ${'%' + lastName + '%'}`
         return users
@@ -43,10 +43,23 @@ async function getByName(firstName, lastName) {
 async function getByPage(page) {
     try {
         const users = await database`
-            select *
+            select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
             offset ${(page - 1) * 10} rows
             fetch first 10 row only`
+        return users
+    }
+    catch(error) {
+        return error
+    }
+}
+
+async function getByIds(ids) {
+    try {
+        const users = await database`
+            select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
+            from users
+            where id = ANY(${ids})`
         return users
     }
     catch(error) {
@@ -58,5 +71,6 @@ module.exports = {
     getById,
     editDetails,
     getByName,
-    getByPage
+    getByPage,
+    getByIds
 }

@@ -3,7 +3,7 @@ const express = require('express')
 const userController = require('../../../controllers/admin/user')
 const generalController = require('../../../controllers/admin/general')
 
-const { editUserSchema, getUserByNameSchema, getUsersByPageSchema } = require('./schemas')
+const { editUserSchema, getUserByNameSchema, getUsersByPageSchema, getUsersByIdsSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -84,6 +84,29 @@ router.get('/byPage', async(req, res) => {
         return
     }
     const users = await userController.getByPage(req.query.page)
+    const databaseConnection = await generalController.checkDatabaseConnection(users)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(users)
+})
+
+router.get('/byIds', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const searchFilter = {
+        ids: JSON.parse(req.query.ids)
+    }
+    const dataValidation = getUsersByIdsSchema.validate(searchFilter)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid array of ids')
+        return
+    }
+    const users = await userController.getByIds(JSON.parse(req.query.ids))
     const databaseConnection = await generalController.checkDatabaseConnection(users)
     if(!databaseConnection) {
         res.status(500).json('Error with database')
