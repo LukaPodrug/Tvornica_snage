@@ -5,7 +5,7 @@ const trainingController = require('../../../controllers/admin/training')
 const reservationController = require('../../../controllers/admin/reservation')
 const generalController = require('../../../controllers/admin/general')
 
-const { newReservationSchema, editReservationSchema, getReservationsByTrainingIdSchema } = require('./schemas')
+const { newReservationSchema, editReservationSchema, getReservationsByTrainingIdSchema, deleteReservationByTrainingIdAndUserId } = require('./schemas')
 
 const router = express.Router()
 
@@ -133,6 +133,43 @@ router.get('/byTrainingId', async(req, res) => {
         delete reservation.password
     })
     res.status(200).json(reservations)
+})
+
+router.delete('/', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const dataValidation = deleteReservationByTrainingIdAndUserId.validate(req.body)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid delete reservation data')
+        return
+    }
+    const reservation = await reservationController.getByUserIdAndTrainingId(req.body.userId, req.body.trainingId)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(reservation)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!reservation) {
+        res.status(400).json('Reservation not found')
+        return
+    }
+    if(!reservation.manual) {
+        res.status(400).json('Can not remove user entered reservation')
+        return
+    }
+    const removedReservation = await reservationController.removeByUserIdAndTrainingId(req.body.userId, req.body.trainingId)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(removedReservation)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!removedReservation) {
+        res.status(500).json('Error with removing reservation')
+    }
+    res.status(200).json('Reservation successfully removed')
 })
 
 module.exports = router
