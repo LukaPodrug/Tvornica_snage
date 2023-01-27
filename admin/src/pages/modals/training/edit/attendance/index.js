@@ -104,6 +104,10 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
         }
     }
 
+    async function addUnannouncedCompletion() {
+        
+    }
+
     return (
         <Modal
             isOpen={isOpen}
@@ -141,6 +145,8 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
                             users={unannouncedByTrainingId.slice((page - 1) * 8, (page - 1) * 8 + 8)}
                             page={page}
                             removeReservation={removeReservationByTrainingIdAndUserId}
+                            reservationEdited={reservationEdited}
+                            changeReservationEdited={setReservationEdited}
                         />
                 }
                 <Pagination

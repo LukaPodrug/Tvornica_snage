@@ -1,14 +1,20 @@
+import { useState } from 'react'
+
 import Button from '../../../components/button'
 import UsersSection from '../../users'
+import AddUserModal from '../../../pages/modals/user/add'
+
 import styles from './style.module.css'
 
-function UnannouncedSection({ users, page, removeReservation }) {
+function UnannouncedSection({ users, page, removeReservation, reservationEdited, changeReservationEdited }) {
+    const [addUserModalOpen, setAddUserModalOpen] = useState(false)
+
     return (
         <>
             <Button
                 disabled={false}
                 text='add new'
-                method={() => {}}
+                method={() => setAddUserModalOpen(true)}
                 loading={false}
                 showMessage={false}
                 message={null}
@@ -31,6 +37,12 @@ function UnannouncedSection({ users, page, removeReservation }) {
                 removeReservation={removeReservation}
                 maxUsers={8}
                 style={styles.wrapper}
+            />
+            <AddUserModal
+                isOpen={addUserModalOpen}
+                changeIsOpen={setAddUserModalOpen}
+                userAdded={reservationEdited}
+                changeUserAdded={changeReservationEdited}
             />
         </>
     )
