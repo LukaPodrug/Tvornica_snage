@@ -6,7 +6,7 @@ import styles from './style.module.css'
 
 import editIcon from '../../assets/icons/edit.png'
 
-function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, toggled, changeToggled, showToggle, showEdit, index }) {
+function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, toggled, changeToggled, showToggle, showEdit, index, userEdited, changeUserEdited }) {
     const [editUserDetailsModalOpen, setEditUserDetailsModalOpen] = useState(false)
 
     return (

@@ -7,9 +7,9 @@ import store from '../../../../../store'
 import LoadingSection from '../../../../../sections/loading'
 import ModalHeader from '../../../../../sections/modals/header'
 import Menu from '../../../../../components/menu'
-import User from '../../../../../components/user'
+import UsersSection from '../../../../../sections/users'
 import Pagination from '../../../../../components/pagination'
-import { getReservationsByTrainingIdAPI } from '../../../../../API/reservation'
+import { getReservationsByTrainingIdAPI, editReservationCompletion } from '../../../../../API/reservation'
 import styles from './style.module.css'
 import '../../../style.css'
 
@@ -23,6 +23,7 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
     const [toggled, setToggled] = useState(null)
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
+    const [reservationEdited, setReservationEdited] = useState(false)
 
     const [reservationsLoading, setReservationsLoading] = useState(true)
 
@@ -52,10 +53,21 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
         }
 
         fetchAPI()
-    }, [])
+    }, [reservationEdited])
 
-    function changeToggled(index) {
-        
+    async function changeToggled(index) {
+        try {
+            const toggledHelp = [...toggled]
+            toggledHelp[index] = !toggled[index]
+            setToggled(toggledHelp)
+            setTimeout(async () => {
+                await editReservationCompletion(token, reservationsByTrainingId[index].trainingId, reservationsByTrainingId[index].userId, !(reservationsByTrainingId[index].completion))
+                setReservationEdited(!reservationEdited)
+            }, 200)
+        }
+        catch(error) {
+            return
+        }
     }
 
     return (
@@ -80,26 +92,16 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
                     reservationsLoading ?
                         <LoadingSection/>
                         :
-                        reservationsByTrainingId.slice((page - 1) * 5, (page - 1) * 5 + 5).map((reservation, index) => {
-                            return (
-                                <User
-                                    key={index + (page - 1) * 5}
-                                    id={reservation.userId}
-                                    image={reservation.image}
-                                    firstName={reservation.firstName}
-                                    lastName={reservation.lastName}
-                                    dateOfBirth={moment(reservation.dateOfBirth).format('DD/MM/YYYY')}
-                                    membership={moment(reservation.embership).format('DD/MM/YYYY')}
-                                    level={reservation.level}
-                                    reduced={true}
-                                    toggled={toggled[index + (page - 1) * 5]}
-                                    changeToggled={changeToggled}
-                                    showToggle={true}
-                                    showEdit={false}
-                                    index={index + (page - 1) * 5}
-                                /> 
-                            )
-                        })
+                        <UsersSection
+                            users={reservationsByTrainingId.slice((page - 1) * 5, (page - 1) * 5 + 5)}
+                            toggled={toggled.slice((page - 1) * 5, (page - 1) * 5 + 5)}
+                            changeToggled={changeToggled}
+                            reduced={true}
+                            page={page}
+                            message='no reservations for this training'
+                            userEdited={null}
+                            changeUserEdited={null}
+                        />
                 }
                 <Pagination
                     page={page}
