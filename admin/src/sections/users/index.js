@@ -1,10 +1,10 @@
 import User from '../../components/user'
 import styles from './style.module.css'
 
-function UsersSection({ users, toggled, changeToggled, reduced, page, message, userEdited, changeUserEdited }) {
+function UsersSection({ users, showToggle, toggled, changeToggled, reduced, page, showEdit, message, userEdited, changeUserEdited, showDelete, removeReservation, maxUsers, style }) {
     return (
         <div
-            className={styles.wrapper}
+            className={styles.wrapper + ' ' + style}
         >
         {
             users.length === 0 ?
@@ -26,11 +26,13 @@ function UsersSection({ users, toggled, changeToggled, reduced, page, message, u
                             membership={user.membership}
                             level={user.level}
                             reduced={reduced}
-                            toggled={toggled[index]}
+                            toggled={toggled && toggled[index]}
                             changeToggled={changeToggled}
-                            showToggle={true}
-                            showEdit={false}
-                            index={index + (page - 1) * 5}
+                            showToggle={showToggle}
+                            showEdit={showEdit}
+                            showDelete={showDelete}
+                            remove={removeReservation}
+                            index={index + (page - 1) * maxUsers}
                             userEdited={userEdited}
                             changeUserEdited={changeUserEdited}
                         />

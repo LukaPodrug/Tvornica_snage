@@ -1,10 +1,19 @@
 import styles from './style.module.css'
 
-function Section({ image, property, value, button, showText, openModal }) {
+function Section({ id, image, property, value, button, showText, openModal, remove }) {
+    function clickHandle() {
+        if(openModal) {
+            openModal(true)
+        }
+        else if(remove) {
+            remove(id)
+        }
+    }
+
     return (
         <div 
             className={styles.wrapper + ' ' + (button && styles.button)}
-            onClick={button ? () => openModal(true) : () => {}}
+            onClick={button ? () => clickHandle() : () => {}}
         >
             {
                 image && 

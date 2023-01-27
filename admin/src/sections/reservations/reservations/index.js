@@ -1,0 +1,25 @@
+import UsersSection from '../../users'
+import styles from './style.module.css'
+
+function ReservationsSection({ users, toggled, changeToggled, page }) {
+    return (
+        <UsersSection
+            users={users}
+            showToggle={true}
+            toggled={toggled}
+            changeToggled={changeToggled}
+            reduced={true}
+            page={page}
+            message='no reservations for this training'
+            showEdit={false}
+            userEdited={null}
+            changeUserEdited={null}
+            showDelete={false}
+            removeReservation={null}
+            maxUsers={10}
+            style={styles.wrapper}
+        />
+    )
+}
+
+export default ReservationsSection

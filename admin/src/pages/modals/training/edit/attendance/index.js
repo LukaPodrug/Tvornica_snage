@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import Modal from 'react-modal'
-import moment from 'moment'
 
 import store from '../../../../../store'
 import LoadingSection from '../../../../../sections/loading'
 import ModalHeader from '../../../../../sections/modals/header'
 import Menu from '../../../../../components/menu'
-import UsersSection from '../../../../../sections/users'
+import ReservationsSection from '../../../../../sections/reservations/reservations'
+import UnannouncedSection from '../../../../../sections/reservations/unannounced'
 import Pagination from '../../../../../components/pagination'
-import { getReservationsByTrainingIdAPI, editReservationCompletion } from '../../../../../API/reservation'
+import { getReservationsByTrainingIdAPI, editReservationCompletionAPI, removeReservationByTrainingIdAndUserIdAPI } from '../../../../../API/reservation'
 import styles from './style.module.css'
 import '../../../style.css'
 
@@ -21,6 +21,7 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
     const [activeTab, setActiveTab] = useState(0)
     const [reservationsByTrainingId, setReservationsByTrainingId] = useState(null)
     const [toggled, setToggled] = useState(null)
+    const [unannouncedByTrainingId, setUnannouncedByTrainingId] = useState(null)
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
     const [reservationEdited, setReservationEdited] = useState(false)
@@ -31,13 +32,22 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
         async function getReservationsByTrainingId() {
             try {
                 const getReservationsByTrainingIdResponse = await getReservationsByTrainingIdAPI(token, id)
+                const reservationsHelp = []
+                const unannouncedHelp = []
                 const toggledHelp = []
                 getReservationsByTrainingIdResponse.data.forEach(reservation => {
-                    toggledHelp.push(reservation.completion)
+                    if(reservation.manual) {
+                        unannouncedHelp.push(reservation)
+                    }
+                    else {
+                        toggledHelp.push(reservation.completion)
+                        reservationsHelp.push(reservation)
+                    }
                 })
                 setToggled(toggledHelp)
-                setReservationsByTrainingId(getReservationsByTrainingIdResponse.data)
-                setMaxPage(Math.ceil(getReservationsByTrainingIdResponse.data.length / 5))
+                setReservationsByTrainingId(reservationsHelp)
+                setUnannouncedByTrainingId(unannouncedHelp)
+                setMaxPage(determineMaxPage())
             }
             catch(error) {
                 return
@@ -55,17 +65,41 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
         fetchAPI()
     }, [reservationEdited])
 
+    useEffect(() => {
+        setPage(1)
+    }, [activeTab])
+
+    function determineMaxPage() {
+        if(activeTab === 0) {
+            return Math.ceil(reservationsByTrainingId.length / 10)
+        }
+        else {
+            return Math.ceil(unannouncedByTrainingId.length / 8)
+        }
+    }
+
     async function changeToggled(index) {
         try {
             const toggledHelp = [...toggled]
             toggledHelp[index] = !toggled[index]
             setToggled(toggledHelp)
             setTimeout(async () => {
-                await editReservationCompletion(token, reservationsByTrainingId[index].trainingId, reservationsByTrainingId[index].userId, !(reservationsByTrainingId[index].completion))
+                await editReservationCompletionAPI(token, reservationsByTrainingId[index].trainingId, reservationsByTrainingId[index].userId, !(reservationsByTrainingId[index].completion))
                 setReservationEdited(!reservationEdited)
             }, 200)
         }
         catch(error) {
+            return
+        }
+    }
+
+    async function removeReservationByTrainingIdAndUserId(userId) {
+        try {
+            await removeReservationByTrainingIdAndUserIdAPI(token, id, userId)
+            setReservationEdited(!reservationEdited)
+        }
+        catch(error) {
+            console.log(error)
             return
         }
     }
@@ -89,18 +123,24 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
                     style={styles.menu}
                 />
                 {
-                    reservationsLoading ?
+                    reservationsLoading &&
                         <LoadingSection/>
-                        :
-                        <UsersSection
-                            users={reservationsByTrainingId.slice((page - 1) * 5, (page - 1) * 5 + 5)}
-                            toggled={toggled.slice((page - 1) * 5, (page - 1) * 5 + 5)}
+                }
+                {
+                    (!reservationsLoading && activeTab === 0) &&
+                        <ReservationsSection
+                            users={reservationsByTrainingId.slice((page - 1) * 10, (page - 1) * 10 + 10)}
+                            toggled={toggled.slice((page - 1) * 10, (page - 1) * 10 + 10)}
                             changeToggled={changeToggled}
-                            reduced={true}
                             page={page}
-                            message='no reservations for this training'
-                            userEdited={null}
-                            changeUserEdited={null}
+                        />
+                }
+                {
+                    (!reservationsLoading && activeTab === 1) &&
+                        <UnannouncedSection
+                            users={unannouncedByTrainingId.slice((page - 1) * 8, (page - 1) * 8 + 8)}
+                            page={page}
+                            removeReservation={removeReservationByTrainingIdAndUserId}
                         />
                 }
                 <Pagination

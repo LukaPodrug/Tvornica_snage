@@ -1,0 +1,25 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 36px;
+
+    padding: 10px 40px;
+
+    background-color: #90EE90;
+
+    width: fit-content;
+}
+
+.button:hover {
+    opacity: 0.5;
+
+    cursor: pointer;
+}

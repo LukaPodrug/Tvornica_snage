@@ -12,7 +12,7 @@ async function getReservationsByTrainingIdAPI(token, trainingId) {
     return getReservationsByTrainingIdResponse
 }
 
-async function editReservationCompletion(token, trainingId, userId, completion) {
+async function editReservationCompletionAPI(token, trainingId, userId, completion) {
     const editReservationCompletionResponse = await axios.patch('http://localhost:3000/api/admin/reservation', {
         trainingId,
         userId,
@@ -26,7 +26,21 @@ async function editReservationCompletion(token, trainingId, userId, completion) 
     return editReservationCompletionResponse
 }
 
+async function removeReservationByTrainingIdAndUserIdAPI(token, trainingId, userId) {
+    const removeReservationByTrainingIdAndUserIdResponse = await axios.delete('http://localhost:3000/api/admin/reservation', {
+        headers: {
+            'Authorization': token
+        },
+        data: {
+            trainingId,
+            userId
+        }
+    })
+    return removeReservationByTrainingIdAndUserIdResponse
+}
+
 export {
     getReservationsByTrainingIdAPI,
-    editReservationCompletion
+    editReservationCompletionAPI,
+    removeReservationByTrainingIdAndUserIdAPI
 }

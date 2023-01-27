@@ -5,8 +5,9 @@ import SwitchInput from '../input/switch'
 import styles from './style.module.css'
 
 import editIcon from '../../assets/icons/edit.png'
+import deleteIcon from '../../assets/icons/delete.png'
 
-function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, toggled, changeToggled, showToggle, showEdit, index, userEdited, changeUserEdited }) {
+function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, toggled, changeToggled, showToggle, showEdit, showDelete, remove, index, userEdited, changeUserEdited }) {
     const [editUserDetailsModalOpen, setEditUserDetailsModalOpen] = useState(false)
 
     return (
@@ -15,55 +16,67 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
         >
             <div className={styles.data}>
                 <Section
+                    id={null}
                     image={image}
                     property={null}
                     value={null}
                     button={false}
                     showText={false}
                     openModal={null}
+                    remove={null}
                 />
                 <Section
+                    id={null}
                     image={null}
                     property='first name'
                     value={firstName}
                     button={false}
                     showText={true}
                     openModal={null}
+                    remove={null}
                 />
                 <Section
+                    id={null}
                     image={null}
                     property='last name'
                     value={lastName}
                     button={false}
                     showText={true}
                     openModal={null}
+                    remove={null}
                 />
                 {
                     !reduced &&
                         <>
                             <Section
+                                id={null}
                                 image={null}
                                 property='date of birth'
                                 value={dateOfBirth}
                                 button={false}
                                 showText={true}
                                 openModal={null}
+                                remove={null}
                             />
                             <Section
+                                id={null}
                                 image={null}
                                 property='membership'
                                 value={membership}
                                 button={false}
                                 showText={true}
                                 openModal={null}
+                                remove={null}
                             />
                             <Section
+                                id={null}
                                 image={null}
                                 property='level'
                                 value={level}
                                 button={false}
                                 showText={true}
                                 openModal={null}
+                                remove={null}
                             />
                         </>
                 }
@@ -79,12 +92,27 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
             {
                 showEdit &&
                     <Section
+                        id={null}
                         image={editIcon}
                         property={null}
                         value={null}
                         button={true}
                         showText={false}
                         openModal={setEditUserDetailsModalOpen}
+                        remove={null}
+                    />
+            }
+            {
+                showDelete &&
+                    <Section
+                        id={id}
+                        image={deleteIcon}
+                        property={null}
+                        value={null}
+                        button={true}
+                        showText={false}
+                        openModal={null}
+                        remove={remove}
                     />
             }
         </div>
