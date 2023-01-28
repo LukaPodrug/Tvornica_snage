@@ -32,7 +32,7 @@ async function getByName(firstName, lastName) {
         const users = await database`
             select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
-            where "firstName" like ${'%' + firstName + '%'} and "lastName" like ${'%' + lastName + '%'}`
+            where LOWER("firstName") like LOWER(${'%' + firstName + '%'}) and LOWER("lastName") like LOWER(${'%' + lastName + '%'})`
         return users
     }
     catch(error) {
