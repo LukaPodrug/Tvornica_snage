@@ -18,7 +18,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Invalid user data')
         return
     }
-    const user = await userController.getById(req.body.userId)
+    const user = await userController.getById(req.body.id)
     const databaseConnection1 = await generalController.checkDatabaseConnection(user)
     if(!databaseConnection1) {
         res.status(500).json('Error with database')
@@ -32,7 +32,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Old memebership is longer than new')
         return
     }
-    const updatedUser = await userController.editDetails(req.body.userId, new Date(req.body.membership), req.body.level)
+    const updatedUser = await userController.editDetails(req.body.id, new Date(req.body.membership), req.body.level)
     const databaseConnection2 = await generalController.checkDatabaseConnection(updatedUser)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
