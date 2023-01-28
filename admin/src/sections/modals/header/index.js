@@ -1,3 +1,4 @@
+import Header from '../../../components/header'
 import Button from '../../../components/button'
 import styles from './style.module.css'
 
@@ -6,11 +7,10 @@ function ModalHeader({ title, closeModal }) {
         <div 
             className={styles.wrapper}
         >
-            <label
-                className={styles.text}
-            >
-                {title}
-            </label>
+            <Header
+                title={title}
+                style={null}
+            />
             <Button
                 disabled={false}
                 text='close'

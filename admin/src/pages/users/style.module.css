@@ -1,0 +1,33 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    gap: 1em;
+
+    width: fit-content;
+
+    padding: 20px 20px;
+
+    border-radius: 10px;
+
+    background-color: #ffffff;
+}
+
+.title {
+    margin-left: 20px;
+    margin-top: 8px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}

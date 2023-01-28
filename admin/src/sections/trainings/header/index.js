@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import Header from '../../../components/header'
 import Button from '../../../components/button'
 import DatePicker from '../../../components/datePicker'
 import AddTrainingModal from '../../../pages/modals/training/add'
@@ -15,11 +16,10 @@ function TrainingsSectionHeader({ title, dateShow, date, changeDate, newTraining
             <div
                 className={styles.header}
             >
-                <label
-                    className={styles.text}
-                >
-                    {title}
-                </label>
+                <Header
+                    title={title}
+                    style={null}
+                />
                 <Button
                     disabled={false}
                     text='add new'

@@ -7,6 +7,7 @@ import Layout from './components/layout'
 import LoginPage from './pages/login'
 import ProfilePage from './pages/profile'
 import TrainingsPage from './pages/trainings'
+import UsersPage from './pages/users'
 import { verifyTokenAPI } from './API/auth'
 import { getOwnDataAPI, getAllCoachesDataAPI } from './API/coach'
 import './App.css'
@@ -105,7 +106,7 @@ function App() {
             />
             <Route
               path='/users'
-              element={ loggedIn ? <div>USERS</div> : <Navigate to='/login'/> }
+              element={ loggedIn ? <UsersPage/> : <Navigate to='/login'/> }
             />
             <Route
               path='/'

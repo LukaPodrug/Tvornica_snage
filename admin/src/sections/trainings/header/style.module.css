@@ -14,13 +14,6 @@
     align-items: center;
 }
 
-.text {
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 2em;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
 .button {
     background-color: #90EE90;
 }
