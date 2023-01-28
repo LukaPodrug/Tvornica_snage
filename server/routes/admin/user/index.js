@@ -76,14 +76,15 @@ router.get('/byPage', async(req, res) => {
         return
     }
     const searchFilter = {
-        page: parseInt(req.query.page)
+        page: parseInt(req.query.page),
+        numberOfUsers: parseInt(req.query.numberOfUsers)
     }
     const dataValidation = getUsersByPageSchema.validate(searchFilter)
     if(dataValidation.error) {
-        res.status(400).json('Invalid page')
+        res.status(400).json('Invalid get users by page data')
         return
     }
-    const users = await userController.getByPage(req.query.page)
+    const users = await userController.getByPage(req.query.page, req.query.numberOfUsers)
     const databaseConnection = await generalController.checkDatabaseConnection(users)
     if(!databaseConnection) {
         res.status(500).json('Error with database')

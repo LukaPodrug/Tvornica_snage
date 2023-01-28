@@ -40,13 +40,13 @@ async function getByName(firstName, lastName) {
     }
 }
 
-async function getByPage(page) {
+async function getByPage(page, numberOfUsers) {
     try {
         const users = await database`
             select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
-            offset ${(page - 1) * 10} rows
-            fetch first 10 row only`
+            offset ${(page - 1) * numberOfUsers} rows
+            fetch first ${numberOfUsers} row only`
         return users
     }
     catch(error) {

@@ -15,7 +15,8 @@ const getUserByNameSchema = joi.object().keys({
 })
 
 const getUsersByPageSchema = joi.object().keys({
-    page: joi.number().integer().min(1).required()
+    page: joi.number().integer().min(1).required(),
+    numberOfUsers: joi.number().integer().min(1).required()
 })
 
 const getUsersByIdsSchema = joi.object().keys({
