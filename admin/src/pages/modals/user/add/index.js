@@ -8,6 +8,7 @@ import ModalHeader from '../../../../sections/modals/header'
 import UsersSection from '../../../../sections/users'
 import Pagination from '../../../../components/pagination'
 import { getUsersByFirstNameAndLastNameAPI } from '../../../../API/user'
+import { addunannouncedCompletionAPI } from '../../../../API/reservation'
 import Search from '../../../../sections/search'
 
 import styles from './style.module.css'
@@ -52,7 +53,7 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
                 }
             })
             setFilteredUsers(filteredUsersHelp)
-            setMaxPage(Math.ceil(searchByFirstNameAndLastNameResponse.data.length / 10))
+            setMaxPage(Math.ceil(filteredUsersHelp.length / 10))
             setTimeout(() => {
                 setUsersLoading(false)
             }, 500)
@@ -66,7 +67,13 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
     }
 
     async function addUnannouncedCompletion(id) {
-        console.log(id, trainingId)
+        try {
+            await addunannouncedCompletionAPI(token, trainingId, id)
+            changeUserAdded(!userAdded)
+        }
+        catch(error) {
+            return
+        }
     }
 
     return (
@@ -100,7 +107,7 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
                             reduced={true}
                             page={page}
                             showEdit={false}
-                            message='no filter enetered'
+                            message='no users found'
                             userEdited={false}
                             changeUserEdited={() => {}}
                             showDelete={false}

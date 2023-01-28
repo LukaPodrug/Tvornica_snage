@@ -39,8 +39,22 @@ async function removeReservationByTrainingIdAndUserIdAPI(token, trainingId, user
     return removeReservationByTrainingIdAndUserIdResponse
 }
 
+async function addunannouncedCompletionAPI(token, trainingId, userId) {
+    const addunannouncedCompletionResponse = await axios.post('http://localhost:3000/api/admin/reservation', {
+        trainingId,
+        userId,    
+    },
+    {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return addunannouncedCompletionResponse
+}
+
 export {
     getReservationsByTrainingIdAPI,
     editReservationCompletionAPI,
-    removeReservationByTrainingIdAndUserIdAPI
+    removeReservationByTrainingIdAndUserIdAPI,
+    addunannouncedCompletionAPI
 }
