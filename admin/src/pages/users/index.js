@@ -14,50 +14,41 @@ function UsersPage() {
 
     const [activeTab, setActiveTab] = useState(0)
 
-    const [loading, setLoading] = useState(false)
-
     return (
-        <>
-            {
-                loading ?
-                    <LoadingPage/>
-                    :
-                    <div
-                        className={styles.wrapper}
-                    >
-                        <div 
-                            className={styles.window}
-                        >
-                            <Header
-                                title='users'
-                                style={styles.title}
-                            />
-                            <Menu
-                                tabs={tabs}
-                                activeTab={activeTab}
-                                changeActiveTab={setActiveTab}
-                                style={styles.menu}
-                            />
-                            {
-                                activeTab === 0 &&
-                                    <AllUsersPage/>
-                            }
-                            {
-                                activeTab === 1 &&
-                                    <MembershipsUsersPage/>
-                            }
-                            {
-                                activeTab === 2 &&
-                                    <BirthdaysUsersPage/>
-                            }
-                            {
-                                activeTab === 3 &&
-                                    <AwardsUsersPage/>
-                            }
-                        </div>
-                    </div>
-            }
-        </>
+        <div
+            className={styles.wrapper}
+        >
+            <div 
+                className={styles.window}
+            >
+                <Header
+                    title='users'
+                    style={styles.title}
+                />
+                <Menu
+                    tabs={tabs}
+                    activeTab={activeTab}
+                    changeActiveTab={setActiveTab}
+                    style={styles.menu}
+                />
+                {
+                    activeTab === 0 &&
+                        <AllUsersPage/>
+                }
+                {
+                    activeTab === 1 &&
+                        <MembershipsUsersPage/>
+                }
+                {
+                    activeTab === 2 &&
+                        <BirthdaysUsersPage/>
+                }
+                {
+                    activeTab === 3 &&
+                        <AwardsUsersPage/>
+                }
+            </div>
+        </div>
     )
 }
 

@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 import store from '../../../store'
+import LoadingSection from '../../../sections/loading'
 import Search from '../../../sections/search'
 import UsersSection from '../../../sections/users'
 import Pagination from '../../../components/pagination'
-import { getNumberOfUsersAPI, getUsersByPageAPI } from '../../../API/user'
+import { getNumberOfUsersAPI, getUsersByPageAPI, getUsersByFirstNameAndLastNameAPI } from '../../../API/user'
 import styles from './style.module.css'
 
 function AllUsersPage() {
@@ -16,7 +17,7 @@ function AllUsersPage() {
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
     const [usersByPage, setUsersByPage] = useState([])
-    const [totalNumberOfUsers, setTotalNumberOfUsers] = useState(0)
+    const [filter, setFilter] = useState(false)
     const [filteredUsers, setFilteredUsers] = useState([])
 
     const [userEdited, setUserEdited] = useState(false)
@@ -26,10 +27,9 @@ function AllUsersPage() {
         async function getUsersByPage() {
             try {
                 const getNumberOfUsersResponse = await getNumberOfUsersAPI(token)
-                setTotalNumberOfUsers(getNumberOfUsersResponse.data)
-                const getUsersByPageResponse = await getUsersByPageAPI(token, page)
+                const getUsersByPageResponse = await getUsersByPageAPI(token, page, 5)
                 setUsersByPage(getUsersByPageResponse.data)
-                setMaxPage(Math.ceil(getNumberOfUsersResponse.data / 10))
+                setMaxPage(Math.ceil(getNumberOfUsersResponse.data / 5))
             }
             catch(error) {
                 return
@@ -45,13 +45,29 @@ function AllUsersPage() {
         }
 
         if(firstName === '' && lastName === '') {
-            setFilteredUsers([])
+            setFilter(false)
             fetchAPI()
         }
     }, [page, userEdited, firstName, lastName])
 
-    async function search() {
-
+    async function searchByFirstNameAndLastName() {
+        try {
+            setPage(1)
+            setFilter(true)
+            setUsersLoading(true)
+            const searchByFirstNameAndLastNameResponse = await getUsersByFirstNameAndLastNameAPI(token, firstName, lastName)
+            setFilteredUsers(searchByFirstNameAndLastNameResponse.data)
+            setMaxPage(Math.ceil(searchByFirstNameAndLastNameResponse.data.length / 5))
+            setTimeout(() => {
+                setUsersLoading(false)
+            }, 500)
+        }
+        catch(error) {
+            setTimeout(() => {
+                setUsersLoading(false)
+            }, 500)
+            return
+        }
     }
 
     return (
@@ -61,26 +77,31 @@ function AllUsersPage() {
                 changeFirstName={setFirstName}
                 lastName={lastName}
                 changeLastName={setLastName}
-                search={search}
+                search={searchByFirstNameAndLastName}
             />
-            <UsersSection
-                users={(filteredUsers.length === 0 && firstName === '' && lastName === '') ? usersByPage : filteredUsers}
-                showToggle={false}
-                toggled={null}
-                changeToggled={() => {}}
-                reduced={false}
-                page={page}
-                showEdit={true}
-                message='no users found'
-                userEdited={userEdited}
-                changeUserEdited={setUserEdited}
-                showDelete={false}
-                removeReservation={() => {}}
-                showAdd={false}
-                addUser={() => {}}
-                maxUsers={10}
-                style={styles.users}
-            />
+            {
+                usersLoading ?
+                    <LoadingSection/>
+                    :
+                    <UsersSection
+                        users={filter ? filteredUsers.slice((page - 1) * 5, (page - 1) * 5 + 5) : usersByPage}
+                        showToggle={false}
+                        toggled={null}
+                        changeToggled={() => {}}
+                        reduced={false}
+                        page={page}
+                        showEdit={true}
+                        message='no users found'
+                        userEdited={userEdited}
+                        changeUserEdited={setUserEdited}
+                        showDelete={false}
+                        removeReservation={() => {}}
+                        showAdd={false}
+                        addUser={() => {}}
+                        maxUsers={5}
+                        style={styles.users}
+                    />
+            }
             <Pagination
                 page={page}
                 changePage={setPage}

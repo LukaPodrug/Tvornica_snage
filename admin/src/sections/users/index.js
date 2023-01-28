@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import User from '../../components/user'
 import styles from './style.module.css'
 
@@ -22,8 +24,8 @@ function UsersSection({ users, showToggle, toggled, changeToggled, reduced, page
                             image={user.image}
                             firstName={user.firstName}
                             lastName={user.lastName}
-                            dateOfBirth={user.dateOfBirth}
-                            membership={user.membership}
+                            dateOfBirth={moment(user.dateOfBirth).format('DD/MM/YYYY')}
+                            membership={moment(user.membership).format('DD/MM/YYYY')}
                             level={user.level}
                             reduced={reduced}
                             toggled={toggled && toggled[index]}

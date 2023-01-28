@@ -13,6 +13,8 @@
     align-items: normal;
     gap: 1em;
 
+    min-width: 860px;
+    min-height: 610px;
     width: fit-content;
 
     padding: 20px 20px;

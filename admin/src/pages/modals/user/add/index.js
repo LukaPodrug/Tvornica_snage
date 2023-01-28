@@ -18,7 +18,7 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [fileteredUsers, setFilteredUsers] = useState([])
+    const [filteredUsers, setFilteredUsers] = useState([])
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
 
@@ -100,7 +100,7 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
                         <LoadingSection/>
                         :
                         <UsersSection
-                            users={fileteredUsers.slice((page - 1) * 10, (page - 1) * 10 + 10)}
+                            users={filteredUsers.slice((page - 1) * 10, (page - 1) * 10 + 10)}
                             showToggle={false}
                             toggled={null}
                             changeToggled={() => {}}

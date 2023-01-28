@@ -23,11 +23,11 @@ async function getNumberOfUsersAPI(token) {
     return getNumberOfUsersResponse
 }
 
-async function getUsersByPageAPI(token, page) {
+async function getUsersByPageAPI(token, page, numberOfUsers) {
     const getUsersByPageResponse = await axios.get('http://localhost:3000/api/admin/user/byPage', {
         params: {
             'page': page,
-
+            'numberOfUsers': numberOfUsers
         },
         headers: {
             'Authorization': token
@@ -36,8 +36,23 @@ async function getUsersByPageAPI(token, page) {
     return getUsersByPageResponse
 }
 
+async function editUserAPI(token, id, membership, level) {
+    const editUserResponse = await axios.patch('http://localhost:3000/api/admin/user', {
+        id,
+        membership,
+        level
+    },
+    {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return editUserResponse
+}
+
 export {
     getUsersByFirstNameAndLastNameAPI,
     getNumberOfUsersAPI,
-    getUsersByPageAPI
+    getUsersByPageAPI,
+    editUserAPI
 }

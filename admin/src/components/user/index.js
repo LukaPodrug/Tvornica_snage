@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import Section from '../section'
 import SwitchInput from '../input/switch'
+import EditUserModal from '../../pages/modals/user/edit'
 import styles from './style.module.css'
 
 import editIcon from '../../assets/icons/edit.png'
@@ -138,6 +139,18 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                         add={add}
                     />
             }
+            <EditUserModal
+                isOpen={editUserDetailsModalOpen}
+                changeIsOpen={setEditUserDetailsModalOpen}
+                id={id}
+                image={image}
+                firstName={firstName}
+                lastName={lastName}
+                membership={membership}
+                level={level}
+                userEdited={userEdited}
+                changeUserEdited={changeUserEdited}
+            />
         </div>
     )
 }
