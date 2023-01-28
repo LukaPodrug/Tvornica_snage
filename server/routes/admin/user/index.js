@@ -115,4 +115,20 @@ router.get('/byIds', async(req, res) => {
     res.status(200).json(users)
 })
 
+router.get('/totalNumber', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const totalNumberOfUsers = await userController.getTotalNumber()
+    const databaseConnection = await generalController.checkDatabaseConnection(totalNumberOfUsers)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(totalNumberOfUsers)
+
+})
+
 module.exports = router

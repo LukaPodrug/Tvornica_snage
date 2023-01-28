@@ -67,10 +67,23 @@ async function getByIds(ids) {
     }
 }
 
+async function getTotalNumber() {
+    try {
+        const totalNumberOfUsers = await database`
+            select CAST(count(*) AS INTEGER)
+            from users`
+        return totalNumberOfUsers[0].count
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getById,
     editDetails,
     getByName,
     getByPage,
-    getByIds
+    getByIds,
+    getTotalNumber
 }
