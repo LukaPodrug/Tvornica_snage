@@ -16,6 +16,8 @@ function ReservationsSection({ users, toggled, changeToggled, page }) {
             changeUserEdited={null}
             showDelete={false}
             removeReservation={null}
+            showAdd={false}
+            add={null}
             maxUsers={10}
             style={styles.wrapper}
         />

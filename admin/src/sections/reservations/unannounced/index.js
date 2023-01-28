@@ -6,9 +6,9 @@ import AddUserModal from '../../../pages/modals/user/add'
 
 import styles from './style.module.css'
 
-function UnannouncedSection({ users, page, removeReservation, reservationEdited, changeReservationEdited }) {
+function UnannouncedSection({ allUsers, users, page, removeReservation, reservationEdited, changeReservationEdited, trainingId }) {
     const [addUserModalOpen, setAddUserModalOpen] = useState(false)
-
+    
     return (
         <>
             <Button
@@ -35,6 +35,8 @@ function UnannouncedSection({ users, page, removeReservation, reservationEdited,
                 changeUserEdited={null}
                 showDelete={true}
                 removeReservation={removeReservation}
+                showAdd={false}
+                add={null}
                 maxUsers={8}
                 style={styles.wrapper}
             />
@@ -43,6 +45,8 @@ function UnannouncedSection({ users, page, removeReservation, reservationEdited,
                 changeIsOpen={setAddUserModalOpen}
                 userAdded={reservationEdited}
                 changeUserAdded={changeReservationEdited}
+                disabledUsers={allUsers}
+                trainingId={trainingId}
             />
         </>
     )

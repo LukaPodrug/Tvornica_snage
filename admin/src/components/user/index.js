@@ -6,8 +6,9 @@ import styles from './style.module.css'
 
 import editIcon from '../../assets/icons/edit.png'
 import deleteIcon from '../../assets/icons/delete.png'
+import addIcon from '../../assets/icons/add.png'
 
-function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, toggled, changeToggled, showToggle, showEdit, showDelete, remove, index, userEdited, changeUserEdited }) {
+function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, toggled, changeToggled, showToggle, showEdit, showDelete, remove, showAdd, add, index, userEdited, changeUserEdited }) {
     const [editUserDetailsModalOpen, setEditUserDetailsModalOpen] = useState(false)
 
     return (
@@ -24,6 +25,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                     showText={false}
                     openModal={null}
                     remove={null}
+                    add={null}
                 />
                 <Section
                     id={null}
@@ -34,6 +36,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                     showText={true}
                     openModal={null}
                     remove={null}
+                    add={null}
                 />
                 <Section
                     id={null}
@@ -44,6 +47,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                     showText={true}
                     openModal={null}
                     remove={null}
+                    add={null}
                 />
                 {
                     !reduced &&
@@ -57,6 +61,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                                 showText={true}
                                 openModal={null}
                                 remove={null}
+                                add={null}
                             />
                             <Section
                                 id={null}
@@ -67,6 +72,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                                 showText={true}
                                 openModal={null}
                                 remove={null}
+                                add={null}
                             />
                             <Section
                                 id={null}
@@ -77,6 +83,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                                 showText={true}
                                 openModal={null}
                                 remove={null}
+                                add={null}
                             />
                         </>
                 }
@@ -100,6 +107,7 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                         showText={false}
                         openModal={setEditUserDetailsModalOpen}
                         remove={null}
+                        add={null}
                     />
             }
             {
@@ -113,6 +121,21 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                         showText={false}
                         openModal={null}
                         remove={remove}
+                        add={null}
+                    />
+            }
+            {
+                showAdd &&
+                    <Section
+                        id={id}
+                        image={addIcon}
+                        property={null}
+                        value={null}
+                        button={true}
+                        showText={false}
+                        openModal={null}
+                        remove={null}
+                        add={add}
                     />
             }
         </div>

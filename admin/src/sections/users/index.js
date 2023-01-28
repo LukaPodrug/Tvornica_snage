@@ -1,7 +1,7 @@
 import User from '../../components/user'
 import styles from './style.module.css'
 
-function UsersSection({ users, showToggle, toggled, changeToggled, reduced, page, showEdit, message, userEdited, changeUserEdited, showDelete, removeReservation, maxUsers, style }) {
+function UsersSection({ users, showToggle, toggled, changeToggled, reduced, page, showEdit, message, userEdited, changeUserEdited, showDelete, removeReservation, showAdd, addUser, maxUsers, style }) {
     return (
         <div
             className={styles.wrapper + ' ' + style}
@@ -32,6 +32,8 @@ function UsersSection({ users, showToggle, toggled, changeToggled, reduced, page
                             showEdit={showEdit}
                             showDelete={showDelete}
                             remove={removeReservation}
+                            showAdd={showAdd}
+                            add={addUser}
                             index={index + (page - 1) * maxUsers}
                             userEdited={userEdited}
                             changeUserEdited={changeUserEdited}

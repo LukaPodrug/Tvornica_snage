@@ -1,0 +1,41 @@
+.wrapper {
+    display: flex;
+    align-items: end;
+    gap: 1em;
+}
+
+.label {
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.input {
+    border: none;
+}
+
+.input:hover {
+    box-shadow: 0 0 10px #90EE90;
+}
+
+.input:focus {
+    outline: none;
+
+    box-shadow: 0 0 10px #35c135;
+}
+
+.button {    
+    min-width: 210px;
+
+    background-color: #90EE90;
+
+    transition: all ease 0.5s;
+}
+
+.button:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}

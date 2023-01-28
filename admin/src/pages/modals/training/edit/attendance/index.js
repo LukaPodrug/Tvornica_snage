@@ -15,7 +15,6 @@ import '../../../style.css'
 
 function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
     const tabs = ['reservations', 'unannounced']
-
     const [token] = useRecoilState(store.token)
 
     const [activeTab, setActiveTab] = useState(0)
@@ -99,13 +98,8 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
             setReservationEdited(!reservationEdited)
         }
         catch(error) {
-            console.log(error)
             return
         }
-    }
-
-    async function addUnannouncedCompletion() {
-        
     }
 
     return (
@@ -142,11 +136,13 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
                 {
                     (!reservationsLoading && activeTab === 1) &&
                         <UnannouncedSection
+                            allUsers={[...reservationsByTrainingId, ...unannouncedByTrainingId]}
                             users={unannouncedByTrainingId.slice((page - 1) * 8, (page - 1) * 8 + 8)}
                             page={page}
                             removeReservation={removeReservationByTrainingIdAndUserId}
                             reservationEdited={reservationEdited}
                             changeReservationEdited={setReservationEdited}
+                            trainingId={id}
                         />
                 }
                 <Pagination

@@ -1,12 +1,15 @@
 import styles from './style.module.css'
 
-function Section({ id, image, property, value, button, showText, openModal, remove }) {
+function Section({ id, image, property, value, button, showText, openModal, remove, add }) {
     function clickHandle() {
         if(openModal) {
             openModal(true)
         }
         else if(remove) {
             remove(id)
+        }
+        else if(add) {
+            add(id)
         }
     }
 
