@@ -21,6 +21,15 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
     const [editTrainingDetailsModalOpen, setEditTrainingDetailsModalOpen] = useState(false)
     const [editTrainingAttendanceModalOpen, setEditTrainingAttendanceModalOpen] = useState(false)
 
+    function openEditTrainingModal() {
+        if(new Date(Date.now()) < new Date(start)) {
+            setEditTrainingDetailsModalOpen(true)
+        }
+        else {
+            setEditTrainingAttendanceModalOpen(true)
+        }
+    }
+
     return (
         <div
             className={styles.wrapper}
@@ -98,7 +107,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 value={null}
                 button={true}
                 showText={false}
-                openModal={(new Date(Date.now()) < new Date(start)) ? setEditTrainingDetailsModalOpen : setEditTrainingAttendanceModalOpen}
+                openModal={openEditTrainingModal}
             />
             <TrainingDetailsModal
                 isOpen={trainingDetailsModalOpen}
