@@ -50,9 +50,19 @@ async function editUserAPI(token, id, membership, level) {
     return editUserResponse
 }
 
+async function getUsersByExpiringMembershipsAPI(token) {
+    const getUsersByExpiringMembershipsResponse = await axios.get('http://localhost:3000/api/admin/user/byExpiringMembership', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return getUsersByExpiringMembershipsResponse
+}
+
 export {
     getUsersByFirstNameAndLastNameAPI,
     getNumberOfUsersAPI,
     getUsersByPageAPI,
-    editUserAPI
+    editUserAPI,
+    getUsersByExpiringMembershipsAPI
 }
