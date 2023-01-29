@@ -161,4 +161,19 @@ router.get('/byBirthdays', async(req, res) => {
     res.status(200).json(birthdayUsers)
 })
 
+router.get('/byAwards', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const awardsUsers = await userController.getByAwards()
+    const databaseConnection = await generalController.checkDatabaseConnection(awardsUsers)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(awardsUsers)
+})
+
 module.exports = router

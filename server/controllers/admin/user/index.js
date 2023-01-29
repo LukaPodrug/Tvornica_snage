@@ -106,6 +106,26 @@ async function getByBirthdays() {
     }
 }
 
+async function getByAwards() {
+    try {
+        const awardsUsers = await database`
+            select
+            cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as reservationsDone,
+            cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as reservationsSkipped,
+            cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as nonReservationsDone,
+            "userId", u.image, u."firstName", u."lastName", u."dateOfBirth", u.membership, u.level
+            from reservations r
+            join trainings t on r."trainingId" = t.id 
+            join users u on r."userId" = u.id
+            where t.start > ${new Date(Date.now() - 30*24*60*60*1000)}
+            group by "userId", u.image, u."firstName", u."lastName", u."dateOfBirth", u.membership, u.level`
+        return awardsUsers
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getById,
     editDetails,
@@ -114,5 +134,6 @@ module.exports = {
     getByIds,
     getTotalNumber,
     getByExpiringMemberships,
-    getByBirthdays
+    getByBirthdays,
+    getByAwards
 }
