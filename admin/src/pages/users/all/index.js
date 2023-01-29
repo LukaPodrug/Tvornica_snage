@@ -91,6 +91,7 @@ function AllUsersPage() {
                     :
                     <UsersSection
                         users={filter ? filteredUsers.slice((page - 1) * 5, (page - 1) * 5 + 5) : usersByPage}
+                        showAwards={false}
                         showToggle={false}
                         toggled={null}
                         changeToggled={() => {}}

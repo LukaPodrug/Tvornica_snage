@@ -5,6 +5,7 @@ function ReservationsSection({ users, toggled, changeToggled, page }) {
     return (
         <UsersSection
             users={users}
+            showAwards={false}
             showToggle={true}
             toggled={toggled}
             changeToggled={changeToggled}

@@ -101,6 +101,7 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
                         :
                         <UsersSection
                             users={filteredUsers.slice((page - 1) * 10, (page - 1) * 10 + 10)}
+                            showAwards={false}
                             showToggle={false}
                             toggled={null}
                             changeToggled={() => {}}

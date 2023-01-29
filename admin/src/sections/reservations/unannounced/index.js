@@ -24,6 +24,7 @@ function UnannouncedSection({ allUsers, users, page, removeReservation, reservat
             />
             <UsersSection
                 users={users}
+                showAwards={false}
                 showToggle={false}
                 toggled={null}
                 changeToggled={null}

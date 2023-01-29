@@ -49,6 +49,7 @@ function BirthdaysUsersPage() {
                     :
                     <UsersSection
                         users={birthdayUsers.slice((page - 1) * 6, (page - 1) * 6 + 6)}
+                        showAwards={false}
                         showToggle={false}
                         toggled={null}
                         changeToggled={() => {}}

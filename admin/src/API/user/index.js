@@ -68,11 +68,21 @@ async function getUsersByBirthdaysAPI(token) {
     return getUsersByBirthdaysResponse
 }
 
+async function getUsersByAwardsAPI(token) {
+    const getUsersByAwardsResponse = await axios.get('http://localhost:3000/api/admin/user/byAwards', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return getUsersByAwardsResponse
+}
+
 export {
     getUsersByFirstNameAndLastNameAPI,
     getNumberOfUsersAPI,
     getUsersByPageAPI,
     editUserAPI,
     getUsersByExpiringMembershipsAPI,
-    getUsersByBirthdaysAPI
+    getUsersByBirthdaysAPI,
+    getUsersByAwardsAPI
 }
