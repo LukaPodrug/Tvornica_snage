@@ -5,6 +5,7 @@ import moment from 'moment'
 
 import store from '../../../../store'
 import ModalHeader from '../../../../sections/modals/header'
+import Image from '../../../../components/image'
 import Info from '../../../../components/info'
 import TextInput from '../../../../components/input/text'
 import NumberInput from '../../../../components/input/number'
@@ -97,6 +98,9 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
                 <form
                     className={styles.form}
                 >
+                    <Image
+                        image={image}
+                    />
                     <div
                         className={styles.data}
                     >
