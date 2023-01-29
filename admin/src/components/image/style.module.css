@@ -1,4 +1,10 @@
 .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.image {
     padding: 10px;
 
     background-color: #e6e6e6;
@@ -6,9 +12,41 @@
     border-radius: 10px;
 }
 
-.wrapper img {
-    width: 250px;
-    height: 300px;
+.image img {
+    width: 270px;
+    height: 270px;
 
     border-radius: 10px;
+}
+
+.icon {
+    background-color: #90EE90;
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100%;
+
+    padding: 5px;
+
+    position: relative;
+    top: -30px;
+    left: 20px;
+}
+
+.icon:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+
+.icon img {
+    width: 30px;
+    height: 25px;
+
+    border-radius: 0;
 }

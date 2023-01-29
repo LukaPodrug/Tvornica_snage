@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil'
 
 import store from './store'
 import Layout from './components/layout'
+import RegistrationPage from './pages/registration'
 import LoginPage from './pages/login'
 import ProfilePage from './pages/profile'
 import TrainingsPage from './pages/trainings'
@@ -90,7 +91,7 @@ function App() {
           >
             <Route
               path='/registration'
-              element={ !loggedIn ? <div>REGISTRATION</div> : <Navigate to='/profile'/> }
+              element={ !loggedIn ? <RegistrationPage/> : <Navigate to='/profile'/> }
             />
             <Route
               path='/login'

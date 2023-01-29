@@ -4,8 +4,8 @@ import styles from './style.module.css'
 
 function Button({ disabled, text, method, loading, showMessage, message, changeMessage, buttonStyle, messageStyle }) {
     function work() {
-        method()
         changeMessage(null)
+        method()
     }
 
     return (

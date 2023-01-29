@@ -1,0 +1,97 @@
+.wrapper {
+    max-width: calc(100vw - 250px);
+    width: calc(100% - 250px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window {
+    display: flex;
+    flex-direction: column;
+
+    background-color: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 30px;
+}
+
+.header {
+    margin: 1em;
+    margin-top: 0.5em;
+
+    width: fill-available;
+
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.image img {
+    width: 250px;
+    height: 250px;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1em;
+}
+
+.label {
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.input {
+    border: none;
+}
+
+.input:hover {
+    box-shadow: 0 0 10px #90EE90;
+}
+
+.input:focus {
+    outline: none;
+
+    box-shadow: 0 0 10px #35c135;
+}
+
+.button {    
+    min-width: 210px;
+    max-width: 210px;
+
+    background-color: #90EE90;
+
+    transition: all ease 0.5s;
+}
+
+.button:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+
+.message {
+    background-color: #E04F5F;
+
+    color: #ffffff;
+}

@@ -100,6 +100,9 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
                 >
                     <Image
                         image={image}
+                        showUpload={false}
+                        upload={() => {}}
+                        style={null}
                     />
                     <div
                         className={styles.data}
