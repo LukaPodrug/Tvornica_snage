@@ -79,11 +79,27 @@ async function getTotalNumber() {
     }
 }
 
+async function getByExpiringMemberships() {
+    try {
+        const expiringMembershipUsers = await database`
+            select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
+            from users
+            where membership < ${new Date(Date.now() + 7*24*60*60*1000)}
+            order by membership DESC`
+        return expiringMembershipUsers
+    }
+    catch(error) {
+        console.log(error)
+        return error
+    }
+}
+
 module.exports = {
     getById,
     editDetails,
     getByName,
     getByPage,
     getByIds,
-    getTotalNumber
+    getTotalNumber,
+    getByExpiringMemberships
 }
