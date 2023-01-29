@@ -118,10 +118,13 @@ async function getByAwards() {
             join trainings t on r."trainingId" = t.id 
             join users u on r."userId" = u.id
             where t.start > ${new Date(Date.now() - 30*24*60*60*1000)}
-            group by "userId", u.image, u."firstName", u."lastName", u."dateOfBirth", u.membership, u.level`
+            group by "userId", u.image, u."firstName", u."lastName", u."dateOfBirth", u.membership, u.level
+            order by reservationsDone DESC, reservationsSkipped ASC, nonReservationsDone DESC
+            limit 6`
         return awardsUsers
     }
     catch(error) {
+        console.log(error)
         return error
     }
 }
