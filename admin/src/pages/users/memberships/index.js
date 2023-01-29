@@ -19,7 +19,7 @@ function MembershipsUsersPage() {
     const [usersLoading, setUsersLoading] = useState(true)
 
     useEffect(() => {
-        async function getUsersByPage() {
+        async function getUsersByExpiringMemberships() {
             try {
                 const getUsersByExpiringMembershipsResponse = await getUsersByExpiringMembershipsAPI(token)
                 setExpiringMembershipUsers(getUsersByExpiringMembershipsResponse.data)
@@ -32,7 +32,7 @@ function MembershipsUsersPage() {
 
         async function fetchAPI() {
             setUsersLoading(true)
-            await getUsersByPage()
+            await getUsersByExpiringMemberships()
             setTimeout(() => {
                 setUsersLoading(false)
             }, 500)

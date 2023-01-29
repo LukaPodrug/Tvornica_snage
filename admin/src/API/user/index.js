@@ -59,10 +59,20 @@ async function getUsersByExpiringMembershipsAPI(token) {
     return getUsersByExpiringMembershipsResponse
 }
 
+async function getUsersByBirthdaysAPI(token) {
+    const getUsersByBirthdaysResponse = await axios.get('http://localhost:3000/api/admin/user/byBirthdays', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return getUsersByBirthdaysResponse
+}
+
 export {
     getUsersByFirstNameAndLastNameAPI,
     getNumberOfUsersAPI,
     getUsersByPageAPI,
     editUserAPI,
-    getUsersByExpiringMembershipsAPI
+    getUsersByExpiringMembershipsAPI,
+    getUsersByBirthdaysAPI
 }
