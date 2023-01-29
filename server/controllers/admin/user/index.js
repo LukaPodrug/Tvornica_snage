@@ -89,7 +89,19 @@ async function getByExpiringMemberships() {
         return expiringMembershipUsers
     }
     catch(error) {
-        console.log(error)
+        return error
+    }
+}
+
+async function getByBirthdays() {
+    try {
+        const birthdayUsers = await database`
+            select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
+            from users
+            where date_part('day', "dateOfBirth") = date_part('day', CURRENT_DATE + INTERVAL '1day') and date_part('month', "dateOfBirth") = date_part('month', CURRENT_DATE + INTERVAL '1day')`
+        return birthdayUsers
+    }
+    catch(error) {
         return error
     }
 }
@@ -101,5 +113,6 @@ module.exports = {
     getByPage,
     getByIds,
     getTotalNumber,
-    getByExpiringMemberships
+    getByExpiringMemberships,
+    getByBirthdays
 }

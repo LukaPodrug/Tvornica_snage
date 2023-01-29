@@ -146,4 +146,19 @@ router.get('/byExpiringMembership', async(req, res) => {
     res.status(200).json(expiringMembershipUsers)
 })
 
+router.get('/byBirthdays', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const birthdayUsers = await userController.getByBirthdays()
+    const databaseConnection = await generalController.checkDatabaseConnection(birthdayUsers)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    res.status(200).json(birthdayUsers)
+})
+
 module.exports = router
