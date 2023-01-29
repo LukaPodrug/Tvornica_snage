@@ -139,18 +139,21 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                         add={add}
                     />
             }
-            <EditUserModal
-                isOpen={editUserDetailsModalOpen}
-                changeIsOpen={setEditUserDetailsModalOpen}
-                id={id}
-                image={image}
-                firstName={firstName}
-                lastName={lastName}
-                membership={membership}
-                level={level}
-                userEdited={userEdited}
-                changeUserEdited={changeUserEdited}
-            />
+            {
+                editUserDetailsModalOpen &&
+                    <EditUserModal
+                        isOpen={true}
+                        changeIsOpen={setEditUserDetailsModalOpen}
+                        id={id}
+                        image={image}
+                        firstName={firstName}
+                        lastName={lastName}
+                        membershipOld={membership}
+                        levelOld={level}
+                        userEdited={userEdited}
+                        changeUserEdited={changeUserEdited}
+                    />
+            }
         </div>
     )
 }
