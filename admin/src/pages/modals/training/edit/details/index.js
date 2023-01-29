@@ -298,18 +298,18 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                             inputStyle={styles.input}
                         />
                     </div>
-                    <Button
-                        disabled={disabled}
-                        text='submit'
-                        method={() => editTraining()}
-                        loading={loading}
-                        showMessage={true}
-                        message={message}
-                        changeMessage={setMessage}
-                        buttonStyle={styles.button}
-                        messageStyle={success ? styles.messageSuccess : styles.messageFail}
-                    />
                 </form>
+                <Button
+                    disabled={disabled}
+                    text='submit'
+                    method={() => editTraining()}
+                    loading={loading}
+                    showMessage={true}
+                    message={message}
+                    changeMessage={setMessage}
+                    buttonStyle={styles.button}
+                    messageStyle={success ? styles.messageSuccess : styles.messageFail}
+                />
             </div>
         </Modal>
     )

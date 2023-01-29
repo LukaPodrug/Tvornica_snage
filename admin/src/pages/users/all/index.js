@@ -45,10 +45,16 @@ function AllUsersPage() {
         }
 
         if(firstName === '' && lastName === '') {
-            setFilter(false)
             fetchAPI()
         }
     }, [page, userEdited, firstName, lastName])
+
+    useEffect(() => {
+        if(firstName === '' && lastName === '') {
+            setFilter(false)
+            setPage(1)
+        }
+    }, [firstName, lastName])
 
     async function searchByFirstNameAndLastName() {
         try {

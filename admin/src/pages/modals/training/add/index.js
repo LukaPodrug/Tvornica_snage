@@ -264,7 +264,8 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                             inputStyle={styles.input}
                         />
                     </div>
-                    <Button
+                </form>
+                <Button
                         disabled={false}
                         text='submit'
                         method={() => addTraining()}
@@ -275,7 +276,6 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                         buttonStyle={styles.button}
                         messageStyle={success ? styles.messageSuccess : styles.messageFail}
                     />
-                </form>
             </div>
         </Modal>
     )

@@ -8,11 +8,18 @@ function ImageInput({ isOpen, changeIsOpen, image, changeImage }) {
     useEffect(() => {
         if(isOpen) {
             imageInputRef.current.click()
+            const interval = setInterval(() => {
+                console.log('aaaa')
+                if(imageInputRef.current.value === '') {
+                    changeIsOpen(false)
+                    clearInterval(interval)
+                }
+            }, 500)
         }
     }, [isOpen])
 
     function uploadImage(e) {
-        if(e.target.value.length > 0){
+        if(e.target.value.length > 0) {
             changeImage(e.target.files[0])
         } 
         else {
@@ -28,9 +35,9 @@ function ImageInput({ isOpen, changeIsOpen, image, changeImage }) {
             <input
                 className={styles.input}
                 type='file'
+                value={null}
                 accept='image/*'
                 ref={imageInputRef}
-                value={null}
                 onChange={(e) => uploadImage(e)}
             />
         </div>
