@@ -32,7 +32,8 @@ async function getByName(firstName, lastName) {
         const users = await database`
             select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
-            where LOWER("firstName") like LOWER(${'%' + firstName + '%'}) and LOWER("lastName") like LOWER(${'%' + lastName + '%'})`
+            where LOWER("firstName") like LOWER(${'%' + firstName + '%'}) and LOWER("lastName") like LOWER(${'%' + lastName + '%'})
+            order by id`
         return users
     }
     catch(error) {
@@ -45,8 +46,9 @@ async function getByPage(page, numberOfUsers) {
         const users = await database`
             select id, "firstName", "lastName", "dateOfBirth", "image", "membership", "level"
             from users
+            order by id
             offset ${(page - 1) * numberOfUsers} rows
-            fetch first ${numberOfUsers} row only`
+            fetch next ${numberOfUsers} row only`
         return users
     }
     catch(error) {
@@ -110,21 +112,20 @@ async function getByAwards() {
     try {
         const awardsUsers = await database`
             select
-            cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as reservationsDone,
-            cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as reservationsSkipped,
-            cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as nonReservationsDone,
-            "userId", u.image, u."firstName", u."lastName", u."dateOfBirth", u.membership, u.level
-            from reservations r
-            join trainings t on r."trainingId" = t.id 
-            join users u on r."userId" = u.id
-            where t.start > ${new Date(Date.now() - 30*24*60*60*1000)}
-            group by "userId", u.image, u."firstName", u."lastName", u."dateOfBirth", u.membership, u.level
-            order by reservationsDone DESC, reservationsSkipped ASC, nonReservationsDone DESC
+            cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as "reservationsDone",
+            cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as "reservationsSkipped",
+            cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as "nonReservationsDone",
+            "userId", users.image, users."firstName", users."lastName", users."dateOfBirth", users.membership, users.level
+            from reservations 
+            join trainings on reservations."trainingId" = trainings.id 
+            join users on reservations."userId" = users.id
+            where trainings.start > ${new Date(Date.now() - 30*24*60*60*1000)}
+            group by "userId", users.image, users."firstName", users."lastName", users."dateOfBirth", users.membership, users.level
+            order by "reservationsDone" DESC, "reservationsSkipped" ASC, "nonReservationsDone" DESC
             limit 6`
         return awardsUsers
     }
     catch(error) {
-        console.log(error)
         return error
     }
 }
