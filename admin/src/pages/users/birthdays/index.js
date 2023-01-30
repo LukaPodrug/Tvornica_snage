@@ -56,7 +56,7 @@ function BirthdaysUsersPage() {
                         reduced={false}
                         page={page}
                         showEdit={true}
-                        message='no users with expiring memberships'
+                        message='no users with birthday tommorow'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
                         showDelete={false}

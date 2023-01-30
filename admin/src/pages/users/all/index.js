@@ -56,6 +56,31 @@ function AllUsersPage() {
         }
     }, [firstName, lastName])
 
+    useEffect(() => {
+        async function getUsersByFirstNameAndLastName() {
+            try {
+                const getUsersByFirstNameAndLastNameResponse = await getUsersByFirstNameAndLastNameAPI(token, firstName, lastName)
+                setFilteredUsers(getUsersByFirstNameAndLastNameResponse.data)
+                setMaxPage(Math.ceil(getUsersByFirstNameAndLastNameResponse.data.length / 5))
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            setUsersLoading(true)
+            await getUsersByFirstNameAndLastName()
+            setTimeout(() => {
+                setUsersLoading(false)
+            }, 500)
+        }
+
+        if(filter) {
+            fetchAPI()
+        }
+    }, [userEdited])
+
     async function searchByFirstNameAndLastName() {
         try {
             setPage(1)

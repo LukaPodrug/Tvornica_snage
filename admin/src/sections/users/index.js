@@ -29,9 +29,9 @@ function UsersSection({ users, showAwards, showToggle, toggled, changeToggled, r
                             level={user.level}
                             reduced={reduced}
                             showAwards={showAwards}
-                            reservationsDone={user.reservationsdone}
-                            reservationsSkipped={user.reservationsskipped}
-                            unannouncedDone={user.nonreservationsdone}
+                            reservationsDone={user.reservationsDone}
+                            reservationsSkipped={user.reservationsSkipped}
+                            unannouncedDone={user.nonReservationsDone}
                             toggled={toggled && toggled[index]}
                             changeToggled={changeToggled}
                             showToggle={showToggle}
