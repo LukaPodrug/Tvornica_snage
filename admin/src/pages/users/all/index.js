@@ -24,6 +24,13 @@ function AllUsersPage() {
     const [usersLoading, setUsersLoading] = useState(true)
 
     useEffect(() => {
+        if(firstName === '' && lastName === '') {
+            setFilter(false)
+            setPage(1)
+        }
+    }, [firstName, lastName])
+
+    useEffect(() => {
         async function getUsersByPage() {
             try {
                 const getNumberOfUsersResponse = await getNumberOfUsersAPI(token)
@@ -44,17 +51,10 @@ function AllUsersPage() {
             }, 500)
         }
 
-        if(firstName === '' && lastName === '') {
+        if(!filter) {
             fetchAPI()
         }
-    }, [page, userEdited, firstName, lastName])
-
-    useEffect(() => {
-        if(firstName === '' && lastName === '') {
-            setFilter(false)
-            setPage(1)
-        }
-    }, [firstName, lastName])
+    }, [page, userEdited, filter])
 
     useEffect(() => {
         async function getUsersByFirstNameAndLastName() {
