@@ -97,9 +97,19 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Coach is occupied at that period')
         return
     }
-    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.title, req.body.regime, req.body.exercises)
-    const databaseConnection4 = await generalController.checkDatabaseConnection(updatedTraining)
+    const numberOfReservations = await reservationController.getNumberOfReservationsByTrainingId(req.body.id)
+    const databaseConnection4 = await generalController.checkDatabaseConnection(numberOfReservations)
     if(!databaseConnection4) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(numberOfReservations > req.body.capacity) {
+        res.status(400).json('Number of existing reservations is higher than new capacity')
+        return
+    }
+    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.title, req.body.regime, req.body.exercises)
+    const databaseConnection5 = await generalController.checkDatabaseConnection(updatedTraining)
+    if(!databaseConnection5) {
         res.status(500).json('Error with database')
         return
     }
