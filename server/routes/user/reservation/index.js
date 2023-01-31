@@ -68,9 +68,19 @@ router.post('/', async(req, res) => {
         res.status(400).json('No available space for this training')
         return
     }
-    const newReservation = await reservationController.addNew(tokenValidation.id, req.body.trainingId)
-    const databaseConnection5 = await generalController.checkDatabaseConnection(newReservation)
+    const userOccupancy = await reservationController.checkUserOccupancy(tokenValidation.id, training.start, training.finish)
+    const databaseConnection5 = await generalController.checkDatabaseConnection(userOccupancy)
     if(!databaseConnection5) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(userOccupancy) {
+        res.status(400).json('User is occupied at that period')
+        return
+    }
+    const newReservation = await reservationController.addNew(tokenValidation.id, req.body.trainingId)
+    const databaseConnection6 = await generalController.checkDatabaseConnection(newReservation)
+    if(!databaseConnection6) {
         res.status(500).json('Error with database')
         return
     }

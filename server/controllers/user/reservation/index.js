@@ -88,11 +88,26 @@ async function getStatisticsByUserId(userId) {
     }
 }
 
+async function checkUserOccupancy(userId , start, finish) {
+    try {
+        const userOccupancy = await database`
+            select *
+            from reservations join trainings on "trainingId" = id
+            where ("userId" = ${userId} and ${start} >= start and ${start} < finish)
+            or ("userId" = ${userId} and ${finish} > start and ${finish} <= finish)`
+        return userOccupancy[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getByUserIdAndTrainingId,
     getCountByTrainingId,
     addNew,
     remove,
     getActiveByUserId,
-    getStatisticsByUserId
+    getStatisticsByUserId,
+    checkUserOccupancy
 }
