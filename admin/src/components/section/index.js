@@ -15,7 +15,7 @@ function Section({ id, image, property, value, button, showText, openModal, remo
 
     return (
         <div 
-            className={styles.wrapper + ' ' + (button && styles.button)}
+            className={styles.wrapper + ' ' + (button && styles.button) + ' ' + (property === 'coach' && styles.coach)}
             onClick={button ? () => clickHandle() : () => {}}
         >
             {

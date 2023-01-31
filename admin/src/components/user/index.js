@@ -28,28 +28,36 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                     remove={null}
                     add={null}
                 />
-                <Section
-                    id={null}
-                    image={null}
-                    property='first name'
-                    value={firstName}
-                    button={false}
-                    showText={true}
-                    openModal={null}
-                    remove={null}
-                    add={null}
-                />
-                <Section
-                    id={null}
-                    image={null}
-                    property='last name'
-                    value={lastName}
-                    button={false}
-                    showText={true}
-                    openModal={null}
-                    remove={null}
-                    add={null}
-                />
+                <div
+                    className={styles.name}
+                >
+                    <Section
+                        id={null}
+                        image={null}
+                        property='first name'
+                        value={firstName}
+                        button={false}
+                        showText={true}
+                        openModal={null}
+                        remove={null}
+                        add={null}
+                    />
+                </div>
+                <div
+                    className={styles.name}
+                >
+                    <Section
+                        id={null}
+                        image={null}
+                        property='last name'
+                        value={lastName}
+                        button={false}
+                        showText={true}
+                        openModal={null}
+                        remove={null}
+                        add={null}
+                    />
+                </div>
                 {
                     !reduced &&
                         <>

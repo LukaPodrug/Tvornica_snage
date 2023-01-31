@@ -16,6 +16,21 @@
     padding: 5px 20px;
 }
 
+.data {
+    display: flex;
+    justify-content: space-between;
+
+    width: fill-available;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+
+    width: fit-content
+}
+
 .section {
     width: fit-content;
 
@@ -23,7 +38,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:0.1em;
+    gap: 0.1em;
 }
 
 .key {

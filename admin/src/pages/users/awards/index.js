@@ -56,7 +56,7 @@ function AwardsUsersPage() {
                         reduced={false}
                         page={page}
                         showEdit={true}
-                        message='no users with expiring memberships'
+                        message='no users wto award'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
                         showDelete={false}
