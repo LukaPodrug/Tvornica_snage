@@ -127,6 +127,34 @@ async function getByCoachIdAndDate(coachId, startOfDay) {
     }
 }
 
+async function checkCoachOccupancyNew(coachId, start, finish) {
+    try {
+        const coachOccupation = await database`
+            select
+            from trainings
+            where ("coachId" = ${coachId} and ${start} >= start and ${start} < finish)
+            or ("coachId" = ${coachId} and ${finish} > start and ${finish} <= finish)`
+        return coachOccupation[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
+async function checkCoachOccupancyEdit(id, coachId, start, finish) {
+    try {
+        const coachOccupation = await database`
+            select
+            from trainings
+            where ("coachId" = ${coachId} and ${start} >= start and ${start} < finish and id != ${id})
+            or ("coachId" = ${coachId} and ${finish} > start and ${finish} <= finish and id != ${id})`
+        return coachOccupation[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     addNew,
     getById,
@@ -136,5 +164,7 @@ module.exports = {
     checkRoomOccupationNew,
     checkRoomOccupationEdit,
     getByCoachId,
-    getByCoachIdAndDate
+    getByCoachIdAndDate,
+    checkCoachOccupancyNew,
+    checkCoachOccupancyEdit
 }
