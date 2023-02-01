@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
 
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+
+    borderRadius: 10
   },
   logo: {
     width: 50,
