@@ -1,13 +1,13 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, StatusBar, Platform } from 'react-native'
 
-export default function App() {
+import Header from './components/header'
+
+function App() {
   return (
     <View 
       style={styles.wrapper}
     >
-      <Text>
-        TVORNICA SNAGE USER APP
-      </Text>
+      <Header/>
     </View>
   )
 }
@@ -18,7 +18,12 @@ const styles = StyleSheet.create({
     height: '100%',
 
     display: 'flex',
-    justifyContent: 'center',
-    alignItems:'center'
+    alignItems:'center',
+
+    marginTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+
+    backgroundColor: '#000000'
   }
 })
+
+export default App
