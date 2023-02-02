@@ -9,7 +9,6 @@ function ImageInput({ isOpen, changeIsOpen, image, changeImage }) {
         if(isOpen) {
             imageInputRef.current.click()
             const interval = setInterval(() => {
-                console.log('aaaa')
                 if(imageInputRef.current.value === '') {
                     changeIsOpen(false)
                     clearInterval(interval)
