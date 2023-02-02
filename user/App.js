@@ -15,7 +15,7 @@ function App() {
 
   if(!fontsLoaded) {
     return (
-      <LoadingPage/>
+      <LoadingPage style={null}/>
     )
   }
 

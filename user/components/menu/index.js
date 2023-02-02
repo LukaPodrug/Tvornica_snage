@@ -21,6 +21,7 @@ const Tab = createBottomTabNavigator()
 function Menu() {
     const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
+    const [, setOwnData] = useRecoilState(store.ownData)
 
     return (
         <Tab.Navigator
@@ -97,6 +98,7 @@ function Menu() {
                                 tabPress: () => {
                                     setToken(null)
                                     setLoggedIn(false)
+                                    setOwnData(null)
                                 }
                             })}
                         />

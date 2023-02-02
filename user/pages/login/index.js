@@ -42,15 +42,14 @@ function LoginPage() {
       setLoading(true)
       try {
         const loginResponse = await loginAPI(username, password)
-        setLoading(false)
-        setLoggedIn(true)
         setToken(loginResponse.headers.authorization)
-        localStorage.setItem('token', loginResponse.headers.authorization)
+        setLoggedIn(true)
+        setLoading(false)
       }
       catch(error) {
-        console.log(error)
         setLoading(false)
         setMessage(error.response.data)
+        return
       }
     }
   }
@@ -119,7 +118,9 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#000000',
 
-    paddingBottom: 80
+    paddingBottom: 80,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   loginPageWrapperWithKeyboard: {
     justifyContent: 'flex-start',

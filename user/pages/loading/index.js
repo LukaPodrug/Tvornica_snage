@@ -1,9 +1,9 @@
-import { StyleSheet, View, ActivityIndicator, Dimensions } from 'react-native'
+import { StyleSheet, View, ActivityIndicator } from 'react-native'
 
-function LoadingPage() {
+function LoadingPage({ style }) {
     return (
         <View
-            style={styles.wrapper}
+            style={[styles.loadingPageWrapper, style && style]}
         >
             <ActivityIndicator
                 size='large'
@@ -14,7 +14,7 @@ function LoadingPage() {
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
+    loadingPageWrapper: {
         width: '100%',
         height: '100%',
 
