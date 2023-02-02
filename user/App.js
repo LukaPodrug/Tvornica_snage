@@ -1,9 +1,9 @@
 import { StyleSheet, View, StatusBar, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { RecoilRoot } from 'recoil'
-import AppLoading from 'expo-app-loading'
 import { useFonts, Ubuntu_400Regular, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu'
 
+import LoadingPage from './pages/loading'
 import Header from './components/header'
 import Menu from './components/menu'
 
@@ -15,7 +15,7 @@ function App() {
 
   if(!fontsLoaded) {
     return (
-      <AppLoading/>
+      <LoadingPage/>
     )
   }
 
