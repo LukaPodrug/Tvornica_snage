@@ -1,6 +1,6 @@
-import { View, TouchableOpacity, Text } from 'react-native'
+import { View, TouchableOpacity, ActivityIndicator, Text } from 'react-native'
 
-function Button({ showMessage, messageText, work, buttonText, wrapperStyle, buttonWrapperStyle, buttonTextStyle, messageWrapperStyle, messageTextStyle }) {
+function Button({ loading, showMessage, messageText, work, buttonText, wrapperStyle, buttonWrapperStyle, buttonTextStyle, messageWrapperStyle, messageTextStyle }) {
     return (
         <View
             style={wrapperStyle}
@@ -9,11 +9,19 @@ function Button({ showMessage, messageText, work, buttonText, wrapperStyle, butt
                 style={buttonWrapperStyle}
                 onPress={() => work()}
             >
-                <Text
-                    style={buttonTextStyle}
-                >
-                    {buttonText}
-                </Text>
+                {
+                    loading ? 
+                        <ActivityIndicator
+                            size='small'
+                            color='#000000'
+                        />
+                        :
+                        <Text
+                            style={buttonTextStyle}
+                        >
+                            {buttonText}
+                        </Text>
+                }
             </TouchableOpacity>
             {
                 showMessage &&

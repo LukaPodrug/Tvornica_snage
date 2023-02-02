@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, View, Keyboard } from 'react-native'
+import { useRecoilState } from 'recoil'
 
+import store from '../../store'
 import Title from '../../components/title'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
+import { loginAPI } from '../../API/auth'
 
 function LoginPage() {
+  const [, setLoggedIn] = useRecoilState(store.loggedIn)
+  const [, setToken] = useRecoilState(store.token)
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const [keyboardVisible, setKeyboardVisible] = useState(false)
   const [message, setMessage] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -31,12 +38,30 @@ function LoginPage() {
   }, [])
 
   async function login() {
+    if(username !== '' && password !== '') {
+      setLoading(true)
+      try {
+        const loginResponse = await loginAPI(username, password)
+        setLoading(false)
+        setLoggedIn(true)
+        setToken(loginResponse.headers.authorization)
+        localStorage.setItem('token', loginResponse.headers.authorization)
+      }
+      catch(error) {
+        console.log(error)
+        setLoading(false)
+        setMessage(error.response.data)
+      }
+    }
+  }
 
+  function removeMessage() {
+    setMessage(null)
   }
 
   return (
     <View
-      style={[styles.loginPageWrapper, {paddingBottom: keyboardVisible ? 0 : 80}]}
+      style={[styles.loginPageWrapper, (keyboardVisible && styles.loginPageWrapperWithKeyboard)]}
     >
       <View
         style={styles.loginPageWindow}
@@ -46,6 +71,7 @@ function LoginPage() {
           style={styles.titleText}
         />
         <InputText
+          removeMessage={removeMessage}
           password={false}
           showLabel={true}
           label='username'
@@ -56,6 +82,7 @@ function LoginPage() {
           inputStyle={styles.input}
         />
         <InputText
+          removeMessage={removeMessage}
           password={true}
           showLabel={true}
           label='password'
@@ -66,14 +93,15 @@ function LoginPage() {
           inputStyle={styles.input}
         />
         <Button
-          showMessage={message}
+          loading={loading}
+          showMessage={true}
           messageText={message}
           work={login}
           buttonText='submit'
           wrapperStyle={styles.buttonWrapper}
           buttonWrapperStyle={styles.button}
           buttonTextStyle={styles.buttonText}
-          messageWrapperStyle={styles.message}
+          messageWrapperStyle={[styles.message, styles.messageFail, ((message === null) && styles.hidden)]}
           messageTextStyle={styles.messageText}
         />
       </View>
@@ -87,9 +115,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    flexGrow: 1,
+    minHeight: '100%',
 
-    backgroundColor: '#000000'
+    backgroundColor: '#000000',
+
+    paddingBottom: 80
+  },
+  loginPageWrapperWithKeyboard: {
+    justifyContent: 'flex-start',
+
+    paddingTop: 20,
+
+    paddingBottom: 0
   },
   loginPageWindow: {
     width: '100%',
@@ -136,17 +173,16 @@ const styles = StyleSheet.create({
   },
 
   buttonWrapper: {
-
+    marginTop: 20,
   },
   button: {
-    marginTop: 20,
-    marginBottom: 30,
-
     padding: 10,
 
     borderRadius: 10,
 
-    backgroundColor: '#90ee90'
+    backgroundColor: '#90ee90',
+
+    minHeight: 42
   },
   buttonText: {
     fontFamily: 'Ubuntu_400Regular',
@@ -155,10 +191,24 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   message: {
+    marginTop: 15,
 
+    padding: 10,
+
+    borderRadius: 10
+  },
+  messageFail: {
+    backgroundColor: '#e04f5f'
   },
   messageText: {
-
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#ffffff'
+  },
+  hidden: {
+    opacity: 0
   }
 })
 

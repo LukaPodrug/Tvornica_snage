@@ -19,7 +19,8 @@ import logoutIcon from '../../assets/icons/logout.png'
 const Tab = createBottomTabNavigator()
 
 function Menu() {
-    const [loggedIn] = useRecoilState(store.loggedIn)
+    const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
+    const [, setToken] = useRecoilState(store.token)
 
     return (
         <Tab.Navigator
@@ -92,6 +93,12 @@ function Menu() {
                                     />
                                 )
                             }}
+                            listeners={() => ({
+                                tabPress: () => {
+                                    setToken(null)
+                                    setLoggedIn(false)
+                                }
+                            })}
                         />
                     </>
                     :
