@@ -25,13 +25,14 @@ function Menu() {
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
+                tabBarHideOnKeyboard: true,
 
                 tabBarStyle: styles.wrapper,
                 tabBarItemStyle: styles.tab,
                 tabBarLabelStyle: styles.label,
 
                 tabBarActiveTintColor: '#000000',
-                tabBarActiveBackgroundColor: '#e6e6e6',
+                tabBarActiveBackgroundColor: '#90ee90',
                 
                 tabBarInactiveTintColor: '#000000',
                 tabBarInctiveBackgroundColor: '#ffffff'
@@ -131,7 +132,10 @@ const styles = StyleSheet.create({
     wrapper: {
         height: 80,
 
-        borderRadius: 10
+        borderRadius: 10,
+        
+        position: 'absolute',
+        bottom: 0
     },
     tab: {
         display: 'flex',
