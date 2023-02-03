@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
 
 import store from '../../store'
 import LoadingPage from '../loading'
 import ProfileSection from '../../sections/profile'
+import Title from '../../components/title'
+import LoadingSection from '../../sections/loading'
 import TrainingsSection from '../../sections/trainings'
 import { getOwnDataAPI } from '../../API/user'
 import { getActiveReservationsAPI } from '../../API/reservation'
+import { getAllCoachesDataAPI } from '../../API/coach'
 
 function ProfilePage() {
+  const isFocused = useIsFocused()
+
   const [token] = useRecoilState(store.token)
   const [ownData, setOwnData] = useRecoilState(store.ownData)
+  const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
   const [activeReservations, setActiveReservations] = useState([])
 
   const [loading, setLoading] = useState(true)
+  const [reservationsLoading, setReservationsLoading] = useState(true)
 
   useEffect(() => {
     async function getOwnData() {
@@ -29,29 +37,59 @@ function ProfilePage() {
       }
     }
 
-    async function getActiveReservations() {
+    async function getAllCoachesData() {
       try {
-        const activeReservationsResponse = await getActiveReservations(token)
-        setActiveReservations(activeReservationsResponse.data)
-        setLoading(false)
+        const allCoachesDataResponse = await getAllCoachesDataAPI(token)
+        setAllCoachesData(allCoachesDataResponse.data)
       }
       catch(error) {
-        setLoading(false)
+        return
+      }
+    }
+
+    async function getActiveReservations() {
+      try {
+        setReservationsLoading(true)
+        const activeReservationsResponse = await getActiveReservationsAPI(token)
+        const activeReservationsHelp = []
+        activeReservationsResponse.data.forEach(reservation => {
+          allCoachesData.forEach(coach => {
+            if(reservation.coachId === coach.id) {
+              reservation.coachImage = coach.image
+              reservation.coachLastName = coach.lastName
+            }
+          })
+          activeReservationsHelp.push(reservation)
+        })
+        setActiveReservations(activeReservationsHelp)
+        setTimeout(() => {
+          setLoading(false)
+          setReservationsLoading(false)
+        }, 300)
+      }
+      catch(error) {
+        setTimeout(() => {
+          setLoading(false)
+          setReservationsLoading(false)
+        }, 300)
         return
       }
     }
 
     async function fetchAPI() {
-      if(!ownData) {
+      if(!ownData && !allCoachesData) {
         await getOwnData()
+        await getAllCoachesData()
       }
-      await getActiveReservations()
+      if(allCoachesData) {
+        await getActiveReservations()
+      }
     }
 
-    if(token) {
+    if(isFocused) {
       fetchAPI()
     }
-  }, [token])
+  }, [isFocused, allCoachesData])
 
   if(loading) {
     return <LoadingPage style={styles.loadingPage}/>
@@ -74,6 +112,24 @@ function ProfilePage() {
         infoLabelTextStyle={styles.infoLabelText}
         infoValueTextStyle={styles.infoValueText}
       />
+      <View
+        style={styles.trainingsSectionWrapper}
+      >
+        <Title
+          text='active reservations'
+          style={styles.titleText}
+        />
+        {
+          reservationsLoading ? 
+            <LoadingSection
+              style={null}
+            />
+            :
+            <TrainingsSection
+              trainings={activeReservations}
+            />
+        }
+      </View>
     </View>
   )
 }
@@ -130,6 +186,36 @@ const styles = StyleSheet.create({
   infoValueText: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 18
+  },
+
+  trainingsSectionWrapper: {
+    width: '100%',
+
+    flexGrow: 1,
+
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+
+    marginTop: 20,
+    marginBottom: 20,
+
+    backgroundColor: '#ffffff',
+
+    borderRadius: 10,
+
+  },
+  titleText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 18,
+
+    marginLeft: 10,
+    marginBottom: 20
+  },
+  scroll: {
+    flex: 1
   }
 })
 

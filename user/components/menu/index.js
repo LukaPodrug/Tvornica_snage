@@ -22,6 +22,7 @@ function Menu() {
     const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
     const [, setOwnData] = useRecoilState(store.ownData)
+    const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
     return (
         <Tab.Navigator
@@ -99,6 +100,7 @@ function Menu() {
                                     setToken(null)
                                     setLoggedIn(false)
                                     setOwnData(null)
+                                    setAllCoachesData(null)
                                 }
                             })}
                         />
