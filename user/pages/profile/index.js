@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView, View } from 'react-native'
+import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
@@ -58,17 +58,17 @@ function ProfilePage() {
         const statisticsHelp = [
           {
             name: 'done',
-            value: ownStatisticsResponse.data[0].reservationsDone,
+            value: ownStatisticsResponse.data[0].reservationsDone === 0 ? 0.0000001 : ownStatisticsResponse.data[0].reservationsDone,
             color: '#90ee90'
           },
           {
             name: 'skipped',
-            value: ownStatisticsResponse.data[0].reservationsSkipped,
+            value: ownStatisticsResponse.data[0].reservationsSkipped === 0 ? 0.0000001 : ownStatisticsResponse.data[0].reservationsSkipped,
             color: '#e04f5f'
           },
           {
             name: 'unnanounced',
-            value: ownStatisticsResponse.data[0].nonReservationsDone,
+            value: ownStatisticsResponse.data[0].nonReservationsDone === 0 ? 0.0000001 : ownStatisticsResponse.data[0].nonReservationsDone,
             color: '#fbec5d'
           },
         ]
@@ -176,28 +176,31 @@ function ProfilePage() {
               textStyle={styles.messageText}
             />
         }
-        <View
-          style={styles.statisticsSectionWrapper}
-        >
-          <Title
-            text='user statistics'
-            style={styles.titleText}
-          />
-          {
-            statisticsLoading ?
-              <LoadingSection
-                style={null}
-              />
-              :
-              <StatisticsSection
-                statistics={ownStatistics}
-                legendWrapperStyle={styles.chartLegendWrapper}
-                legendTabStyle={styles.chartLegendTab}
-                legendLabelTextStyle={styles.chartLegendLabelText}
-                legendValueTextStyle={styles.chartValueText}
-              />
-          }
-        </View>
+        {
+          (ownStatistics[0].value >= 1 || ownStatistics[1].value >= 1 || ownStatistics[2].value >= 1) &&
+          <View
+            style={styles.statisticsSectionWrapper}
+          >
+            <Title
+              text='user statistics'
+              style={styles.titleText}
+            />
+            {
+              statisticsLoading ?
+                <LoadingSection
+                  style={null}
+                />
+                :
+                <StatisticsSection
+                  statistics={ownStatistics}
+                  legendWrapperStyle={styles.chartLegendWrapper}
+                  legendTabStyle={styles.chartLegendTab}
+                  legendLabelTextStyle={styles.chartLegendLabelText}
+                  legendValueTextStyle={styles.chartValueText}
+                />
+            }
+          </View>
+        }
         <View
           style={styles.trainingsSectionWrapper}
         >
@@ -230,7 +233,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
 
-    minHeight: '100%',
+    minHeight: Dimensions.get('window').height - 100,
 
     backgroundColor: '#000000',
 

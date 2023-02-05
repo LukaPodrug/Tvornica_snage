@@ -35,7 +35,7 @@ function StatisticsSection({ statistics, legendWrapperStyle, legendTabStyle, leg
                                 <Text
                                     style={legendValueTextStyle}
                                 >
-                                    {statistic.value}
+                                    {Math.floor(statistic.value)}
                                 </Text>
                             </View>
                         )
