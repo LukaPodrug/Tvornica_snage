@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 
 import TrainingSection from './section'
+import TrainingCapacity from './capacity'
 import TrainingButton from './button'
 
 import calendarIcon from '../../assets/icons/calendar.png'
@@ -54,12 +55,9 @@ function Training({ id, date, coachImage, coachLastName, start, finish, numberOf
                     propertyTextStyle={styles.propertyText}
                     valueTextStyle={styles.valueText}
                 />
-                <TrainingSection
-                    image={finishIcon}
-                    property='finish'
-                    value={finish}
-                    wrapperStyle={styles.sectionWrapper}
-                    imageStyle={styles.sectionImage}
+                <TrainingCapacity
+                    numberOfReservations={numberOfReservations}
+                    capacity={capacity}
                     propertyTextStyle={styles.propertyText}
                     valueTextStyle={styles.valueText}
                 />

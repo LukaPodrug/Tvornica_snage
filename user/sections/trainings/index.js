@@ -28,7 +28,7 @@ function TrainingsSection({ trainings, emptyMessage }) {
                                 coachLastName={training.coachLastName}
                                 start={moment(training.start).format('HH:mm')}
                                 finish={moment(training.finish).format('HH:mm')}
-                                numberOfReservations={2}
+                                numberOfReservations={training.numberOfReservations}
                                 capacity={training.capacity}
                                 level={training.level}
                                 title={training.title}
