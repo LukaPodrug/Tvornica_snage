@@ -26,7 +26,12 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#ffffff',
 
-    borderRadius: 10
+    borderRadius: 10,
+
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#e6e6e6',
+
+    elevation: 8
   },
   logo: {
     width: 50,

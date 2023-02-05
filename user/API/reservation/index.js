@@ -9,6 +9,16 @@ async function getActiveReservationsAPI(token) {
     return getActiveReservationsResponse
 }
 
+async function getOwnStatisticsAPI(token) {
+    const getOwnStatisticsResponse = await axios.get('http://192.168.0.15:3000/api/user/reservation/statistics', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return getOwnStatisticsResponse
+}
+
 export {
-    getActiveReservationsAPI
+    getActiveReservationsAPI,
+    getOwnStatisticsAPI
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, ScrollView, View, Text } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
+import { DonutChart } from 'react-native-circular-chart'
 
 import store from '../../store'
 import LoadingPage from '../loading'
@@ -11,7 +12,7 @@ import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
 import TrainingsSection from '../../sections/trainings'
 import { getOwnDataAPI } from '../../API/user'
-import { getActiveReservationsAPI } from '../../API/reservation'
+import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/reservation'
 import { getAllCoachesDataAPI } from '../../API/coach'
 
 function ProfilePage() {
@@ -22,8 +23,10 @@ function ProfilePage() {
   const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
   const [activeReservations, setActiveReservations] = useState([])
+  const [ownStatistics, setOwnStatistics] = useState(null)
 
   const [loading, setLoading] = useState(true)
+  const [statisticsLoading, setStatisticsLoading] = useState(true)
   const [reservationsLoading, setReservationsLoading] = useState(true)
 
   useEffect(() => {
@@ -43,6 +46,40 @@ function ProfilePage() {
         setAllCoachesData(allCoachesDataResponse.data)
       }
       catch(error) {
+        return
+      }
+    }
+
+    async function getOwnStatistics() {
+      try {
+        setStatisticsLoading(true)
+        const ownStatisticsResponse = await getOwnStatisticsAPI(token)
+        const statisticsHelp = [
+          {
+            name: 'done',
+            value: ownStatisticsResponse.data[0].reservationsDone,
+            color: '#90ee90'
+          },
+          {
+            name: 'skipped',
+            value: ownStatisticsResponse.data[0].reservationsSkipped,
+            color: '#e04f5f'
+          },
+          {
+            name: 'unnanounced',
+            value: ownStatisticsResponse.data[0].nonReservationsDone,
+            color: '#fbec5d'
+          },
+        ]
+        setOwnStatistics(statisticsHelp)
+        setTimeout(() => {
+          setStatisticsLoading(false)
+        }, 300)
+      }
+      catch(error) {
+        setTimeout(() => {
+          setStatisticsLoading(false)
+        }, 300)
         return
       }
     }
@@ -82,6 +119,7 @@ function ProfilePage() {
         await getAllCoachesData()
       }
       if(allCoachesData) {
+        await getOwnStatistics()
         await getActiveReservations()
       }
     }
@@ -96,41 +134,115 @@ function ProfilePage() {
   }
 
   return (
-    <View
-      style={styles.profilePageWrapper}
-    >
-      <ProfileSection
-        image={ownData.image}
-        firstName={ownData.firstName}
-        lastName={ownData.lastName}
-        dateOfBirth={moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
-        username={ownData.username}
-        membership={moment(ownData.membership).format('DD/MM/YYYY')}
-        level={ownData.level}
-        wrapperStyle={styles.profileSectionWrapper}
-        imageStyle={styles.image}
-        infoLabelTextStyle={styles.infoLabelText}
-        infoValueTextStyle={styles.infoValueText}
-      />
+    <ScrollView>
       <View
-        style={styles.trainingsSectionWrapper}
+        style={styles.profilePageWrapper}
       >
-        <Title
-          text='active reservations'
-          style={styles.titleText}
+        <ProfileSection
+          image={ownData.image}
+          firstName={ownData.firstName}
+          lastName={ownData.lastName}
+          dateOfBirth={moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
+          username={ownData.username}
+          membership={moment(ownData.membership).format('DD/MM/YYYY')}
+          level={ownData.level}
+          wrapperStyle={styles.profileSectionWrapper}
+          imageStyle={styles.image}
+          infoLabelTextStyle={styles.infoLabelText}
+          infoValueTextStyle={styles.infoValueText}
         />
-        {
-          reservationsLoading ? 
-            <LoadingSection
-              style={null}
-            />
-            :
-            <TrainingsSection
-              trainings={activeReservations}
-            />
-        }
+        <View
+          style={styles.statisticsSectionWrapper}
+        >
+          <Title
+            text='user statistics'
+            style={styles.titleText}
+          />
+          {
+            statisticsLoading ? 
+              <LoadingSection/>
+              :
+              <DonutChart
+                data={ownStatistics}
+                strokeWidth={20}
+                radius={90}
+                type='round'
+                startAngle={0}
+                endAngle={360}
+                animationType='fade'
+                containerWidth={200}
+                containerHeight={200}
+                labelTitleStyle={styles.chartLabelText}
+                labelValueStyle={styles.chartValueText}
+              />
+          }
+          <View
+            style={styles.chartLegendWrapper}
+          >
+            <View
+              style={[styles.chartLegendTab, {backgroundColor: ownStatistics[0].color}]}
+            >
+              <Text
+                style={styles.chartLegendLabelText}
+              >
+                {ownStatistics[0].name}
+              </Text>
+              <Text
+                style={styles.chartLegendValueText}
+              >
+                {ownStatistics[0].value}
+              </Text>
+            </View>
+            <View
+              style={[styles.chartLegendTab, {backgroundColor: ownStatistics[1].color}]}
+            >
+              <Text
+                style={styles.chartLegendLabelText}
+              >
+                {ownStatistics[1].name}
+              </Text>
+              <Text
+                style={styles.chartLegendValueText}
+              >
+                {ownStatistics[1].value}
+              </Text>
+            </View>
+            <View
+              style={[styles.chartLegendTab, {backgroundColor: ownStatistics[2].color}]}
+            >
+              <Text
+                style={styles.chartLegendLabelText}
+              >
+                {ownStatistics[2].name}
+              </Text>
+              <Text
+                style={styles.chartLegendValueText}
+              >
+                {ownStatistics[2].value}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={styles.trainingsSectionWrapper}
+        >
+          <Title
+            text='active reservations'
+            style={styles.titleText}
+          />
+          {
+            reservationsLoading ? 
+              <LoadingSection
+                style={null}
+              />
+              :
+              <TrainingsSection
+                trainings={activeReservations}
+              />
+          }
+        </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -188,10 +300,62 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 
-  trainingsSectionWrapper: {
+  statisticsSectionWrapper: {
+    width: '100%',
+    height: 350,
+
+    marginTop: 20,
+
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+
+    backgroundColor: '#ffffff',
+
+    borderRadius: 10,
+
+    display: 'flex',
+    alignItems: 'center'
+  },
+  chartLabelText: {
+    display: 'none'
+  },
+  chartValueText: {
+    display: 'none'
+  },
+  chartLegendWrapper: {
     width: '100%',
 
-    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'row',
+
+    marginTop: 20
+  },
+  chartLegendTab: {
+    width: '33%',
+
+    paddingVertical: 5,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    borderRadius: 10
+  },
+  chartLegendLabelText: {
+    fontFamily: 'Ubuntu_400Regular',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+  chartLegendValueText: {
+    fontFamily: 'Ubuntu_400Regular',
+    textTransform: 'uppercase',
+    fontSize: 20
+  },
+
+  trainingsSectionWrapper: {
+    width: '100%',
 
     paddingTop: 20,
     paddingBottom: 20,
@@ -204,18 +368,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
 
     borderRadius: 10,
-
   },
+  scroll: {
+    flex: 1
+  },
+
   titleText: {
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
     fontSize: 18,
 
     marginLeft: 10,
-    marginBottom: 20
-  },
-  scroll: {
-    flex: 1
+    marginBottom: 20,
+
+    width: '100%'
   }
 })
 

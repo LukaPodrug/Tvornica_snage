@@ -1,13 +1,10 @@
-import { StyleSheet, ScrollView } from 'react-native'
 import moment from 'moment'
 
 import Training from '../../components/training'
 
 function TrainingsSection({ trainings }) {
     return (
-        <ScrollView
-            style={styles.scroll}
-        >
+        <>
             {
                 trainings.map((training, index) => {
                     return (
@@ -29,14 +26,8 @@ function TrainingsSection({ trainings }) {
                     )
                 })
             }
-        </ScrollView>
+        </>
     )
 }
-
-const styles = StyleSheet.create({
-    scroll: {
-        flex: 1
-    }
-})
 
 export default TrainingsSection
