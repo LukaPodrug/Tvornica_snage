@@ -76,11 +76,11 @@ async function getStatisticsByUserId(userId) {
     try {
         const statistics = await database`
             select
-            cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as reservationsDone,
-            cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as reservationsSkipped,
-            cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as nonReservationsDone
+            cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as "reservationsDone",
+            cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as "reservationsSkipped",
+            cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as "nonReservationsDone"
             from reservations join trainings on "trainingId" = id
-            where "userId" = ${userId} and finish > ${new Date(Date.now())}`
+            where "userId" = ${userId} and finish < ${new Date(Date.now())}`
         return statistics
     }
     catch(error) {

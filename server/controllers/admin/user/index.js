@@ -119,7 +119,7 @@ async function getByAwards() {
             from reservations 
             join trainings on reservations."trainingId" = trainings.id 
             join users on reservations."userId" = users.id
-            where trainings.start > ${new Date(Date.now() - 30*24*60*60*1000)}
+            where trainings.start > ${new Date(Date.now() - 30*24*60*60*1000)} and trainings.finish < ${new Date(Date.now())}
             group by "userId", users.image, users."firstName", users."lastName", users."dateOfBirth", users.membership, users.level
             order by "reservationsDone" DESC, "reservationsSkipped" ASC, "nonReservationsDone" DESC
             limit 6`
