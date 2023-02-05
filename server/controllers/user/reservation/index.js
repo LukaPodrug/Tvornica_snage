@@ -62,12 +62,23 @@ async function remove(userId, trainingId) {
 async function getActiveByUserId(userId) {
     try {
         const reservations = await database`
+            with numberOfReservations as (
+                select "trainingId", cast(count("trainingId") as integer) as "numberOfReservations"
+                from trainings
+                join reservations on id = "trainingId"
+                where start > ${new Date(Date.now())}
+                group by "trainingId"
+            )
+
             select *
-            from reservations join trainings on "trainingId" = id
+            from reservations
+            join trainings on reservations."trainingId" = id
+            join numberOfReservations on reservations."trainingId" = numberOfReservations."trainingId"
             where "userId" = ${userId} and start > ${new Date(Date.now())}`
         return reservations
     }
     catch(error) {
+        console.log(error)
         return error
     }
 }
