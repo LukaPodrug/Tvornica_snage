@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView, View, Text } from 'react-native'
+import { StyleSheet, ScrollView, View } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
-import { DonutChart } from 'react-native-circular-chart'
 
 import store from '../../store'
 import LoadingPage from '../loading'
-import ProfileSection from '../../sections/profile'
-import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
+import Title from '../../components/title'
+import ProfileSection from '../../sections/profile'
+import Message from '../../components/message'
+import StatisticsSection from '../../sections/statistics'
 import TrainingsSection from '../../sections/trainings'
 import { getOwnDataAPI } from '../../API/user'
 import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/reservation'
@@ -151,6 +152,30 @@ function ProfilePage() {
           infoLabelTextStyle={styles.infoLabelText}
           infoValueTextStyle={styles.infoValueText}
         />
+        {
+          moment(ownData.dateOfBirth).format('DD/MM/YYYY') === moment(new Date(Date.now())).format('DD/MM/YYYY') &&
+            <Message
+              text={`Happy birthday ${ownData.firstName}!`}
+              wrapperStyle={[styles.messageWrapper, {backgroundColor: '#90ee90'}]}
+              textStyle={styles.messageText}
+            />
+        }
+        {
+          new Date(ownData.membership) < new Date(Date.now() + 5*24*60*60*1000) &&
+            <Message
+              text='Your membership is due to expire in 5 days or less. To continue using our gym please renew membership with our staff.'
+              wrapperStyle={[styles.messageWrapper, {backgroundColor: '#fbec5d'}]}
+              textStyle={styles.messageText}
+            />
+        }
+        {
+          new Date(ownData.membership) < new Date(Date.now()) &&
+            <Message
+              text='Your membership expired. To continue using our gym please renew membership with our staff.'
+              wrapperStyle={[styles.messageWrapper, {backgroundColor: '#e04f5f'}]}
+              textStyle={styles.messageText}
+            />
+        }
         <View
           style={styles.statisticsSectionWrapper}
         >
@@ -159,69 +184,19 @@ function ProfilePage() {
             style={styles.titleText}
           />
           {
-            statisticsLoading ? 
-              <LoadingSection/>
+            statisticsLoading ?
+              <LoadingSection
+                style={null}
+              />
               :
-              <DonutChart
-                data={ownStatistics}
-                strokeWidth={20}
-                radius={90}
-                type='round'
-                startAngle={0}
-                endAngle={360}
-                animationType='fade'
-                containerWidth={200}
-                containerHeight={200}
-                labelTitleStyle={styles.chartLabelText}
-                labelValueStyle={styles.chartValueText}
+              <StatisticsSection
+                statistics={ownStatistics}
+                legendWrapperStyle={styles.chartLegendWrapper}
+                legendTabStyle={styles.chartLegendTab}
+                legendLabelTextStyle={styles.chartLegendLabelText}
+                legendValueTextStyle={styles.chartValueText}
               />
           }
-          <View
-            style={styles.chartLegendWrapper}
-          >
-            <View
-              style={[styles.chartLegendTab, {backgroundColor: ownStatistics[0].color}]}
-            >
-              <Text
-                style={styles.chartLegendLabelText}
-              >
-                {ownStatistics[0].name}
-              </Text>
-              <Text
-                style={styles.chartLegendValueText}
-              >
-                {ownStatistics[0].value}
-              </Text>
-            </View>
-            <View
-              style={[styles.chartLegendTab, {backgroundColor: ownStatistics[1].color}]}
-            >
-              <Text
-                style={styles.chartLegendLabelText}
-              >
-                {ownStatistics[1].name}
-              </Text>
-              <Text
-                style={styles.chartLegendValueText}
-              >
-                {ownStatistics[1].value}
-              </Text>
-            </View>
-            <View
-              style={[styles.chartLegendTab, {backgroundColor: ownStatistics[2].color}]}
-            >
-              <Text
-                style={styles.chartLegendLabelText}
-              >
-                {ownStatistics[2].name}
-              </Text>
-              <Text
-                style={styles.chartLegendValueText}
-              >
-                {ownStatistics[2].value}
-              </Text>
-            </View>
-          </View>
         </View>
         <View
           style={styles.trainingsSectionWrapper}
@@ -238,6 +213,7 @@ function ProfilePage() {
               :
               <TrainingsSection
                 trainings={activeReservations}
+                emptyMessage='no active reservations'
               />
           }
         </View>
@@ -300,6 +276,21 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 
+  messageWrapper: {
+    width: '100%',
+
+    marginTop: 20,
+
+    padding: 20,
+
+    borderRadius: 10
+  },
+  messageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+
   statisticsSectionWrapper: {
     width: '100%',
     height: 350,
@@ -318,22 +309,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center'
   },
-  chartLabelText: {
-    display: 'none'
-  },
-  chartValueText: {
-    display: 'none'
-  },
   chartLegendWrapper: {
     width: '100%',
 
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
 
     marginTop: 20
   },
   chartLegendTab: {
-    width: '33%',
+    width: '32%',
 
     paddingVertical: 5,
 
@@ -346,7 +332,7 @@ const styles = StyleSheet.create({
   chartLegendLabelText: {
     fontFamily: 'Ubuntu_400Regular',
     textTransform: 'uppercase',
-    fontSize: 14
+    fontSize: 12
   },
   chartLegendValueText: {
     fontFamily: 'Ubuntu_400Regular',
