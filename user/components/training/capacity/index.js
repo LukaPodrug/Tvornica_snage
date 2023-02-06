@@ -2,10 +2,11 @@ import { StyleSheet, View, Text } from 'react-native'
 import { DonutChart } from 'react-native-circular-chart'
 
 function TrainingCapacity({ numberOfReservations, capacity, propertyTextStyle, valueTextStyle }) {
+
     const capacityHelp = [
         {
             name: 'number of reservations',
-            value: numberOfReservations,
+            value: numberOfReservations === 0 ? 0.1 : numberOfReservations,
             color: '#e04f5f'
         },
         {
