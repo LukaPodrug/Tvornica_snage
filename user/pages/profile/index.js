@@ -53,7 +53,6 @@ function ProfilePage() {
 
     async function getOwnStatistics() {
       try {
-        setStatisticsLoading(true)
         const ownStatisticsResponse = await getOwnStatisticsAPI(token)
         const statisticsHelp = [
           {
@@ -87,13 +86,13 @@ function ProfilePage() {
 
     async function getActiveReservations() {
       try {
-        setReservationsLoading(true)
         const activeReservationsResponse = await getActiveReservationsAPI(token)
         const activeReservationsHelp = []
         activeReservationsResponse.data.forEach(reservation => {
           allCoachesData.forEach(coach => {
             if(reservation.coachId === coach.id) {
               reservation.coachImage = coach.image
+              reservation.coachFirstName = coach.firstName
               reservation.coachLastName = coach.lastName
             }
           })
@@ -120,6 +119,8 @@ function ProfilePage() {
         await getAllCoachesData()
       }
       if(allCoachesData) {
+        setStatisticsLoading(true)
+        setReservationsLoading(true)
         await getOwnStatistics()
         await getActiveReservations()
       }
@@ -153,7 +154,7 @@ function ProfilePage() {
           infoValueTextStyle={styles.infoValueText}
         />
         {
-          moment(ownData.dateOfBirth).format('DD/MM/YYYY') === moment(new Date(Date.now())).format('DD/MM/YYYY') &&
+          moment(new Date(ownData.dateOfBirth)).format('DD/MM') === moment(new Date(Date.now())).format('DD/MM') &&
             <Message
               text={`Happy birthday ${ownData.firstName}!`}
               wrapperStyle={[styles.messageWrapper, {backgroundColor: '#90ee90'}]}

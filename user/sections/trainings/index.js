@@ -25,10 +25,12 @@ function TrainingsSection({ trainings, emptyMessage }) {
                                 id={training.id}
                                 date={moment(training.start).format('DD/MM')}
                                 coachImage={training.coachImage}
+                                coachFirstName={training.coachFirstName}
                                 coachLastName={training.coachLastName}
                                 start={moment(training.start).format('HH:mm')}
                                 finish={moment(training.finish).format('HH:mm')}
                                 numberOfReservations={training.numberOfReservations}
+                                room={training.room}
                                 capacity={training.capacity}
                                 level={training.level}
                                 title={training.title}
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
 
         backgroundColor: '#e6e6e6',
 
-        padding: 10
+        padding: 9
     },
     emptyText: {
         fontFamily: 'Ubuntu_700Bold',

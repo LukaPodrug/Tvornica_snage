@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import TrainingSection from './section'
 import TrainingCapacity from './capacity'
 import TrainingButton from './button'
+import TrainingDetailsModal from '../../pages/modals/training/details'
 
 import calendarIcon from '../../assets/icons/calendar.png'
 import startIcon from '../../assets/icons/start.png'
@@ -11,7 +13,17 @@ import moreIcon from '../../assets/icons/more.png'
 import addReservationIcon from '../../assets/icons/registration.png'
 import removeReservationIcon from '../../assets/icons/remove.png'
 
-function Training({ id, date, coachImage, coachLastName, start, finish, numberOfReservations, capacity, level, title, regime, exercises }) {
+function Training({ id, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises }) {
+    const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
+
+    function openTrainingDetailsModal() {
+        setTrainingDetailsModalOpen(true)
+    }
+
+    function closeTrainingDetailsModal() {
+        setTrainingDetailsModalOpen(false)
+    }
+
     return (
         <View
             style={styles.wrapper}
@@ -66,10 +78,10 @@ function Training({ id, date, coachImage, coachLastName, start, finish, numberOf
                 style={styles.menuWrapper}
             >
                 <TrainingButton
-                    work={() => {}}
+                    work={openTrainingDetailsModal}
                     image={moreIcon}
                     disabled={false}
-                    wrapperStyle={styles.button}
+                    wrapperStyle={[styles.button, {backgroundColor: '#90ee90'}]}
                     imageStyle={styles.buttonImage}
                 />
                 <TrainingButton
@@ -80,6 +92,21 @@ function Training({ id, date, coachImage, coachLastName, start, finish, numberOf
                     imageStyle={styles.buttonImage}
                 />
             </View>
+            <TrainingDetailsModal
+                isOpen={trainingDetailsModalOpen}
+                close={closeTrainingDetailsModal}
+                coachFirstName={coachFirstName}
+                coachLastName={coachLastName}
+                date={date}
+                start={start}
+                finish={finish}
+                room={room}
+                capacity={capacity}
+                level={level}
+                title={title}
+                regime={regime}
+                exercises={exercises}
+            />
         </View>
     )
 }
@@ -153,9 +180,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
         marginLeft: 5,
-        marginRight: 5,
-
-        backgroundColor: 'red'
+        marginRight: 5
     },
     buttonImage: {
         width: 20,

@@ -35,7 +35,7 @@ function TrainingCapacity({ numberOfReservations, capacity, propertyTextStyle, v
             <Text
                 style={propertyTextStyle}
             >
-                space
+                free
             </Text>
             <Text
                 style={valueTextStyle}
