@@ -89,6 +89,7 @@ function ProfilePage() {
         const activeReservationsResponse = await getActiveReservationsAPI(token)
         const activeReservationsHelp = []
         activeReservationsResponse.data.forEach(reservation => {
+          reservation.reserved = true
           allCoachesData.forEach(coach => {
             if(reservation.coachId === coach.id) {
               reservation.coachImage = coach.image

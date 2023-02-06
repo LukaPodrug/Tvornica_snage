@@ -23,6 +23,7 @@ function TrainingsSection({ trainings, emptyMessage }) {
                             <Training
                                 key={index}
                                 id={training.id}
+                                reserved={training.reserved}
                                 date={moment(training.start).format('DD/MM')}
                                 coachImage={training.coachImage}
                                 coachFirstName={training.coachFirstName}
@@ -36,6 +37,7 @@ function TrainingsSection({ trainings, emptyMessage }) {
                                 title={training.title}
                                 regime={training.regime}
                                 exercises={training.exercises}
+                                startDate={training.start}
                             />
                         )
                     })

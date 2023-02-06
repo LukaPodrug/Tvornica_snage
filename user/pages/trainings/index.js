@@ -10,6 +10,7 @@ import DatePicker from '../../components/datePicker'
 import LoadingSection from '../../sections/loading'
 import TrainingsSection from '../../sections/trainings'
 import { getTrainingsByDateAPI } from '../../API/training'
+import { getActiveReservationsAPI } from '../../API/reservation'
 
 function TrainingsPage() {
   const isFocused = useIsFocused()
@@ -19,6 +20,7 @@ function TrainingsPage() {
 
   const [date, setDate] = useState(new Date(Date.now()))
   const [trainingsByDate, setTrainingsByDate] = useState([])
+  const [activeReservations, setActiveReservations] = useState([])
 
   const [dateShow, setDateShow] = useState(moment(date).format('DD/MM/YYYY'))
   const [trainingsLoading, setTrainingsLoading] = useState(true)
@@ -31,6 +33,14 @@ function TrainingsPage() {
           if(!training.numberOfReservations) {
             training.numberOfReservations = 0
           }
+
+          training.reserved = false
+          activeReservations.forEach(reservation => {
+            if(training.id === reservation.trainingId) {
+              training.reserved = true
+            }
+          })
+
           allCoachesData.forEach(coach => {
             if(training.coachId === coach.id) {
               training.coachImage = coach.image
@@ -52,8 +62,19 @@ function TrainingsPage() {
       }
     }
 
+    async function getActiveReservations() {
+      try {
+        const activeReservationsResponse = await getActiveReservationsAPI(token)
+        setActiveReservations(activeReservationsResponse.data)
+      }
+      catch(error) {
+        return
+      }
+    }
+
     async function fetchAPI() {
       setTrainingsLoading(true)
+      await getActiveReservations()
       await getTrainingsByDate()
     }
 

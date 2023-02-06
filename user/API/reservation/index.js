@@ -18,7 +18,17 @@ async function getOwnStatisticsAPI(token) {
     return getOwnStatisticsResponse
 }
 
+async function addReservationAPI(token, trainingId) {
+
+}
+
+async function removeReservationAPI(token, trainingId) {
+
+}
+
 export {
     getActiveReservationsAPI,
-    getOwnStatisticsAPI
+    getOwnStatisticsAPI,
+    addReservationAPI,
+    removeReservationAPI
 }

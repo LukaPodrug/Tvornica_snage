@@ -13,7 +13,7 @@ import moreIcon from '../../assets/icons/more.png'
 import addReservationIcon from '../../assets/icons/registration.png'
 import removeReservationIcon from '../../assets/icons/remove.png'
 
-function Training({ id, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises }) {
+function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate }) {
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
 
     function openTrainingDetailsModal() {
@@ -22,6 +22,14 @@ function Training({ id, date, coachImage, coachFirstName, coachLastName, start, 
 
     function closeTrainingDetailsModal() {
         setTrainingDetailsModalOpen(false)
+    }
+
+    async function addReservation() {
+
+    }
+
+    async function removeReservation() {
+
     }
 
     return (
@@ -84,13 +92,24 @@ function Training({ id, date, coachImage, coachFirstName, coachLastName, start, 
                     wrapperStyle={[styles.button, {backgroundColor: '#90ee90'}]}
                     imageStyle={styles.buttonImage}
                 />
-                <TrainingButton
-                    work={() => {}}
-                    image={addReservationIcon}
-                    disabled={false}
-                    wrapperStyle={styles.button}
-                    imageStyle={styles.buttonImage}
-                />
+                {
+                    reserved ?
+                        <TrainingButton
+                            work={removeReservation}
+                            image={removeReservationIcon}
+                            disabled={new Date(Date.now()) > new Date(startDate)}
+                            wrapperStyle={[styles.button, {backgroundColor: '#e04f5f'}, new Date(Date.now()) > new Date(startDate) && {opacity: 0}]}
+                            imageStyle={styles.buttonImage}
+                        />
+                        :
+                        <TrainingButton
+                            work={addReservation}
+                            image={addReservationIcon}
+                            disabled={new Date(Date.now()) > new Date(startDate) || numberOfReservations === capacity}
+                            wrapperStyle={[styles.button, {backgroundColor: '#90ee90'}, new Date(Date.now()) > new Date(startDate) && {opacity: 0}]}
+                            imageStyle={styles.buttonImage}
+                        />
+                }
             </View>
             <TrainingDetailsModal
                 isOpen={trainingDetailsModalOpen}
