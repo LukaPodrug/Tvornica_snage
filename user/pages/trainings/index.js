@@ -20,13 +20,13 @@ function TrainingsPage() {
 
   const [date, setDate] = useState(new Date(Date.now()))
   const [trainingsByDate, setTrainingsByDate] = useState([])
-  const [activeReservations, setActiveReservations] = useState([])
 
   const [dateShow, setDateShow] = useState(moment(date).format('DD/MM/YYYY'))
   const [trainingsLoading, setTrainingsLoading] = useState(true)
+  const [reservationUpdated, setReservationUpdated] = useState(false)
 
   useEffect(() => {
-    async function getTrainingsByDate() {
+    async function getTrainingsByDate(activeReservations) {
       try {
         const trainingsByDateResponse = await getTrainingsByDateAPI(token, moment(date).format('YYYY-MM-DD'))
         trainingsByDateResponse.data.forEach(training => {
@@ -65,7 +65,7 @@ function TrainingsPage() {
     async function getActiveReservations() {
       try {
         const activeReservationsResponse = await getActiveReservationsAPI(token)
-        setActiveReservations(activeReservationsResponse.data)
+        return activeReservationsResponse.data
       }
       catch(error) {
         return
@@ -74,14 +74,14 @@ function TrainingsPage() {
 
     async function fetchAPI() {
       setTrainingsLoading(true)
-      await getActiveReservations()
-      await getTrainingsByDate()
+      const activeReservations = await getActiveReservations()
+      await getTrainingsByDate(activeReservations)
     }
 
     if(isFocused) {
       fetchAPI()
     }
-  }, [isFocused, date])
+  }, [isFocused, date, reservationUpdated])
 
   useEffect(() => {
     setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
@@ -116,6 +116,9 @@ function TrainingsPage() {
               <TrainingsSection
                 trainings={trainingsByDate}
                 emptyMessage='no trainings scheduled on this date'
+                reservationUpdated={reservationUpdated}
+                changeReservationUpdated={setReservationUpdated}
+                changeLoading={setTrainingsLoading}
               />
           }
         </View>

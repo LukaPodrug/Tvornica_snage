@@ -19,11 +19,27 @@ async function getOwnStatisticsAPI(token) {
 }
 
 async function addReservationAPI(token, trainingId) {
-
+    const addReservationResponse = await axios.post('http://192.168.0.15:3000/api/user/reservation', {
+        trainingId
+    },
+    {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return addReservationResponse
 }
 
 async function removeReservationAPI(token, trainingId) {
-
+    const removeReservationResponse = await axios.delete('http://192.168.0.15:3000/api/user/reservation', {
+        headers: {
+            'Authorization': token
+        },
+        data: {
+            trainingId
+        }
+    })
+    return removeReservationResponse
 }
 
 export {

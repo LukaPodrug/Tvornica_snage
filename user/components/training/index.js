@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useRecoilState } from 'recoil'
 
+import store from '../../store'
 import TrainingSection from './section'
 import TrainingCapacity from './capacity'
 import TrainingButton from './button'
 import TrainingDetailsModal from '../../pages/modals/training/details'
+import { addReservationAPI, removeReservationAPI } from '../../API/reservation'
 
 import calendarIcon from '../../assets/icons/calendar.png'
 import startIcon from '../../assets/icons/start.png'
@@ -13,7 +16,9 @@ import moreIcon from '../../assets/icons/more.png'
 import addReservationIcon from '../../assets/icons/registration.png'
 import removeReservationIcon from '../../assets/icons/remove.png'
 
-function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate }) {
+function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate, reservationUpdated, changeReservationUpdated, changeLoading }) {
+    const [token] = useRecoilState(store.token)
+    
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
 
     function openTrainingDetailsModal() {
@@ -25,11 +30,25 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
     }
 
     async function addReservation() {
-
+        try {
+            changeLoading(true)
+            await addReservationAPI(token, id)
+            changeReservationUpdated(!reservationUpdated)
+        }
+        catch(error) {
+            return
+        }
     }
 
     async function removeReservation() {
-
+        try {
+            changeLoading(true)
+            await removeReservationAPI(token, id)
+            changeReservationUpdated(!reservationUpdated)
+        }
+        catch(error) {
+            return
+        }
     }
 
     return (

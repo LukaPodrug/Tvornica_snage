@@ -29,6 +29,7 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true)
   const [statisticsLoading, setStatisticsLoading] = useState(true)
   const [reservationsLoading, setReservationsLoading] = useState(true)
+  const [reservationUpdated, setReservationUpdated] = useState(false)
 
   useEffect(() => {
     async function getOwnData() {
@@ -130,7 +131,7 @@ function ProfilePage() {
     if(isFocused) {
       fetchAPI()
     }
-  }, [isFocused, allCoachesData])
+  }, [isFocused, allCoachesData, reservationUpdated])
 
   if(loading) {
     return <LoadingPage style={styles.loadingPage}/>
@@ -219,6 +220,9 @@ function ProfilePage() {
               <TrainingsSection
                 trainings={activeReservations}
                 emptyMessage='no active reservations'
+                reservationUpdated={reservationUpdated}
+                changeReservationUpdated={setReservationUpdated}
+                changeLoading={setReservationsLoading}
               />
           }
         </View>

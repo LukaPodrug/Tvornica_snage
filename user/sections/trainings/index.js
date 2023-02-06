@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import Training from '../../components/training'
 
-function TrainingsSection({ trainings, emptyMessage }) {
+function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeReservationUpdated, changeLoading }) {
     return (
         <>
             {
@@ -38,6 +38,9 @@ function TrainingsSection({ trainings, emptyMessage }) {
                                 regime={training.regime}
                                 exercises={training.exercises}
                                 startDate={training.start}
+                                reservationUpdated={reservationUpdated}
+                                changeReservationUpdated={changeReservationUpdated}
+                                changeLoading={changeLoading}
                             />
                         )
                     })
