@@ -74,11 +74,11 @@ async function getActiveByUserId(userId) {
             from reservations
             join trainings on reservations."trainingId" = id
             join numberOfReservations on reservations."trainingId" = numberOfReservations."trainingId"
-            where "userId" = ${userId} and start > ${new Date(Date.now())}`
+            where "userId" = ${userId} and start > ${new Date(Date.now())}
+            order by start asc`
         return reservations
     }
     catch(error) {
-        console.log(error)
         return error
     }
 }

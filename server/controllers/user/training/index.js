@@ -4,9 +4,19 @@ async function getByDate(startOfDay) {
     const finishOfDay = new Date(startOfDay.getTime() + 3600*1000*24)
     try {
         const trainings = await database`
+            with numberOfReservations as (
+                select "trainingId", cast(count("trainingId") as integer) as "numberOfReservations"
+                from trainings
+                join reservations on id = "trainingId"
+                where start between ${startOfDay} and ${finishOfDay}
+                group by "trainingId"
+            )
+
             select *
             from trainings
-            where start between ${startOfDay} and ${finishOfDay}`
+            left join numberOfReservations on trainings.id = numberOfReservations."trainingId"
+            where start between ${startOfDay} and ${finishOfDay}
+            order by start asc`
         return trainings
     }
     catch(error) {
