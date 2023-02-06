@@ -17,7 +17,20 @@ async function verifyTokenAPI(token) {
     return verifyTokenResponse
 }
 
+async function registrationAPI(image, firstName, lastName, dateOfBirth, username, password) {
+    const registrationResponse = await axios.post('http://192.168.0.15:3000/api/user/auth/registration', {
+        image,
+        firstName,
+        lastName,
+        dateOfBirth,
+        username,
+        password
+    })
+    return registrationResponse
+}
+
 export {
     loginAPI,
-    verifyTokenAPI
+    verifyTokenAPI,
+    registrationAPI
 }

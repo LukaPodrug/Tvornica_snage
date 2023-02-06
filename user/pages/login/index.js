@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, Keyboard } from 'react-native'
+import { StyleSheet, View, Keyboard, Dimensions } from 'react-native'
 import { useRecoilState } from 'recoil'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -66,6 +66,14 @@ function LoginPage() {
   }, [])
 
   async function login() {
+    if(username === '') {
+      setMessage('username required')
+      return
+    }
+    if(password === '') {
+      setMessage('password required')
+      return
+    }
     if(username !== '' && password !== '') {
       setLoading(true)
       try {
@@ -113,6 +121,7 @@ function LoginPage() {
           label='username'
           text={username}
           changeText={setUsername}
+          placeholder={null}
           wrapperStyle={styles.inputWrapper}
           labelStyle={styles.labelText}
           inputStyle={styles.input}
@@ -124,6 +133,7 @@ function LoginPage() {
           label='password'
           text={password}
           changeText={setPassword}
+          placeholder={null}
           wrapperStyle={styles.inputWrapper}
           labelStyle={styles.labelText}
           inputStyle={styles.input}
@@ -155,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    minHeight: '100%',
+    minHeight: Dimensions.get('window').height - 100,
 
     backgroundColor: '#000000',
 

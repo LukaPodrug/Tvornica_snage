@@ -1,6 +1,6 @@
 import { View, Text, TextInput } from 'react-native'
 
-function InputText({ removeMessage, password, showLabel, label, text, changeText, wrapperStyle, labelStyle, inputStyle }) {
+function InputText({ removeMessage, password, showLabel, label, text, changeText, placeholder, wrapperStyle, labelStyle, inputStyle }) {
     return (
         <View
             style={wrapperStyle}
@@ -19,6 +19,7 @@ function InputText({ removeMessage, password, showLabel, label, text, changeText
                 onChangeText={changeText}
                 onPressIn={() => removeMessage()}
                 secureTextEntry={password}
+                placeholder={placeholder}
             />
         </View>
     )
