@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, View, Keyboard } from 'react-native'
 import { useRecoilState } from 'recoil'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import store from '../../store'
+import LoadingPage from '../loading'
 import Title from '../../components/title'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
-import { loginAPI } from '../../API/auth'
+import { loginAPI, verifyTokenAPI } from '../../API/auth'
 
 function LoginPage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
@@ -17,7 +19,33 @@ function LoginPage() {
 
   const [keyboardVisible, setKeyboardVisible] = useState(false)
   const [message, setMessage] = useState(null)
+  const [tokenLoading, setTokenLoading] = useState(true)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    async function verifyToken() {
+      if(await AsyncStorage.getItem('token')) {
+        try {
+          const verifyTokenResponse = await verifyTokenAPI(await AsyncStorage.getItem('token'))
+          setToken(verifyTokenResponse.headers.authorization)
+          setLoggedIn(true)
+          setTimeout(() => {
+            setTokenLoading(false)
+          }, 1000)
+        }
+        catch(error) {
+          setTimeout(() => {
+            setTokenLoading(false)
+          }, 1000)
+        }
+      }
+      else {
+        setTokenLoading(false)
+      }
+    }
+
+    verifyToken()
+  }, [])
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -42,6 +70,7 @@ function LoginPage() {
       setLoading(true)
       try {
         const loginResponse = await loginAPI(username, password)
+        await AsyncStorage.setItem('token', loginResponse.headers.authorization)
         setToken(loginResponse.headers.authorization)
         setLoggedIn(true)
         setLoading(false)
@@ -56,6 +85,14 @@ function LoginPage() {
 
   function removeMessage() {
     setMessage(null)
+  }
+
+  if(tokenLoading) {
+    return (
+      <LoadingPage
+        style={null}
+      />
+    )
   }
 
   return (

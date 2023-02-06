@@ -1,6 +1,7 @@
 import { StyleSheet, Image } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useRecoilState } from 'recoil'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import store from '../../store'
 import RegistrationPage from '../../pages/registration'
@@ -96,11 +97,12 @@ function Menu() {
                                 )
                             }}
                             listeners={() => ({
-                                tabPress: () => {
+                                tabPress: async () => {
                                     setToken(null)
                                     setLoggedIn(false)
                                     setOwnData(null)
                                     setAllCoachesData(null)
+                                    await AsyncStorage.removeItem('token')
                                 }
                             })}
                         />
