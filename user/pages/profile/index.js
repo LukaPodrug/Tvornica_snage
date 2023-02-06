@@ -27,7 +27,6 @@ function ProfilePage() {
   const [ownStatistics, setOwnStatistics] = useState(null)
 
   const [loading, setLoading] = useState(true)
-  const [statisticsLoading, setStatisticsLoading] = useState(true)
   const [reservationsLoading, setReservationsLoading] = useState(true)
   const [reservationUpdated, setReservationUpdated] = useState(false)
 
@@ -73,14 +72,8 @@ function ProfilePage() {
           },
         ]
         setOwnStatistics(statisticsHelp)
-        setTimeout(() => {
-          setStatisticsLoading(false)
-        }, 300)
       }
       catch(error) {
-        setTimeout(() => {
-          setStatisticsLoading(false)
-        }, 300)
         return
       }
     }
@@ -120,12 +113,11 @@ function ProfilePage() {
         await getOwnData()
         await getAllCoachesData()
       }
-      if(allCoachesData) {
-        setStatisticsLoading(true)
-        setReservationsLoading(true)
+      if(allCoachesData && !ownStatistics) {
         await getOwnStatistics()
-        await getActiveReservations()
       }
+      setReservationsLoading(true)
+      await getActiveReservations()
     }
 
     if(isFocused) {
@@ -134,7 +126,11 @@ function ProfilePage() {
   }, [isFocused, allCoachesData, reservationUpdated])
 
   if(loading) {
-    return <LoadingPage style={styles.loadingPage}/>
+    return (
+      <LoadingPage 
+        style={styles.loadingPage}
+      />
+    )
   }
 
   return (
@@ -188,20 +184,13 @@ function ProfilePage() {
               text='user statistics'
               style={styles.titleText}
             />
-            {
-              statisticsLoading ?
-                <LoadingSection
-                  style={null}
-                />
-                :
-                <StatisticsSection
-                  statistics={ownStatistics}
-                  legendWrapperStyle={styles.chartLegendWrapper}
-                  legendTabStyle={styles.chartLegendTab}
-                  legendLabelTextStyle={styles.chartLegendLabelText}
-                  legendValueTextStyle={styles.chartValueText}
-                />
-            }
+            <StatisticsSection
+              statistics={ownStatistics}
+              legendWrapperStyle={styles.chartLegendWrapper}
+              legendTabStyle={styles.chartLegendTab}
+              legendLabelTextStyle={styles.chartLegendLabelText}
+              legendValueTextStyle={styles.chartValueText}
+            />
           </View>
         }
         <View

@@ -90,7 +90,7 @@ function LoginPage() {
   if(tokenLoading) {
     return (
       <LoadingPage
-        style={null}
+        style={styles.loadingPage}
       />
     )
   }
@@ -146,6 +146,10 @@ function LoginPage() {
 }
 
 const styles = StyleSheet.create({
+  loadingPage: {
+    paddingBottom: 80
+  },
+
   loginPageWrapper: {
     display: 'flex',
     justifyContent: 'center',
