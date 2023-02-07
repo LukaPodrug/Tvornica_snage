@@ -75,6 +75,7 @@ function RegistrationPage() {
         reader.readAsDataURL(image)
         reader.onload = () => setImage(reader.result)
     }
+    
     return (
         <div
             className={styles.wrapper}
