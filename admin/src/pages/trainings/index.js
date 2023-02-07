@@ -58,8 +58,10 @@ function TrainingsPage() {
             }, 500)
         }
 
-        fetchAPI()
-    }, [date, newTrainingAdded, trainingEdited])
+        if(allCoachesData) {
+            fetchAPI()
+        }
+    }, [date, newTrainingAdded, trainingEdited, allCoachesData])
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))

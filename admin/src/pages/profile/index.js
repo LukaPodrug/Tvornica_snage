@@ -15,6 +15,7 @@ import styles from './style.module.css'
 function ProfilePage() {
     const [token] = useRecoilState(store.token)
     const [ownData] = useRecoilState(store.ownData)
+    const [allCoachesData] = useRecoilState(store.allCoachesData)
 
     const [date, setDate] = useState(Date.now())
     const [ownTrainingsByDate, setOwnTrainingsByDate] = useState(null)
@@ -53,8 +54,10 @@ function ProfilePage() {
             }, 500)
         }
 
-        fetchAPI()
-    }, [date, newTrainingAdded, trainingEdited])
+        if(ownData && allCoachesData) {
+            fetchAPI()
+        }
+    }, [date, newTrainingAdded, trainingEdited, ownData, allCoachesData])
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
