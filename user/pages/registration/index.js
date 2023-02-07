@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     width: '100%',
 
     padding: 20,
+    paddingTop: 10,
 
     backgroundColor: '#ffffff',
 
@@ -322,8 +323,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   inputWrapper: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 7,
+    marginBottom: 7,
 
     width: '45%'
   },

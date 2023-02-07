@@ -160,7 +160,7 @@ function ProfilePage() {
             />
         }
         {
-          new Date(ownData.membership) < new Date(Date.now() + 5*24*60*60*1000) &&
+          (new Date(ownData.membership) > new Date(Date.now()) && new Date(ownData.membership) < new Date(Date.now() + 5*24*60*60*1000)) &&
             <Message
               text='Your membership is due to expire in 5 days or less. To continue using our gym please renew membership with our staff.'
               wrapperStyle={[styles.messageWrapper, {backgroundColor: '#fbec5d'}]}
