@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, Keyboard, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, View, Keyboard, Dimensions } from 'react-native'
 import { useRecoilState } from 'recoil'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -74,20 +74,18 @@ function LoginPage() {
       setMessage('password required')
       return
     }
-    if(username !== '' && password !== '') {
-      setLoading(true)
-      try {
-        const loginResponse = await loginAPI(username, password)
-        await AsyncStorage.setItem('token', loginResponse.headers.authorization)
-        setToken(loginResponse.headers.authorization)
-        setLoggedIn(true)
-        setLoading(false)
-      }
-      catch(error) {
-        setLoading(false)
-        setMessage(error.response.data)
-        return
-      }
+    setLoading(true)
+    try {
+      const loginResponse = await loginAPI(username, password)
+      await AsyncStorage.setItem('token', loginResponse.headers.authorization)
+      setToken(loginResponse.headers.authorization)
+      setLoggedIn(true)
+      setLoading(false)
+    }
+    catch(error) {
+      setLoading(false)
+      setMessage(error.response.data)
+      return
     }
   }
 
@@ -104,54 +102,56 @@ function LoginPage() {
   }
 
   return (
-    <View
-      style={[styles.loginPageWrapper, (keyboardVisible && styles.loginPageWrapperWithKeyboard)]}
-    >
+    <ScrollView>
       <View
-        style={styles.loginPageWindow}
+        style={[styles.loginPageWrapper, (keyboardVisible && styles.loginPageWrapperWithKeyboard)]}
       >
-        <Title
-          text='login'
-          style={styles.titleText}
-        />
-        <InputText
-          removeMessage={removeMessage}
-          password={false}
-          showLabel={true}
-          label='username'
-          text={username}
-          changeText={setUsername}
-          placeholder={null}
-          wrapperStyle={styles.inputWrapper}
-          labelStyle={styles.labelText}
-          inputStyle={styles.input}
-        />
-        <InputText
-          removeMessage={removeMessage}
-          password={true}
-          showLabel={true}
-          label='password'
-          text={password}
-          changeText={setPassword}
-          placeholder={null}
-          wrapperStyle={styles.inputWrapper}
-          labelStyle={styles.labelText}
-          inputStyle={styles.input}
-        />
-        <Button
-          loading={loading}
-          showMessage={true}
-          messageText={message}
-          work={login}
-          buttonText='submit'
-          wrapperStyle={styles.buttonWrapper}
-          buttonWrapperStyle={styles.button}
-          buttonTextStyle={styles.buttonText}
-          messageWrapperStyle={[styles.message, styles.messageFail, ((message === null) && styles.hidden)]}
-          messageTextStyle={styles.messageText}
-        />
+        <View
+          style={styles.loginPageWindow}
+        >
+          <Title
+            text='login'
+            style={styles.titleText}
+          />
+          <InputText
+            removeMessage={removeMessage}
+            password={false}
+            showLabel={true}
+            label='username'
+            text={username}
+            changeText={setUsername}
+            placeholder={null}
+            wrapperStyle={styles.inputWrapper}
+            labelStyle={styles.labelText}
+            inputStyle={styles.input}
+          />
+          <InputText
+            removeMessage={removeMessage}
+            password={true}
+            showLabel={true}
+            label='password'
+            text={password}
+            changeText={setPassword}
+            placeholder={null}
+            wrapperStyle={styles.inputWrapper}
+            labelStyle={styles.labelText}
+            inputStyle={styles.input}
+          />
+          <Button
+            loading={loading}
+            showMessage={true}
+            messageText={message}
+            work={login}
+            buttonText='submit'
+            wrapperStyle={styles.buttonWrapper}
+            buttonWrapperStyle={styles.button}
+            buttonTextStyle={styles.buttonText}
+            messageWrapperStyle={[styles.message, styles.messageFail, ((message === null) && styles.hidden)]}
+            messageTextStyle={styles.messageText}
+          />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
 
     paddingTop: 20,
-
     paddingBottom: 0
   },
   loginPageWindow: {

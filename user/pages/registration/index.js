@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, ScrollView, View, Keyboard, Dimensions } from 'react-native'
 import { useRecoilState } from 'recoil'
+import moment from 'moment'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import store from '../../store'
 import Title from '../../components/title'
 import InputImage from '../../components/input/image'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
+import { registrationAPI } from '../../API/auth'
 
 function RegistrationPage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
@@ -47,7 +50,51 @@ function RegistrationPage() {
 }
 
   async function registration() {
-
+    if(firstName === '') {
+      setMessage('first name required')
+      return 
+    }
+    if(lastName === '') {
+      setMessage('last name required')
+      return
+    }
+    if(dateOfBirth === '') {
+      setMessage('date of birth required')
+      return
+    }
+    if(username === '') {
+      setMessage('username required')
+      return
+    }
+    if(password === '') {
+      setMessage('password required')
+      return
+    }
+    if(rePassword === '') {
+      setMessage('re-password required')
+      return
+    }
+    if(password !== rePassword) {
+      setMessage('password did not match re-password')
+      return
+    }
+    if(!moment(dateOfBirth, 'DD/MM/YYYY', true).isValid()) {
+      setMessage('date format not correct')
+      return
+    }
+    setLoading(true)
+    try {
+      const registrationResponse = await registrationAPI(image, firstName, lastName, moment(dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD'), username, password)
+      await AsyncStorage.setItem('token', registrationResponse.headers.authorization)
+      setToken(registrationResponse.headers.authorization)
+      setLoggedIn(true)
+      setLoading(false)
+    }
+    catch(error) {
+      setLoading(false)
+      setMessage(error.response.data)
+      return
+    }
   }
 
   function removeMessage() {
@@ -200,7 +247,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
 
     paddingTop: 20,
-
     paddingBottom: 0
   },
   registrationPageWindow: {
@@ -210,10 +256,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#ffffff',
 
-    borderRadius: 10,
-
-    marginTop: 20,
-    marginBottom: 20
+    borderRadius: 10
   },
 
   titleText: {

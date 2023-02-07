@@ -11,7 +11,8 @@ function InputImage({ image, changeImage, wrapperStyle, imageStyle, buttonStyle,
             if(cameraPermissionResult.granted) {
                 const cameraImage = await ImagePicker.launchCameraAsync({
                     base64: true,
-                    quality: 1,
+                    aspect: [3, 3],
+                    quality: 0.1,
                 })
                 if(!cameraImage.canceled) {
                     changeImage(cameraImage.assets[0].base64)
@@ -32,7 +33,7 @@ function InputImage({ image, changeImage, wrapperStyle, imageStyle, buttonStyle,
                     mediaTypes: ImagePicker.MediaTypeOptions.All,
                     allowsEditing: true,
                     aspect: [3, 3],
-                    quality: 1,
+                    quality: 0.1,
                 })
                 if(!galleryImage.canceled) {
                     changeImage(galleryImage.assets[0].base64)
