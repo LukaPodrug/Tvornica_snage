@@ -23,7 +23,8 @@
     "react-native-easy-grid": "^0.2.2",
     "react-native-modal": "^13.0.1",
     "react-native-svg": "13.4.0",
-    "recoil": "^0.7.6"
+    "recoil": "^0.7.6",
+    "expo-image-picker": "~14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
