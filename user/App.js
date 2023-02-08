@@ -7,10 +7,10 @@ import { persistCache } from 'apollo3-cache-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFonts, Ubuntu_400Regular, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu'
 
-import { cache, client } from './API/contentful/client'
 import LoadingPage from './pages/loading'
 import Header from './components/header'
 import Menu from './components/menu'
+import { cache, client } from './API/graphQL/client'
 
 function App() {
   const [loadingCache, setLoadingCache] = useState(true)

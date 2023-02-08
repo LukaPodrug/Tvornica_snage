@@ -9,8 +9,8 @@ import Title from '../../components/title'
 import DatePicker from '../../components/datePicker'
 import LoadingSection from '../../sections/loading'
 import TrainingsSection from '../../sections/trainings'
-import { getTrainingsByDateAPI } from '../../API/training'
-import { getActiveReservationsAPI } from '../../API/reservation'
+import { getTrainingsByDateAPI } from '../../API/REST/training'
+import { getActiveReservationsAPI } from '../../API/REST/reservation'
 
 function TrainingsPage() {
   const isFocused = useIsFocused()

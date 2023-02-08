@@ -8,7 +8,7 @@ import LoadingPage from '../loading'
 import Title from '../../components/title'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
-import { loginAPI, verifyTokenAPI } from '../../API/auth'
+import { loginAPI, verifyTokenAPI } from '../../API/REST/auth'
 
 function LoginPage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)

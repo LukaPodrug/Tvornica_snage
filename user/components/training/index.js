@@ -7,7 +7,7 @@ import TrainingSection from './section'
 import TrainingCapacity from './capacity'
 import TrainingButton from './button'
 import TrainingDetailsModal from '../../pages/modals/training/details'
-import { addReservationAPI, removeReservationAPI } from '../../API/reservation'
+import { addReservationAPI, removeReservationAPI } from '../../API/REST/reservation'
 
 import calendarIcon from '../../assets/icons/calendar.png'
 import startIcon from '../../assets/icons/start.png'

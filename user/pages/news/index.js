@@ -1,42 +1,14 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 
 import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
 import BlogPost from '../../components/blogPost'
-
-const query = gql`
-  {
-    blogPostCollection {
-      items {
-        title
-        categories
-        content
-        images: photoGalleryCollection {
-          items {
-            title,
-            url
-          }
-        }
-        videos:videoGalleryCollection {
-          items {
-            title
-            url
-          }
-        }
-        attachments: attachmentsCollection {
-          items {
-            title
-            url
-          }
-        }
-      }
-    }
-  }`
+import { blogPostsQuery } from '../../API/graphQL/blogs'
 
 function NewsPage() {
-  const { data, loading } = useQuery(query)
+  const { data, loading } = useQuery(blogPostsQuery)
 
   const [blogPosts, setBlogPosts] = useState([])
 
@@ -69,7 +41,12 @@ function NewsPage() {
                   return (
                     <BlogPost
                       key={index}
-                      text={blogPost.title}
+                      title={blogPost.title}
+                      categories={blogPost.categories}
+                      content={blogPost.content}
+                      images={blogPost.images.items}
+                      videos={blogPost.videos.items}
+                      attachments={blogPost.attachments.items}
                     />
                   )
                 })

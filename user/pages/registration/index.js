@@ -9,7 +9,7 @@ import Title from '../../components/title'
 import InputImage from '../../components/input/image'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
-import { registrationAPI } from '../../API/auth'
+import { registrationAPI } from '../../API/REST/auth'
 
 function RegistrationPage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)

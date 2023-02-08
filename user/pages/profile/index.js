@@ -12,9 +12,9 @@ import ProfileSection from '../../sections/profile'
 import Message from '../../components/message'
 import StatisticsSection from '../../sections/statistics'
 import TrainingsSection from '../../sections/trainings'
-import { getOwnDataAPI } from '../../API/user'
-import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/reservation'
-import { getAllCoachesDataAPI } from '../../API/coach'
+import { getOwnDataAPI } from '../../API/REST/user'
+import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/REST/reservation'
+import { getAllCoachesDataAPI } from '../../API/REST/coach'
 
 function ProfilePage() {
   const isFocused = useIsFocused()
