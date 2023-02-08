@@ -1,12 +1,27 @@
+import { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native'
+
+import BlogPostModal from '../../pages/modals/blogPost'
 
 import photoIcon from '../../assets/icons/camera.png'
 import videoIcon from '../../assets/icons/video.png'
 import attachmentIcon from '../../assets/icons/attachment.png'
 
 function BlogPost({ title, categories, content, images, videos, attachments }) {
+    const [blogPostModalOpen, setBlogPostModalOpen] = useState(false)
+
+    function openBlogPostModal() {
+        setBlogPostModalOpen(true)
+    }
+
+    function closeBlogPostModal() {
+        setBlogPostModalOpen(false)
+    }
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => openBlogPostModal()}
+        >
             <View
                 style={styles.blogPostWrapper}
             >
@@ -64,6 +79,16 @@ function BlogPost({ title, categories, content, images, videos, attachments }) {
                     </View>
                 </View>
             </View>
+            <BlogPostModal
+                isOpen={blogPostModalOpen}
+                close={closeBlogPostModal}
+                title={title}
+                categories={categories}
+                content={content}
+                images={images}
+                videos={videos}
+                attachments={attachments}
+            />
         </TouchableOpacity>
     )
 }

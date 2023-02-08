@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Ubuntu_400Regular',
-        fontSize: 20,
+        fontSize: 15,
         textTransform: 'uppercase',
         color: '#ffffff'
     },
