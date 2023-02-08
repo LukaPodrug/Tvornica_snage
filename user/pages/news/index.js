@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { StyleSheet, View, Dimensions } from 'react-native'
+import { useEffect,  useState } from 'react'
+import { StyleSheet, ScrollView, View, Dimensions} from 'react-native'
 import { useQuery } from '@apollo/client'
+import { useIsFocused } from '@react-navigation/native'
 
 import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
@@ -8,53 +9,76 @@ import BlogPost from '../../components/blogPost'
 import { blogPostsQuery } from '../../API/graphQL/blogs'
 
 function NewsPage() {
-  const { data, loading } = useQuery(blogPostsQuery)
+  const isFocused = useIsFocused()
+
+  const { data, loading, refetch } = useQuery(blogPostsQuery)
 
   const [blogPosts, setBlogPosts] = useState([])
 
+  const [blogPostsLoading, setBlogPostsLoading] = useState(true)
+
   useEffect(() => {
-    if(!loading) {
-      setBlogPosts(data.blogPostCollection.items)
+    async function fetchContentful() {
+      try {
+        await refetch()
+        if(!loading) {
+          setBlogPosts(data.blogPostCollection.items)
+          setTimeout(() => {
+            setBlogPostsLoading(false)
+          }, 300)
+        }
+      }
+      catch(error) {
+        setTimeout(() => {
+          setBlogPostsLoading(false)
+        }, 300)
+        return
+      }
     }
-  }, []) 
+
+    setBlogPostsLoading(true)
+    fetchContentful()
+  }, [isFocused])
 
   return (
-    <View
-      style={styles.newsPageWrapper}
-    >
+    <ScrollView>
       <View
-        style={styles.newsWrapper}
+        style={styles.newsPageWrapper}
       >
-        <Title
-          text='news'
-          style={styles.titleText}
-        />
-        {
-          loading ? 
-            <LoadingSection
-              style={null}
-            />
-            :
-            <>
-              {
-                blogPosts.map((blogPost, index) => {
-                  return (
-                    <BlogPost
-                      key={index}
-                      title={blogPost.title}
-                      categories={blogPost.categories}
-                      content={blogPost.content}
-                      images={blogPost.images.items}
-                      videos={blogPost.videos.items}
-                      attachments={blogPost.attachments.items}
-                    />
-                  )
-                })
-              }
-            </>
-        }
+        <View
+          style={styles.newsWrapper}
+        >
+          <Title
+            text='news'
+            style={styles.titleText}
+          />
+          {
+            blogPostsLoading ? 
+              <LoadingSection
+                style={null}
+              />
+              :
+              <>
+                {
+                  blogPosts.map((blogPost, index) => {
+                    return (
+                      <BlogPost
+                        key={index}
+                        title={blogPost.title}
+                        categories={blogPost.categories}
+                        content={blogPost.content}
+                        images={blogPost.images.items}
+                        videos={blogPost.videos.items}
+                        attachments={blogPost.attachments.items}
+                      />
+                    )
+                  })
+                }
+              </>
+          }
+        </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -65,7 +89,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
 
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    paddingBottom: 80
   },
 
   newsWrapper: {
