@@ -1,5 +1,5 @@
 import { useEffect,  useState } from 'react'
-import { StyleSheet, ScrollView, View, Dimensions} from 'react-native'
+import { StyleSheet, ScrollView, View, Text, Dimensions} from 'react-native'
 import { useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 
@@ -60,19 +60,30 @@ function NewsPage() {
               :
               <>
                 {
-                  blogPosts.map((blogPost, index) => {
-                    return (
-                      <BlogPost
-                        key={index}
-                        title={blogPost.title}
-                        categories={blogPost.categories}
-                        content={blogPost.content}
-                        images={blogPost.images.items}
-                        videos={blogPost.videos.items}
-                        attachments={blogPost.attachments.items}
-                      />
-                    )
-                  })
+                  blogPosts.length === 0 ?
+                    <View
+                      style={styles.emptyNewsMessageWrapper}
+                    >
+                      <Text
+                        style={styles.emptyNewsMessageText}
+                      >
+                        No news available
+                      </Text>
+                    </View>
+                    :
+                    blogPosts.map((blogPost, index) => {
+                      return (
+                        <BlogPost
+                          key={index}
+                          title={blogPost.title}
+                          categories={blogPost.categories}
+                          content={blogPost.content}
+                          images={blogPost.images.items}
+                          videos={blogPost.videos.items}
+                          attachments={blogPost.attachments.items}
+                        />
+                      )
+                    })
                 }
               </>
           }
@@ -118,6 +129,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
 
     width: '100%'
+  },
+
+  emptyNewsMessageWrapper: {
+    padding: 10,
+
+    backgroundColor: '#e6e6e6',
+    
+    borderRadius: 10
+  },
+  emptyNewsMessageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 15,
   }
 })
 
