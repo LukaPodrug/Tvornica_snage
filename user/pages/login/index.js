@@ -29,14 +29,10 @@ function LoginPage() {
           const verifyTokenResponse = await verifyTokenAPI(await AsyncStorage.getItem('token'))
           setToken(verifyTokenResponse.headers.authorization)
           setLoggedIn(true)
-          setTimeout(() => {
-            setTokenLoading(false)
-          }, 1000)
+          setTokenLoading(false)
         }
         catch(error) {
-          setTimeout(() => {
-            setTokenLoading(false)
-          }, 1000)
+          setTokenLoading(false)
         }
       }
       else {

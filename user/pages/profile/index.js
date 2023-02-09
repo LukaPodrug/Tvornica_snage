@@ -95,14 +95,10 @@ function ProfilePage() {
           activeReservationsHelp.push(reservation)
         })
         setActiveReservations(activeReservationsHelp)
-        setTimeout(() => {
-          setReservationsLoading(false)
-        }, 300)
+        setReservationsLoading(false)
       }
       catch(error) {
-        setTimeout(() => {
-          setReservationsLoading(false)
-        }, 300)
+        setReservationsLoading(false)
         return
       }
     }

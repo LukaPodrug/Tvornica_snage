@@ -23,15 +23,11 @@ function NewsPage() {
         await refetch()
         if(!loading) {
           setBlogPosts(data.blogPostCollection.items)
-          setTimeout(() => {
-            setBlogPostsLoading(false)
-          }, 300)
+          setBlogPostsLoading(false)
         }
       }
       catch(error) {
-        setTimeout(() => {
-          setBlogPostsLoading(false)
-        }, 300)
+        setBlogPostsLoading(false)
         return
       }
     }

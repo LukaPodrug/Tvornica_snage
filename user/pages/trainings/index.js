@@ -50,14 +50,10 @@ function TrainingsPage() {
           })
         })
         setTrainingsByDate(trainingsByDateResponse.data)
-        setTimeout(() => {
-          setTrainingsLoading(false)
-        }, 300)
+        setTrainingsLoading(false)
       }
       catch(error) {
-        setTimeout(() => {
-          setTrainingsLoading(false)
-        }, 300)
+        setTrainingsLoading(false)
         return
       }
     }
