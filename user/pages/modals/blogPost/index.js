@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import Modal from 'react-native-modal'
 import { ImageGallery } from '@georstat/react-native-image-gallery'
+import * as WebBrowser from 'expo-web-browser'
 
 import Title from '../../../components/title'
 import Button from '../../../components/button'
@@ -16,6 +17,15 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
 
     function closePhotoGallery() {
         setPhotoGalleryOpen(false)
+    }
+
+    async function downloadAttachment(url) {
+        try {
+            WebBrowser.openBrowserAsync(url)
+        }
+        catch(error) {
+            return
+        }
     }
 
     return (
@@ -47,7 +57,7 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                     />
                 </View>
                 <Text
-                    style={styles.categoriesText}
+                    style={styles.subtitleText}
                 >
                     categories: {categories}
                 </Text>
@@ -57,8 +67,42 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                     {content}
                 </Text>
                 {
+                    attachments.length > 0 &&
+                        <>
+                            <Text
+                                style={styles.subtitleText}
+                            >
+                                download attachments:
+                            </Text>
+                            {
+                                attachments.map((attachment, index) => {
+                                    return (
+                                        <Button
+                                            key={index}
+                                            loading={false}
+                                            showMessage={false}
+                                            messageText={null}
+                                            work={() => downloadAttachment(attachment.url)}
+                                            buttonText={attachment.title}
+                                            wrapperStyle={null}
+                                            buttonWrapperStyle={styles.assetButtonWrapper}
+                                            buttonTextStyle={styles.assetButtonText}
+                                            messageWrapperStyle={null}
+                                            messageTextStyle={null}
+                                        />
+                                    )
+                                })
+                            }
+                        </>
+                }
+                {
                     images.length > 0 &&
                         <>
+                            <Text
+                                style={styles.subtitleText}
+                            >
+                                photo gallery:
+                            </Text>
                             <Button
                                 loading={false}
                                 showMessage={false}
@@ -66,8 +110,8 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                                 work={openPhotoGallery}
                                 buttonText='photo gallery'
                                 wrapperStyle={null}
-                                buttonWrapperStyle={styles.openGalleryButtonWrapper}
-                                buttonTextStyle={styles.openGalleryButtonText}
+                                buttonWrapperStyle={styles.assetButtonWrapper}
+                                buttonTextStyle={styles.assetButtonText}
                                 messageWrapperStyle={null}
                                 messageTextStyle={null}
                             />
@@ -125,7 +169,7 @@ const styles = StyleSheet.create({
         color: '#ffffff'
     },
 
-    categoriesText: {
+    subtitleText: {
         fontFamily: 'Ubuntu_700Bold',
         fontSize: 15,
         textTransform: 'uppercase',
@@ -140,14 +184,16 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
 
-    openGalleryButtonWrapper: {
+    assetButtonWrapper: {
         padding: 10,
     
         borderRadius: 10,
 
         backgroundColor: '#90ee90',
+
+        marginBottom: 5
     },
-    openGalleryButtonText: {
+    assetButtonText: {
         fontFamily: 'Ubuntu_400Regular',
         fontSize: 15,
         textTransform: 'uppercase',
