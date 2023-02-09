@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
@@ -18,6 +18,8 @@ import { getAllCoachesDataAPI } from '../../API/REST/coach'
 
 function ProfilePage() {
   const isFocused = useIsFocused()
+
+  const pageRef = useRef(null)
 
   const [token] = useRecoilState(store.token)
   const [ownData, setOwnData] = useRecoilState(store.ownData)
@@ -122,6 +124,15 @@ function ProfilePage() {
     }
   }, [isFocused, allCoachesData, reservationUpdated])
 
+  useEffect(() => {
+    if(isFocused && pageRef.current) {
+      pageRef.current.scrollTo({
+        y: 0,
+        animated: false
+      })
+    }
+  }, [isFocused])
+
   if(!ownData || !ownStatistics) {
     return (
       <LoadingPage 
@@ -131,7 +142,9 @@ function ProfilePage() {
   }
 
   return (
-    <ScrollView>
+    <ScrollView
+      ref={pageRef}
+    >
       <View
         style={styles.profilePageWrapper}
       >

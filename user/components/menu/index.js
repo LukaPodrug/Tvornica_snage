@@ -62,6 +62,7 @@ function Menu() {
                             name='trainings'
                             component={TrainingsPage}
                             options={{
+                                unmountOnBlur: true,
                                 tabBarLabel: 'trainings',
                                 tabBarIcon: () => (
                                     <Image 
@@ -75,6 +76,7 @@ function Menu() {
                             name='blogs'
                             component={NewsPage}
                             options={{
+                                unmountOnBlur: true,
                                 tabBarLabel: 'news',
                                 tabBarIcon: () => (
                                     <Image 
@@ -88,6 +90,7 @@ function Menu() {
                             name='logout'
                             component={LoginPage}
                             options={{
+                                unmountOnBlur: true,
                                 tabBarLabel: 'logout',
                                 tabBarIcon: () => (
                                     <Image 
@@ -113,6 +116,7 @@ function Menu() {
                             name='login'
                             component={LoginPage}
                             options={{
+                                unmountOnBlur: true,
                                 tabBarLabel: 'login',
                                 tabBarIcon: () => (
                                     <Image 
@@ -126,6 +130,7 @@ function Menu() {
                             name='registration'
                             component={RegistrationPage}
                             options={{
+                                unmountOnBlur: true,
                                 tabBarLabel: 'registration',
                                 tabBarIcon: () => (
                                     <Image 
