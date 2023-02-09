@@ -106,6 +106,7 @@ function TrainingsPage() {
           <DatePicker
             dateShow={dateShow}
             changeDate={changeDate}
+            disabled={trainingsLoading}
           />
           {
             trainingsLoading ?

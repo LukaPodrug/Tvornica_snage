@@ -3,14 +3,15 @@ import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native'
 import leftArrowIcon from '../../assets/icons/left.png'
 import rightArrowIcon from '../../assets/icons/right.png'
 
-function DatePicker({ dateShow, changeDate }) {
+function DatePicker({ dateShow, changeDate, disabled }) {
     return (
         <View
             style={styles.wrapper}
         >
             <TouchableOpacity
-                style={styles.button}
-                onPress={() => changeDate(-1)}
+                style={[styles.button, disabled && styles.disabled]}
+                onPress={disabled ? () => {} : () => changeDate(-1)}
+                disabled={disabled}
             >
                 <Image
                     style={styles.image}
@@ -23,8 +24,9 @@ function DatePicker({ dateShow, changeDate }) {
                 {dateShow}
             </Text>
             <TouchableOpacity
-                style={styles.button}
-                onPress={() => changeDate(1)}
+                style={[styles.button, disabled && styles.disabled]}
+                onPress={disabled ? () => {} : () => changeDate(1)}
+                disabled={disabled}
             >
                 <Image
                     style={styles.image}
@@ -56,6 +58,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
 
         backgroundColor: '#90ee90'
+    },
+    disabled: {
+        backgroundColor: '#807d7d'
     },
     image: {
         width: 15,
