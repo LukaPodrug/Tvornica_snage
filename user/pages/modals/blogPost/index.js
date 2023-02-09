@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 import Modal from 'react-native-modal'
-import { ImageGallery } from '@georstat/react-native-image-gallery'
 import * as WebBrowser from 'expo-web-browser'
-import { ResizeMode } from 'expo-av'
-import VideoPlayer from 'expo-video-player'
 
 import Title from '../../../components/title'
 import Button from '../../../components/button'
-import GalleryHeader from '../../../components/gallery/header'
+import AttachmentsSection from '../../../sections/attachments'
+import ImagesSection from '../../../sections/images'
+import VideosSection from '../../../sections/videos'
 
 function BlogPostModal({ isOpen, close, title, categories, content, images, videos, attachments }) {
     const [photoGalleryOpen, setPhotoGalleryOpen] = useState(false)
@@ -80,111 +79,50 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                 >
                     {content}
                 </Text>
-                <ScrollView>
-                    {
-                        attachments.length > 0 &&
-                            <>
-                                <Text
-                                    style={styles.subtitleText}
-                                >
-                                    download attachments:
-                                </Text>
-                                {
-                                    attachments.map((attachment, index) => {
-                                        return (
-                                            <Button
-                                                key={index}
-                                                loading={false}
-                                                showMessage={false}
-                                                messageText={null}
-                                                work={() => downloadAttachment(attachment.url)}
-                                                buttonText={attachment.title}
-                                                wrapperStyle={null}
-                                                buttonWrapperStyle={styles.assetButtonWrapper}
-                                                buttonTextStyle={styles.assetButtonText}
-                                                messageWrapperStyle={null}
-                                                messageTextStyle={null}
-                                            />
-                                        )
-                                    })
-                                }
-                            </>
-                    }
-                    {
-                        images.length > 0 &&
-                            <>
-                                <Text
-                                    style={styles.subtitleText}
-                                >
-                                    photo gallery:
-                                </Text>
-                                <Button
-                                    loading={false}
-                                    showMessage={false}
-                                    messageText={null}
-                                    work={openPhotoGallery}
-                                    buttonText='open'
-                                    wrapperStyle={null}
-                                    buttonWrapperStyle={styles.assetButtonWrapper}
-                                    buttonTextStyle={styles.assetButtonText}
-                                    messageWrapperStyle={null}
-                                    messageTextStyle={null}
-                                />
-                                <ImageGallery
-                                    isOpen={photoGalleryOpen}
-                                    close={closePhotoGallery}
-                                    images={images}
-                                    thumbColor='#e04f5f'
-                                    disableSwipe={true}
-                                    renderHeaderComponent={() => <GalleryHeader work={closePhotoGallery}  wrapperStyle={styles.photoGalleryHeader} buttonWrapperStyle={styles.buttonWrapper} buttonTextStyle={styles.buttonText}/> }
-                                />
-                            </>
-                    }       
-                    {
-                        videos.length > 0 &&
-                            <>
-                                <Text
-                                    style={styles.subtitleText}
-                                >
-                                    video gallery:
-                                </Text>
-                                {
-                                    videos.map((video, index) => {
-                                        return (
-                                            <Button
-                                                key={index}
-                                                loading={false}
-                                                showMessage={false}
-                                                messageText={null}
-                                                work={() => openVideo(video.url)}
-                                                buttonText={video.title}
-                                                wrapperStyle={null}
-                                                buttonWrapperStyle={styles.assetButtonWrapper}
-                                                buttonTextStyle={styles.assetButtonText}
-                                                messageWrapperStyle={null}
-                                                messageTextStyle={null}
-                                            />
-                                        )
-                                    })
-                                }
-                                <Modal
-                                    isVisible={videoOpen}
-                                    backdropOpacity={1}
-                                >
-                                    <VideoPlayer
-                                        videoProps={{
-                                            shouldPlay: true,
-                                            resizeMode: ResizeMode.CONTAIN,
-                                            source: {
-                                                uri: videoURL,
-                                            }
-                                        }}
-                                        header={ <GalleryHeader work={closeVideo}  wrapperStyle={styles.videoHeader} buttonWrapperStyle={styles.buttonWrapper} buttonTextStyle={styles.buttonText}/> }
-                                    />
-                                </Modal>
-                            </>
-                    }      
-                </ScrollView> 
+                {
+                    attachments.length > 0 &&
+                        <AttachmentsSection
+                            attachments={attachments}
+                            downloadAttachment={downloadAttachment}
+                            wrapperStyle={styles.attachmentSectionWrapper}
+                            subtitleTextStyle={styles.subtitleText}
+                            assetButtonWrapperStyle={styles.assetButtonWrapper}
+                            assetButtonTextStyle={styles.assetButtonText}
+                        />
+                }
+                {
+                    images.length > 0 &&
+                        <ImagesSection
+                            images={images}
+                            isPhotoGalleryOpen={photoGalleryOpen}
+                            openPhotoGallery={openPhotoGallery}
+                            closePhotoGallery={closePhotoGallery}
+                            wrapperStyle={styles.imagesSectionWrapper}
+                            subtitleTextStyle={styles.subtitleText}
+                            assetButtonWrapperStyle={styles.assetButtonWrapper}
+                            assetButtonTextStyle={styles.assetButtonText}
+                            photoGalleryHeaderWrapperStyle={styles.photoGalleryHeader}
+                            photoGalleryHeaderButtonWrapperStyle={styles.buttonWrapper}
+                            photoGalleryHeaderButtonTextStyle={styles.buttonText}
+                        />
+                }       
+                {
+                    videos.length > 0 &&
+                        <VideosSection
+                            videos={videos}
+                            openVideo={openVideo}
+                            closeVideo={closeVideo}
+                            isVideoOpen={videoOpen}
+                            videoURL={videoURL}
+                            wrapperStyle={styles.videosSectionWrapper}
+                            subtitleTextStyle={styles.subtitleText}
+                            assetButtonWrapperStyle={styles.assetButtonWrapper}
+                            assetButtonTextStyle={styles.assetButtonText}
+                            videoGalleryHeaderWrapperStyle={styles.videoGalleryHeader}
+                            videoGalleryHeaderButtonWrapperStyle={styles.buttonWrapper}
+                            videoGalleryHeaderButtonTextStyle={styles.buttonText}
+                        />
+                }      
             </View>
         </Modal>
     )
@@ -232,16 +170,26 @@ const styles = StyleSheet.create({
     subtitleText: {
         fontFamily: 'Ubuntu_700Bold',
         fontSize: 15,
-        textTransform: 'uppercase',
-
-        marginBottom: 10
+        textTransform: 'uppercase'
     },
 
     contentText: {
         fontFamily: 'Ubuntu_400Regular',
         fontSize: 15,
 
-        marginBottom: 10
+        marginTop: 10
+    },
+
+    attachmentSectionWrapper: {
+        marginTop: 10
+    },
+
+    imagesSectionWrapper: {
+        marginTop: 10
+    },
+
+    videosSectionWrapper: {
+        marginTop: 10
     },
 
     assetButtonWrapper: {
@@ -251,6 +199,7 @@ const styles = StyleSheet.create({
 
         backgroundColor: '#90ee90',
 
+        marginTop: 5,
         marginBottom: 5
     },
     assetButtonText: {
@@ -270,7 +219,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
 
-    videoHeader: {
+    videoGalleryHeader: {
         marginTop: 20,
         marginRight: 20,
 

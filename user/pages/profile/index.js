@@ -26,7 +26,6 @@ function ProfilePage() {
   const [activeReservations, setActiveReservations] = useState([])
   const [ownStatistics, setOwnStatistics] = useState(null)
 
-  const [loading, setLoading] = useState(true)
   const [reservationsLoading, setReservationsLoading] = useState(true)
   const [reservationUpdated, setReservationUpdated] = useState(false)
 
@@ -95,13 +94,11 @@ function ProfilePage() {
         })
         setActiveReservations(activeReservationsHelp)
         setTimeout(() => {
-          setLoading(false)
           setReservationsLoading(false)
         }, 300)
       }
       catch(error) {
         setTimeout(() => {
-          setLoading(false)
           setReservationsLoading(false)
         }, 300)
         return
@@ -125,7 +122,7 @@ function ProfilePage() {
     }
   }, [isFocused, allCoachesData, reservationUpdated])
 
-  if(loading) {
+  if(!ownData || !ownStatistics) {
     return (
       <LoadingPage 
         style={styles.loadingPage}
