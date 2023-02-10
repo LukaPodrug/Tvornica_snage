@@ -1,40 +1,63 @@
 import { useEffect,  useState } from 'react'
 import { StyleSheet, ScrollView, View, Text, Dimensions} from 'react-native'
 import { useQuery } from '@apollo/client'
-import { useIsFocused } from '@react-navigation/native'
 
 import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
 import BlogPost from '../../components/blogPost'
+import Button from '../../components/button'
 import { blogPostsQuery } from '../../API/graphQL/blogs'
 
 function NewsPage() {
-  const isFocused = useIsFocused()
 
-  const { data, loading, refetch } = useQuery(blogPostsQuery)
+  const { data, loading, fetchMore } = useQuery(blogPostsQuery, {fetchPolicy: 'no-cache', variables: {limit: 2, offset: 0}})
 
   const [blogPosts, setBlogPosts] = useState([])
+  const [blogPostsOffset, setBlogPostsOffset] = useState(0)
+  const [totalBlogPosts, setTotalBlogPosts] = useState(0)
 
   const [blogPostsLoading, setBlogPostsLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchContentful() {
+    if(!loading && blogPosts.length === 0) {
+      setBlogPosts(data.blogPostCollection.items)
+      setTotalBlogPosts(data.blogPostCollection.total)
+      setBlogPostsLoading(false)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    async function fetchMoreBlogPosts() {
       try {
-        await refetch()
-        if(!loading) {
-          setBlogPosts(data.blogPostCollection.items)
-          setBlogPostsLoading(false)
-        }
+        await fetchMore(
+          {
+            variables: {
+              offset: blogPostsOffset
+            },
+            updateQuery: ({ fetchMoreResult }) => {
+              if(!fetchMoreResult) {
+                setBlogPosts(blogPosts)
+              }
+              else {
+                setBlogPosts([...blogPosts, ...fetchMoreResult.blogPostCollection.items])
+              }
+            }
+          }
+        )
       }
       catch(error) {
-        setBlogPostsLoading(false)
         return
       }
     }
 
-    setBlogPostsLoading(true)
-    fetchContentful()
-  }, [isFocused])
+    if(blogPostsOffset !== 0) {
+      fetchMoreBlogPosts()
+    }
+  }, [blogPostsOffset])
+
+  function changeOffset() {
+    setBlogPostsOffset(blogPostsOffset + 2)
+  }
 
   return (
     <ScrollView>
@@ -67,19 +90,27 @@ function NewsPage() {
                       </Text>
                     </View>
                     :
-                    blogPosts.map((blogPost, index) => {
-                      return (
-                        <BlogPost
-                          key={index}
-                          title={blogPost.title}
-                          categories={blogPost.categories}
-                          content={blogPost.content}
-                          images={blogPost.images.items}
-                          videos={blogPost.videos.items}
-                          attachments={blogPost.attachments.items}
-                        />
-                      )
-                    })
+                    <>
+                      {
+                        blogPosts.map((blogPost, index) => {
+                          return (
+                            <BlogPost
+                              key={index}
+                              title={blogPost.title}
+                              categories={blogPost.categories}
+                              content={blogPost.content}
+                              images={blogPost.images.items}
+                              videos={blogPost.videos.items}
+                              attachments={blogPost.attachments.items}
+                            />
+                          )
+                        })
+                      }
+                      <Button
+                        work={changeOffset}
+                        buttonText='load more'
+                      />
+                    </>
                 }
               </>
           }

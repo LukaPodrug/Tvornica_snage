@@ -1,8 +1,9 @@
 import { gql } from '@apollo/client'
 
 const blogPostsQuery = gql`
-  {
-    blogPostCollection {
+  query getBlogPosts($limit: Int, $offset: Int) {
+    blogPostCollection(limit: $limit, skip: $offset) {
+      total
       items {
         title
         categories
