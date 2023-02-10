@@ -34,7 +34,7 @@ function NewsPage() {
             variables: {
               offset: blogPostsOffset
             },
-            updateQuery: ({ fetchMoreResult }) => {
+            updateQuery: (prev, { fetchMoreResult }) => {
               if(!fetchMoreResult) {
                 setBlogPosts(blogPosts)
               }
