@@ -4,8 +4,7 @@ import { useQuery } from '@apollo/client'
 
 import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
-import BlogPost from '../../components/blogPost'
-import Button from '../../components/button'
+import BlogsSection from '../../sections/blogs'
 import { blogPostsQuery } from '../../API/graphQL/blogs'
 
 function NewsPage() {
@@ -78,53 +77,11 @@ function NewsPage() {
                 style={null}
               />
               :
-              <>
-                {
-                  blogPosts.length === 0 ?
-                    <View
-                      style={styles.emptyNewsMessageWrapper}
-                    >
-                      <Text
-                        style={styles.emptyNewsMessageText}
-                      >
-                        No news available
-                      </Text>
-                    </View>
-                    :
-                    <>
-                      {
-                        blogPosts.map((blogPost, index) => {
-                          return (
-                            <BlogPost
-                              key={index}
-                              title={blogPost.title}
-                              categories={blogPost.categories}
-                              content={blogPost.content}
-                              images={blogPost.images.items}
-                              videos={blogPost.videos.items}
-                              attachments={blogPost.attachments.items}
-                            />
-                          )
-                        })
-                      }
-                      {
-                        blogPosts.length !== totalBlogPosts &&
-                          <Button
-                            loading={false}
-                            showMessage={false}
-                            messageText={null}
-                            work={changeOffset}
-                            buttonText='load more'
-                            wrapperStyle={null}
-                            buttonWrapperStyle={styles.buttonWrapper}
-                            buttonTextStyle={styles.buttonText}
-                            messageWrapperStyle={null}
-                            messageTextStyle={null}
-                          />
-                      }
-                    </>
-                }
-              </>
+              <BlogsSection
+                blogPosts={blogPosts}
+                totalBlogPosts={totalBlogPosts}
+                loadMore={changeOffset}
+              />
           }
         </View>
       </View>
@@ -168,37 +125,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
 
     width: '100%'
-  },
-
-  emptyNewsMessageWrapper: {
-    padding: 10,
-
-    backgroundColor: '#e6e6e6',
-    
-    borderRadius: 10
-  },
-  emptyNewsMessageText: {
-    fontFamily: 'Ubuntu_700Bold',
-    textTransform: 'uppercase',
-    fontSize: 15,
-  },
-
-  buttonWrapper: {
-    padding: 10,
-    
-    borderRadius: 10,
-
-    backgroundColor: '#90ee90',
-
-    marginTop: 5,
-    marginBottom: 5
-  },
-  buttonText: {
-    fontFamily: 'Ubuntu_400Regular',
-    fontSize: 15,
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    color: '#000000'
   }
 })
 
