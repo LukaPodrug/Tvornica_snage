@@ -9,8 +9,9 @@ import Button from '../../components/button'
 import { blogPostsQuery } from '../../API/graphQL/blogs'
 
 function NewsPage() {
+  const blogPostsLimit = 5
 
-  const { data, loading, fetchMore } = useQuery(blogPostsQuery, {fetchPolicy: 'no-cache', variables: {limit: 2, offset: 0}})
+  const { data, loading, fetchMore } = useQuery(blogPostsQuery, {fetchPolicy: 'no-cache', variables: {limit: blogPostsLimit, offset: blogPostsOffset}})
 
   const [blogPosts, setBlogPosts] = useState([])
   const [blogPostsOffset, setBlogPostsOffset] = useState(0)
@@ -56,7 +57,7 @@ function NewsPage() {
   }, [blogPostsOffset])
 
   function changeOffset() {
-    setBlogPostsOffset(blogPostsOffset + 2)
+    setBlogPostsOffset(blogPostsOffset + blogPostsLimit)
   }
 
   return (
@@ -106,10 +107,21 @@ function NewsPage() {
                           )
                         })
                       }
-                      <Button
-                        work={changeOffset}
-                        buttonText='load more'
-                      />
+                      {
+                        blogPosts.length !== totalBlogPosts &&
+                          <Button
+                            loading={false}
+                            showMessage={false}
+                            messageText={null}
+                            work={changeOffset}
+                            buttonText='load more'
+                            wrapperStyle={null}
+                            buttonWrapperStyle={styles.buttonWrapper}
+                            buttonTextStyle={styles.buttonText}
+                            messageWrapperStyle={null}
+                            messageTextStyle={null}
+                          />
+                      }
                     </>
                 }
               </>
@@ -169,6 +181,24 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
     fontSize: 15,
+  },
+
+  buttonWrapper: {
+    padding: 10,
+    
+    borderRadius: 10,
+
+    backgroundColor: '#90ee90',
+
+    marginTop: 5,
+    marginBottom: 5
+  },
+  buttonText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#000000'
   }
 })
 
