@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 async function getReservationsByTrainingIdAPI(token, trainingId) {
-    const getReservationsByTrainingIdResponse = await axios.get('https://tvornica-snage-api.onrender.com/api/admin/reservation/byTrainingId', {
+    const getReservationsByTrainingIdResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/reservation/byTrainingId', {
         params: {
             'trainingId': trainingId
         },
@@ -13,7 +13,7 @@ async function getReservationsByTrainingIdAPI(token, trainingId) {
 }
 
 async function editReservationCompletionAPI(token, trainingId, userId, completion) {
-    const editReservationCompletionResponse = await axios.patch('https://tvornica-snage-api.onrender.com/api/admin/reservation', {
+    const editReservationCompletionResponse = await axios.patch('https://tvornica-snage-api-8xrw.onrender.com/api/admin/reservation', {
         trainingId,
         userId,
         completion
@@ -27,7 +27,7 @@ async function editReservationCompletionAPI(token, trainingId, userId, completio
 }
 
 async function removeReservationByTrainingIdAndUserIdAPI(token, trainingId, userId) {
-    const removeReservationByTrainingIdAndUserIdResponse = await axios.delete('https://tvornica-snage-api.onrender.com/api/admin/reservation', {
+    const removeReservationByTrainingIdAndUserIdResponse = await axios.delete('https://tvornica-snage-api-8xrw.onrender.com/api/admin/reservation', {
         headers: {
             'Authorization': token
         },
@@ -40,7 +40,7 @@ async function removeReservationByTrainingIdAndUserIdAPI(token, trainingId, user
 }
 
 async function addunannouncedCompletionAPI(token, trainingId, userId) {
-    const addunannouncedCompletionResponse = await axios.post('https://tvornica-snage-api.onrender.com/api/admin/reservation', {
+    const addunannouncedCompletionResponse = await axios.post('https://tvornica-snage-api-8xrw.onrender.com/api/admin/reservation', {
         trainingId,
         userId,    
     },
