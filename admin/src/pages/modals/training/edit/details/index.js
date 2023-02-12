@@ -120,6 +120,10 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
             setMessage('finish format not correct')
             return
         }
+        if(capacity < 1) {
+            setMessage('capacity value wrong')
+            return
+        }
         if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
             try {
                 setLoading(true)
@@ -261,13 +265,16 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                             changeError={setCapacityError}
                             message={message}
                             changeMessage={setMessage}
+                            owLimit={1}
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <NumberInput
+                        <DropdownInput
                             label='level'
-                            number={level}
-                            changeNumber={setLevel}
+                            person={false}
+                            choices={[1, 2, 3]}
+                            value={level}
+                            changeValue={setLevel}
                             error={levelError}
                             changeError={setLevelError}
                             message={message}

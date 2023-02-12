@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import ErrorInput from '../error'
 import styles from './style.module.css'
 
-function NumberInput({ label, number, changeNumber, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
+function NumberInput({ label, number, changeNumber, error, changeError, message, changeMessage, lowLimit, labelStyle, inputStyle }) {
     const numberInputRef = useRef(null)
 
     function focus() {
@@ -34,6 +34,7 @@ function NumberInput({ label, number, changeNumber, error, changeError, message,
                     value={number}
                     onChange={(e) => changeNumber(parseInt(e.target.value))}
                     onFocus={() => focus()}
+                    min={lowLimit}
                 />
                 {
                     error && 

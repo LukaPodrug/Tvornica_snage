@@ -8,7 +8,7 @@ import ModalHeader from '../../../../sections/modals/header'
 import Image from '../../../../components/image'
 import Info from '../../../../components/info'
 import TextInput from '../../../../components/input/text'
-import NumberInput from '../../../../components/input/number'
+import DropdownInput from '../../../../components/input/dropdown'
 import Button from '../../../../components/button'
 import { editUserAPI } from '../../../../API/user'
 import styles from './style.module.css'
@@ -132,12 +132,12 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <NumberInput
+                        <DropdownInput
                             label='level'
-                            showPlaceholder={false}
-                            placeholder={null}
-                            number={level}
-                            changeNumber={setLevel}
+                            person={false}
+                            choices={[1, 2, 3]}
+                            value={level}
+                            changeValue={setLevel}
                             error={levelError}
                             changeError={setLevelError}
                             message={message}
