@@ -50,6 +50,10 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
         if(level === '') {
             setLevelError(true)
         }
+        if(membership !== '' && !moment(membership, 'DD/MM/YYYY', true).isValid()) {
+            setMessage('membership format not correct')
+            return
+        }
         if(membership !== '' && level !== '') {
             try {
                 setLoading(true)

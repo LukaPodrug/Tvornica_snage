@@ -49,8 +49,13 @@ function RegistrationPage() {
         if(rePassword === '') {
             setRePasswordError(true)
         }
+        if(dateOfBirth !== '' && !moment(dateOfBirth, 'DD/MM/YYYY', true).isValid()) {
+            setMessage('date format not correct')
+            return
+        }
         if(password !== '' && rePassword !== '' && password !== rePassword) {
             setMessage('password and re-password not same')
+            return
         }
         if(firstName !== '' && lastName !== '' && dateOfBirth !== '' && username !== '' && password !== '' && rePassword !== '' && password === rePassword) {
             try {

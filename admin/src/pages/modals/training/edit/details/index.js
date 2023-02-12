@@ -108,6 +108,18 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
         if(exercises === '') {
             setExercisesError(true)
         }
+        if(date !== '' && !moment(date, 'DD/MM/YYYY', true).isValid()) {
+            setMessage('date format not correct')
+            return
+        }
+        if(start !== '' && !moment(start, 'HH:mm', true).isValid()) {
+            setMessage('start format not correct')
+            return
+        }
+        if(finish !== '' && !moment(finish, 'HH:mm', true).isValid()) {
+            setMessage('finish format not correct')
+            return
+        }
         if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
             try {
                 setLoading(true)

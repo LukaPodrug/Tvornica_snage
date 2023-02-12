@@ -74,11 +74,23 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
         if(exercises === '') {
             setExercisesError(true)
         }
+        if(date !== '' && !moment(date, 'DD/MM/YYYY', true).isValid()) {
+            setMessage('date format not correct')
+            return
+        }
+        if(start !== '' && !moment(start, 'HH:mm', true).isValid()) {
+            setMessage('start format not correct')
+            return
+        }
+        if(finish !== '' && !moment(finish, 'HH:mm', true).isValid()) {
+            setMessage('finish format not correct')
+            return
+        }
         if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
-            const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
-            const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
             try {
                 setLoading(true)
+                const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
+                const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
                 const addTrainingResponse = await addTrainingAPI(token, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
                 setMessage(addTrainingResponse.data)
                 setSuccess(true)
