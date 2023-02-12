@@ -215,7 +215,7 @@ function RegistrationPage() {
             loading={loading}
             showMessage={true}
             messageText={message}
-            work={registration}
+            work={loading ? () => {} : registration}
             buttonText='submit'
             wrapperStyle={styles.buttonWrapper}
             buttonWrapperStyle={styles.button}

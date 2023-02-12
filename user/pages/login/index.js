@@ -137,7 +137,7 @@ function LoginPage() {
             loading={loading}
             showMessage={true}
             messageText={message}
-            work={login}
+            work={loading ? () => {} : login}
             buttonText='submit'
             wrapperStyle={styles.buttonWrapper}
             buttonWrapperStyle={styles.button}
