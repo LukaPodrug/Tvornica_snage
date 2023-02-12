@@ -8,13 +8,13 @@ const blogPostsQuery = gql`
         title
         categories
         content
-        images: photoGalleryCollection {
+        images: imageGalleryCollection {
           items {
             title,
             url
           }
         }
-        videos:videoGalleryCollection {
+        videos: videoGalleryCollection {
           items {
             title
             url
