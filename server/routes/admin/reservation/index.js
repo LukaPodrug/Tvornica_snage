@@ -40,6 +40,10 @@ router.post('/', async(req, res) => {
         res.status(400).json('Training not found')
         return
     }
+    if(new Date(Date.now()) < new Date(training.start)) {
+        res.status(400).json('Can not add coach reservation before training started')
+        return
+    }
     const reservation = await reservationController.getByUserIdAndTrainingId(req.body.userId, req.body.trainingId)
     const databaseConnection3 = await generalController.checkDatabaseConnection(reservation)
     if(!databaseConnection3) {
