@@ -26,22 +26,14 @@ function App() {
       if(localStorage.getItem('token')) {
         try {
           const verifyTokenResponse = await verifyTokenAPI(localStorage.getItem('token'))
-          setLoggedIn(true)
           setToken(verifyTokenResponse.headers.authorization)
-          setTimeout(() => {
-            setLoading(false)
-          }, 1000)
         }
         catch(error) {
-          setTimeout(() => {
-            setLoading(false)
-          }, 1000)
+          return
         }
       }
       else {
-        setTimeout(() => {
-          setLoading(false)
-        }, 1000)
+        setLoading(false)
       }
     }
 
@@ -49,35 +41,38 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if(loggedIn) {
-      async function getOwnData() {
-        try {
-            const getOwnDataResponse = await getOwnDataAPI(token)
-            setOwnData(getOwnDataResponse.data[0])
-        }
-        catch(error) {
-            return
-        }
+    async function getOwnData() {
+      try {
+          const getOwnDataResponse = await getOwnDataAPI(token)
+          setOwnData(getOwnDataResponse.data[0])
       }
-
-      async function getAllCoachesData() {
-        try {
-            const getAllCoachesDataResponse = await getAllCoachesDataAPI(token)
-            setAllCoachesData(getAllCoachesDataResponse.data)
-        }
-        catch(error) {
-            return
-        }
+      catch(error) {
+          return
       }
+    }
 
-      async function fetchStoreData() {
-        getOwnData()
-        getAllCoachesData()
+    async function getAllCoachesData() {
+      try {
+          const getAllCoachesDataResponse = await getAllCoachesDataAPI(token)
+          setAllCoachesData(getAllCoachesDataResponse.data)
       }
+      catch(error) {
+          return
+      }
+    }
 
+    async function fetchStoreData() {
+      setLoading(true)
+      await getOwnData()
+      await getAllCoachesData()
+      setLoggedIn(true)
+      setLoading(false)
+    }
+
+    if(token) {
       fetchStoreData()
     }
-  }, [loggedIn])
+  }, [token])
 
   return (
     <div 
@@ -111,15 +106,11 @@ function App() {
             />
             <Route
               path='/'
-              element={ <Navigate
-                to={ loggedIn ? '/profile' : '/login' }
-              /> }
+              element={ <Navigate to={ loggedIn ? '/profile' : '/login' }/> }
             />
             <Route
               path='*'
-              element={ <Navigate
-                to={ loggedIn ? '/profile' : '/login' }
-              /> }
+              element={ <Navigate to={ loggedIn ? '/profile' : '/login' }/> }
             />
           </Route>
         </Routes>

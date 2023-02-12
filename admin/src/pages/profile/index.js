@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil'
 import moment from 'moment'
 
 import store from '../../store'
-import LoadingPage from '../loading'
 import DataSection from '../../sections/data'
 import LoadingSection from '../../sections/loading'
 import TrainingsSectionHeader from '../../sections/trainings/header'
@@ -25,7 +24,6 @@ function ProfilePage() {
     const [trainingEdited, setTrainingEdited] = useState(false)
 
     const [dateShow, setDateShow] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
-    const [loading, setLoading] = useState(true)
     const [trainingsLoading, setTrainingsLoading] = useState(true)
 
     useEffect(() => {
@@ -48,10 +46,7 @@ function ProfilePage() {
         async function fetchAPI() {
             setTrainingsLoading(true)
             await getOwnTrainingsByDate()
-            setTimeout(() => {
-                setLoading(false)
-                setTrainingsLoading(false)
-            }, 500)
+            setTrainingsLoading(false)
         }
 
         if(ownData && allCoachesData) {
@@ -65,56 +60,49 @@ function ProfilePage() {
     }, [date])
 
     return (
-        <>
-            {
-                loading ?
-                    <LoadingPage/>
-                    :
-                    <div
-                        className={styles.wrapper}
-                    >
-                        <div
-                            className={styles.window}
-                        >
-                            <DataSection
-                                image={ownData.image}
-                                firstName={ownData.firstName}
-                                lastName={ownData.lastName}
-                                username={ownData.username}
-                                dateOfBirth={moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
+        <div
+            className={styles.wrapper}
+        >
+            <div
+                className={styles.window}
+            >
+                <DataSection
+                    image={ownData.image}
+                    firstName={ownData.firstName}
+                    lastName={ownData.lastName}
+                    username={ownData.username}
+                    dateOfBirth={moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
+                />
+                <div
+                    className={styles.trainings}
+                >
+                    <TrainingsSectionHeader
+                        title='my trainings'
+                        dateShow={dateShow}
+                        date={date}
+                        changeDate={setDate}
+                        newTrainingAdded={newTrainingAdded}
+                        changeNewTrainingAdded={setNewTrainingAdded}
+                    />
+                    {
+                        trainingsLoading ? 
+                            <LoadingSection/>
+                            :
+                            <TrainingsSection
+                                trainings={ownTrainingsByDate.slice((page - 1) * 3, (page - 1) * 3 + 3)}
+                                showCoach={false}
+                                trainingEdited={trainingEdited}
+                                changeTrainingEdited={setTrainingEdited}
                             />
-                            <div
-                                className={styles.trainings}
-                            >
-                                <TrainingsSectionHeader
-                                    title='my trainings'
-                                    dateShow={dateShow}
-                                    date={date}
-                                    changeDate={setDate}
-                                    newTrainingAdded={newTrainingAdded}
-                                    changeNewTrainingAdded={setNewTrainingAdded}
-                                />
-                                {
-                                    trainingsLoading ? 
-                                        <LoadingSection/>
-                                        :
-                                        <TrainingsSection
-                                            trainings={ownTrainingsByDate.slice((page - 1) * 3, (page - 1) * 3 + 3)}
-                                            showCoach={false}
-                                            trainingEdited={trainingEdited}
-                                            changeTrainingEdited={setTrainingEdited}
-                                        />
-                                }
-                                <Pagination
-                                    page={page}
-                                    changePage={setPage}
-                                    maxPage={maxPage}
-                                />
-                            </div>
-                        </div>
-                    </div>
-            }
-        </>
+                    }
+                    <Pagination
+                        page={page}
+                        changePage={setPage}
+                        maxPage={maxPage}
+                    />
+                </div>
+            </div>
+        </div>
     )
 }
 

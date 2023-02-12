@@ -33,9 +33,7 @@ function BirthdaysUsersPage() {
         async function fetchAPI() {
             setUsersLoading(true)
             await getUsersByBirthdays()
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
 
         fetchAPI()

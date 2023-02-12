@@ -33,9 +33,7 @@ function AwardsUsersPage() {
         async function fetchAPI() {
             setUsersLoading(true)
             await getUsersByAwards()
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
 
         fetchAPI()

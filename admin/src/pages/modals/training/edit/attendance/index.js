@@ -56,9 +56,7 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
         async function fetchAPI() {
             setReservationsLoading(true)
             await getReservationsByTrainingId()
-            setTimeout(() => {
-                setReservationsLoading(false)
-            }, 500)
+            setReservationsLoading(false)
         }
 
         fetchAPI()
@@ -82,10 +80,8 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
             const toggledHelp = [...toggled]
             toggledHelp[index] = !toggled[index]
             setToggled(toggledHelp)
-            setTimeout(async () => {
-                await editReservationCompletionAPI(token, reservationsByTrainingId[index].trainingId, reservationsByTrainingId[index].userId, !(reservationsByTrainingId[index].completion))
-                setReservationEdited(!reservationEdited)
-            }, 200)
+            await editReservationCompletionAPI(token, reservationsByTrainingId[index].trainingId, reservationsByTrainingId[index].userId, !(reservationsByTrainingId[index].completion))
+            setReservationEdited(!reservationEdited)
         }
         catch(error) {
             return

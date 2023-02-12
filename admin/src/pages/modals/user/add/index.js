@@ -54,14 +54,10 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
             })
             setFilteredUsers(filteredUsersHelp)
             setMaxPage(Math.ceil(filteredUsersHelp.length / 10))
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
         catch(error) {
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
             return
         }
     }

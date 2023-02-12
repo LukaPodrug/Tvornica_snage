@@ -46,9 +46,7 @@ function AllUsersPage() {
         async function fetchAPI() {
             setUsersLoading(true)
             await getUsersByPage()
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
 
         if(!filter) {
@@ -71,9 +69,7 @@ function AllUsersPage() {
         async function fetchAPI() {
             setUsersLoading(true)
             await getUsersByFirstNameAndLastName()
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
 
         if(filter) {
@@ -89,14 +85,10 @@ function AllUsersPage() {
             const searchByFirstNameAndLastNameResponse = await getUsersByFirstNameAndLastNameAPI(token, firstName, lastName)
             setFilteredUsers(searchByFirstNameAndLastNameResponse.data)
             setMaxPage(Math.ceil(searchByFirstNameAndLastNameResponse.data.length / 5))
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
         catch(error) {
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
             return
         }
     }

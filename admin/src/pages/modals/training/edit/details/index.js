@@ -124,6 +124,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                 setSuccess(false)
                 setMessage(error.response.data)
                 setLoading(false)
+                return
             }
         }
     }

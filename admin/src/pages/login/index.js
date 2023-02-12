@@ -9,7 +9,6 @@ import { loginAPI } from '../../API/auth'
 import styles from './style.module.css'
 
 function LoginPage() {
-    const [, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
 
     const [username, setUsername] = useState('')
@@ -28,17 +27,17 @@ function LoginPage() {
             setPasswordError(true)
         }
         if(username !== '' && password !== '') {
-            setLoading(true)
             try {
+                setLoading(true)
                 const loginResponse = await loginAPI(username, password)
                 setLoading(false)
-                setLoggedIn(true)
                 setToken(loginResponse.headers.authorization)
                 localStorage.setItem('token', loginResponse.headers.authorization)
             }
             catch(error) {
                 setLoading(false)
                 setMessage(error.response.data)
+                return
             }
         }
     }

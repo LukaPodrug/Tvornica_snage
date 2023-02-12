@@ -33,9 +33,7 @@ function MembershipsUsersPage() {
         async function fetchAPI() {
             setUsersLoading(true)
             await getUsersByExpiringMemberships()
-            setTimeout(() => {
-                setUsersLoading(false)
-            }, 500)
+            setUsersLoading(false)
         }
 
         fetchAPI()

@@ -77,8 +77,8 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
         if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
             const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
             const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
-            setLoading(true)
             try {
+                setLoading(true)
                 const addTrainingResponse = await addTrainingAPI(token, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
                 setMessage(addTrainingResponse.data)
                 setSuccess(true)
@@ -90,6 +90,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                 setSuccess(false)
                 setMessage(error.response.data)
                 setLoading(false)
+                return
             }
         }
     }

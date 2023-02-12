@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil'
 import moment from 'moment'
 
 import store from '../../store'
-import LoadingPage from '../loading'
 import LoadingSection from '../../sections/loading'
 import TrainingsSectionHeader from '../../sections/trainings/header'
 import TrainingsSection from '../../sections/trainings'
@@ -23,7 +22,6 @@ function TrainingsPage() {
     const [trainingEdited, setTrainingEdited] = useState(false)
 
     const [dateShow, setDateShow] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
-    const [loading, setLoading] = useState(true)
     const [trainingsLoading, setTrainingsLoading] = useState(true)
 
     useEffect(() => {
@@ -52,10 +50,7 @@ function TrainingsPage() {
         async function fetchAPI() {
             setTrainingsLoading(true)
             await getTrainingsByDate()
-            setTimeout(() => {
-                setLoading(false)
-                setTrainingsLoading(false)
-            }, 500)
+            setTrainingsLoading(false)
         }
 
         if(allCoachesData) {
@@ -69,45 +64,38 @@ function TrainingsPage() {
     }, [date])
 
     return (
-        <>
-            {
-                loading ?
-                    <LoadingPage/>
-                    :
-                    <div
-                        className={styles.wrapper}
-                    >
-                        <div 
-                            className={styles.window}
-                        >
-                            <TrainingsSectionHeader
-                                title='all trainings'
-                                dateShow={dateShow}
-                                date={date}
-                                changeDate={setDate}
-                                newTrainingAdded={newTrainingAdded}
-                                changeNewTrainingAdded={setNewTrainingAdded}
-                            />
-                            {
-                                trainingsLoading ? 
-                                    <LoadingSection/>
-                                    :
-                                    <TrainingsSection
-                                        trainings={trainingsByDate.slice((page - 1) * 5, (page - 1) * 5 + 5)}
-                                        showCoach={true}
-                                        trainingEdited={trainingEdited}
-                                        changeTrainingEdited={setTrainingEdited}
-                                    />
-                            }
-                            <Pagination
-                                page={page}
-                                changePage={setPage}
-                                maxPage={maxPage}
-                            />
-                        </div>
-                    </div>
-            }
-        </>
+        <div
+            className={styles.wrapper}
+        >
+            <div 
+                className={styles.window}
+            >
+                <TrainingsSectionHeader
+                    title='all trainings'
+                    dateShow={dateShow}
+                    date={date}
+                    changeDate={setDate}
+                    newTrainingAdded={newTrainingAdded}
+                    changeNewTrainingAdded={setNewTrainingAdded}
+                />
+                {
+                    trainingsLoading ? 
+                        <LoadingSection/>
+                        :
+                        <TrainingsSection
+                            trainings={trainingsByDate.slice((page - 1) * 5, (page - 1) * 5 + 5)}
+                            showCoach={true}
+                            trainingEdited={trainingEdited}
+                            changeTrainingEdited={setTrainingEdited}
+                        />
+                }
+                <Pagination
+                    page={page}
+                    changePage={setPage}
+                    maxPage={maxPage}
+                />
+            </div>
+        </div>
     )
 }
 

@@ -8,22 +8,19 @@ import LoadingPage from '../../pages/loading'
 function Layout({ loading }) {
     const [loggedIn] = useRecoilState(store.loggedIn)
 
+    if(loading) {
+        return <LoadingPage/>
+    }
+
     return (
         <>
             {
-                loading ? 
-                    <LoadingPage/>
-                    :
-                    <>
-                        {
-                            loggedIn ? 
-                                <SideMenuLoggedIn/> 
-                                : 
-                                <SideMenuLoggedOut/>
-                        }
-                        <Outlet/>
-                    </>
+                loggedIn ? 
+                    <SideMenuLoggedIn/> 
+                    : 
+                    <SideMenuLoggedOut/>
             }
+            <Outlet/>
         </>
     )
 }
