@@ -3,11 +3,11 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 const cache = new InMemoryCache()
 
 const client = new ApolloClient({
-    uri: 'https://graphql.contentful.com/content/v1/spaces/rnh92ge3lpy9',
+    uri: 'https://graphql.contentful.com/content/v1/spaces/txvfo602f8md',
     cache,
     credentials: 'same-origin',
     headers: {
-        Authorization: `Bearer 3ALv7Q4R7peqUwmJu7VdBOusNAXSi1o3EmDxEWNVD9Y`,
+        Authorization: `Bearer qAXnH8ZxMG3NK7oPukY2mYtvWnYLeSLqe-0No4DPhQQ`,
     }
 })
 
