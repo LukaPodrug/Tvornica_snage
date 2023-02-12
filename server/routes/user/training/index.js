@@ -1,6 +1,7 @@
 const express = require('express')
 
 const trainingController = require('../../../controllers/user/training')
+const userController = require('../../../controllers/user/user')
 const generalController = require('../../../controllers/user/general')
 
 const { getTrainingsByDateSchema } = require('./schemas')
@@ -18,9 +19,15 @@ router.get('/byDate', async(req, res) => {
         res.status(400).json('Invalid date')
         return
     }
-    const trainings = await trainingController.getByDate(new Date(req.query.date))
-    const databaseConnection = await generalController.checkDatabaseConnection(trainings)
-    if(!databaseConnection) {
+    const user = await userController.getById(tokenValidation.id)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(user)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    const trainings = await trainingController.getByDate(new Date(req.query.date), user.level)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(trainings)
+    if(!databaseConnection2) {
         res.status(500).json('Error with database')
         return
     }

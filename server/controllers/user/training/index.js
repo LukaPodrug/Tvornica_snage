@@ -1,6 +1,6 @@
 const database = require('../../../database')
 
-async function getByDate(startOfDay) {
+async function getByDate(startOfDay, userLevel) {
     const finishOfDay = new Date(startOfDay.getTime() + 3600*1000*24)
     try {
         const trainings = await database`
@@ -15,7 +15,7 @@ async function getByDate(startOfDay) {
             select *
             from trainings
             left join numberOfReservations on trainings.id = numberOfReservations."trainingId"
-            where start between ${startOfDay} and ${finishOfDay}
+            where start between ${startOfDay} and ${finishOfDay} and level <= ${userLevel}
             order by start asc`
         return trainings
     }
