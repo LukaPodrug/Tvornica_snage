@@ -18,7 +18,7 @@ import removeReservationIcon from '../../assets/icons/remove.png'
 
 function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate, reservationUpdated, changeReservationUpdated, changeLoading }) {
     const [token] = useRecoilState(store.token)
-    
+    const [ownData] = useRecoilState(store.ownData)
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
 
     function openTrainingDetailsModal() {
@@ -124,7 +124,7 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                         <TrainingButton
                             work={addReservation}
                             image={addReservationIcon}
-                            disabled={new Date(Date.now()) > new Date(startDate) || numberOfReservations === capacity}
+                            disabled={new Date(Date.now()) > new Date(startDate) || numberOfReservations === capacity || new Date(new Date(ownData.membership).getTime() + 7*24*60*60*1000) < new Date(startDate)}
                             wrapperStyle={[styles.button, {backgroundColor: '#90ee90'}, new Date(Date.now()) > new Date(startDate) && {opacity: 0}]}
                             imageStyle={styles.buttonImage}
                         />
