@@ -8,7 +8,7 @@ async function getByDate(startOfDay, userLevel) {
                 select "trainingId", cast(count("trainingId") as integer) as "numberOfReservations"
                 from trainings
                 join reservations on id = "trainingId"
-                where start between ${startOfDay} and ${finishOfDay}
+                where start between ${startOfDay} and ${finishOfDay} and manual = false
                 group by "trainingId"
             )
 
