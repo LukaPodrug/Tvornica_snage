@@ -3,7 +3,7 @@ import styles from './style.module.css'
 import leftIcon from '../../assets/icons/left.png'
 import rightIcon from '../../assets/icons/right.png'
 
-function Pagination({ page, changePage, maxPage }) {
+function Pagination({ page, changePage, maxPage, disabled }) {
     function changePageValue(value) {
         if(page === 1 && value === -1) {
             return
@@ -19,8 +19,8 @@ function Pagination({ page, changePage, maxPage }) {
             className={styles.wrapper}
         >
             <div
-                className={styles.arrow + ' ' + (page === 1 && styles.disabled)}
-                onClick={() => changePageValue(-1)}
+                className={styles.arrow + ' ' + (page === 1 && styles.disabled) + ' ' + (disabled && styles.disabled)}
+                onClick={disabled ? () => {} : () => changePageValue(-1)}
             >
                 <img
                     src={leftIcon}
@@ -33,8 +33,8 @@ function Pagination({ page, changePage, maxPage }) {
                 {page}
             </label>
             <div
-                className={styles.arrow + ' ' + ((page === maxPage || maxPage === 0) && styles.disabled)}
-                onClick={() => changePageValue(1)}
+                className={styles.arrow + ' ' + ((page === maxPage || maxPage === 0) && styles.disabled) + ' ' + (disabled && styles.disabled)}
+                onClick={disabled ? () => {} : () => changePageValue(1)}
             >
                 <img
                     src={rightIcon}

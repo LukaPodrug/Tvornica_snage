@@ -69,6 +69,7 @@ function MembershipsUsersPage() {
                 page={page}
                 changePage={setPage}
                 maxPage={maxPage}
+                disabled={usersLoading}
             />
         </>
     )

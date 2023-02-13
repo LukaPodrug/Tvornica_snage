@@ -149,7 +149,7 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
                     <Button
                         disabled={disabled}
                         text='submit'
-                        method={editUser}
+                        method={loading ? () => {} : () => editUser()}
                         loading={loading}
                         showMessage={true}
                         message={message}

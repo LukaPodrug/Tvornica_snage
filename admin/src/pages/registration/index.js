@@ -180,7 +180,7 @@ function RegistrationPage() {
                     </div>
                     <Button
                         text='submit'
-                        method={() => registration()}
+                        method={loading ? () => {} : () => registration()}
                         loading={loading}
                         showMessage={true}
                         message={message}

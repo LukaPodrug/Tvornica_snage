@@ -288,7 +288,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                 <Button
                         disabled={false}
                         text='submit'
-                        method={() => addTraining()}
+                        method={loading ? () => {} : () => addTraining()}
                         loading={loading}
                         showMessage={true}
                         message={message}

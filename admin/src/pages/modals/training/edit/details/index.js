@@ -322,7 +322,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                 <Button
                     disabled={disabled}
                     text='submit'
-                    method={() => editTraining()}
+                    method={loading ? () => {} : () => editTraining()}
                     loading={loading}
                     showMessage={true}
                     message={message}

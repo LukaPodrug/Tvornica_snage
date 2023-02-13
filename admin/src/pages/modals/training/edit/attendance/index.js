@@ -14,6 +14,7 @@ import styles from './style.module.css'
 import '../../../style.css'
 
 function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
+    
     const tabs = ['reservations', 'unannounced']
     const [token] = useRecoilState(store.token)
 
@@ -145,6 +146,7 @@ function EditTrainingAttendanceModal({ isOpen, changeIsOpen, id }) {
                     page={page}
                     changePage={setPage}
                     maxPage={maxPage}
+                    disabled={reservationsLoading}
                 />
             </div>
         </Modal>

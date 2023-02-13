@@ -77,6 +77,7 @@ function TrainingsPage() {
                     changeDate={setDate}
                     newTrainingAdded={newTrainingAdded}
                     changeNewTrainingAdded={setNewTrainingAdded}
+                    disabled={trainingsLoading}
                 />
                 {
                     trainingsLoading ? 
@@ -93,6 +94,7 @@ function TrainingsPage() {
                     page={page}
                     changePage={setPage}
                     maxPage={maxPage}
+                    disabled={trainingsLoading}
                 />
             </div>
         </div>

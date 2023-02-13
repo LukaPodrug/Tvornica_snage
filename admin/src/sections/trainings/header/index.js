@@ -6,7 +6,7 @@ import DatePicker from '../../../components/datePicker'
 import AddTrainingModal from '../../../pages/modals/training/add'
 import styles from './style.module.css'
 
-function TrainingsSectionHeader({ title, dateShow, date, changeDate, newTrainingAdded, changeNewTrainingAdded }) {
+function TrainingsSectionHeader({ title, dateShow, date, changeDate, newTrainingAdded, changeNewTrainingAdded, disabled }) {
     const [addTrainingModalOpen, setAddTrainingModalOpen] = useState(false)
 
     return (
@@ -36,6 +36,7 @@ function TrainingsSectionHeader({ title, dateShow, date, changeDate, newTraining
                 dateShow={dateShow}
                 date={date}
                 setDate={changeDate}
+                disabled={disabled}
             />
             <AddTrainingModal
                 isOpen={addTrainingModalOpen}

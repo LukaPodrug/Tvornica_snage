@@ -87,7 +87,7 @@ function LoginPage() {
                     </div>
                     <Button
                         text='submit'
-                        method={() => login()}
+                        method={loading ? () => {} : () => login()}
                         loading={loading}
                         showMessage={true}
                         message={message}

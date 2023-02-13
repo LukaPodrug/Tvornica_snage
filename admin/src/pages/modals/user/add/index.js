@@ -119,6 +119,7 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
                     page={page}
                     changePage={setPage}
                     maxPage={maxPage}
+                    disabled={usersLoading}
                 />
             </div>
         </Modal>

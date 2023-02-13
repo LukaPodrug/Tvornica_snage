@@ -130,6 +130,7 @@ function AllUsersPage() {
                 page={page}
                 changePage={setPage}
                 maxPage={maxPage}
+                disabled={usersLoading}
             />
         </>
     )

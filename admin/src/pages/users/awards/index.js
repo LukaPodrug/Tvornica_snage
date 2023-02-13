@@ -69,6 +69,7 @@ function AwardsUsersPage() {
                 page={page}
                 changePage={setPage}
                 maxPage={maxPage}
+                disabled={usersLoading}
             />
         </>
     )
