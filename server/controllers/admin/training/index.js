@@ -45,7 +45,7 @@ async function editDetails(id, coachId, start, finish, room, capacity, level, ti
 }
 
 async function getByDate(startOfDay) {
-    const finishOfDay = new Date(startOfDay.getTime() + 3600*1000*24)
+    const finishOfDay = new Date(startOfDay.getTime() + 24*60*60*1000)
     try {
         const trainings = await database`
             select *
@@ -114,7 +114,7 @@ async function getByCoachId(coachId) {
 }
 
 async function getByCoachIdAndDate(coachId, startOfDay) {
-    const finishOfDay = new Date(startOfDay.getTime() + 3600*1000*24)
+    const finishOfDay = new Date(startOfDay.getTime() + 24*60*60*1000)
     try {
         const trainings = await database`
             select *

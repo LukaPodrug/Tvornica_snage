@@ -5,17 +5,17 @@ async function getByDate(startOfDay, userLevel) {
     try {
         const trainings = await database`
             with numberOfReservations as (
-                select "trainingId", cast(count("trainingId") as integer) as "numberOfReservations"
+                select reservations."trainingId", cast(count(reservations."trainingId") as integer) as "numberOfReservations"
                 from trainings
-                join reservations on id = "trainingId"
-                where start between ${startOfDay} and ${finishOfDay} and manual = false
+                join reservations on trainings.id = reservations."trainingId"
+                where trainings.start between ${startOfDay} and ${finishOfDay} and reservations.manual = false
                 group by "trainingId"
             )
 
             select *
             from trainings
             left join numberOfReservations on trainings.id = numberOfReservations."trainingId"
-            where start between ${startOfDay} and ${finishOfDay} and level <= ${userLevel}
+            where trainings.start between ${startOfDay} and ${finishOfDay} and trainings.level <= ${userLevel}
             order by start asc`
         return trainings
     }

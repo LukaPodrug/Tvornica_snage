@@ -63,18 +63,18 @@ async function getActiveByUserId(userId) {
     try {
         const reservations = await database`
             with numberOfReservations as (
-                select "trainingId", cast(count("trainingId") as integer) as "numberOfReservations"
+                select reservations."trainingId", cast(count(reservations."trainingId") as integer) as "numberOfReservations"
                 from trainings
-                join reservations on id = "trainingId"
+                join reservations on trainings.id = reservations."trainingId"
                 where start > ${new Date(Date.now())}
                 group by "trainingId"
             )
 
             select *
             from reservations
-            join trainings on reservations."trainingId" = id
+            join trainings on reservations."trainingId" = training.id
             join numberOfReservations on reservations."trainingId" = numberOfReservations."trainingId"
-            where "userId" = ${userId} and start > ${new Date(Date.now())}
+            where reservations."userId" = ${userId} and start > ${new Date(Date.now())}
             order by start asc`
         return reservations
     }
@@ -87,11 +87,11 @@ async function getStatisticsByUserId(userId) {
     try {
         const statistics = await database`
             select
-            cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as "reservationsDone",
-            cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as "reservationsSkipped",
-            cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as "nonReservationsDone"
-            from reservations join trainings on "trainingId" = id
-            where "userId" = ${userId} and finish < ${new Date(Date.now())}`
+            cast(sum(case when reservations.completion = true and reservations.manual = false then 1 else 0 end) as integer) as "reservationsDone",
+            cast(sum(case when reservations.completion = false and reservations.manual = false then 1 else 0 end) as integer) as "reservationsSkipped",
+            cast(sum(case when reservations.completion = true and reservations.manual = true then 1 else 0 end) as integer) as "nonReservationsDone"
+            from reservations join trainings on reservations."trainingId" = trainings.id
+            where reservations."userId" = ${userId} and trainings.finish < ${new Date(Date.now())}`
         return statistics
     }
     catch(error) {
@@ -103,9 +103,9 @@ async function checkUserOccupancy(userId , start, finish) {
     try {
         const userOccupancy = await database`
             select *
-            from reservations join trainings on "trainingId" = id
-            where ("userId" = ${userId} and ${start} >= start and ${start} < finish)
-            or ("userId" = ${userId} and ${finish} > start and ${finish} <= finish)`
+            from reservations join trainings on reservations."trainingId" = trainings.id
+            where (reservations."userId" = ${userId} and ${start} >= trainings.start and ${start} < trainings.finish)
+            or (reservations."userId" = ${userId} and ${finish} > trainings.start and ${finish} <= trainings.finish)`
         return userOccupancy[0]
     }
     catch(error) {
