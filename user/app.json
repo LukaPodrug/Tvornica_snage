@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "user",
-    "slug": "user",
+    "name": "Tvornica snage",
+    "slug": "tvornica-snage",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -24,16 +24,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.tvornica_snage.tvornicasnage"
     },
     "web": {
       "favicon": "./assets/images/logo.png"
     },
     "extra": {
       "eas": {
-        "projectId": "e125051a-4346-4bbe-b10d-7f9ed193a39b"
+        "projectId": "c0c4f527-9619-4470-9f63-472f1e1c526f"
       }
     },
-    "owner": "podra01"
+    "owner": "tvornica_snage"
   }
 }
