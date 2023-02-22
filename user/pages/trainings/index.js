@@ -90,19 +90,24 @@ function TrainingsPage() {
   return (
     <ScrollView>
       <View
-        style={styles.trainingsPageWrapper}
+        style={styles.wrapper}
       >
         <View
-          style={styles.trainingsWrapper}
+          style={styles.window}
         >
           <Title
             text='all trainings'
-            style={styles.titleText}
+            textStyle={styles.titleText}
           />
           <DatePicker
             dateShow={dateShow}
             changeDate={changeDate}
             disabled={trainingsLoading}
+            wrapperStyle={styles.datePickerWrapper}
+            buttonWrapperStyle={styles.datePickerButtonWrapper}
+            buttonDisabledStyle={styles.datePickerButtonDisabled}
+            buttonIconStyle={styles.datePickerButtonIcon}
+            textStyle={styles.datePickerText}
           />
           {
             trainingsLoading ?
@@ -116,6 +121,31 @@ function TrainingsPage() {
                 reservationUpdated={reservationUpdated}
                 changeReservationUpdated={setReservationUpdated}
                 changeLoading={setTrainingsLoading}
+                emptyMessageWrapperStyle={styles.trainingsSectionEmptyMessageWrapper}
+                emptyMessageTextStyle={styles.trainingsSectionEmptyMessageText}
+                trainingWrapperStyle={styles.trainingWrapper}
+                trainingDataWrapperStyle={styles.trainingDataWrapper}
+                trainingMenuWrapperStyle={styles.trainingMenuWrapper}
+                trainingSectionWrapperStyle={styles.trainingSectionWrapper}
+                trainingCoachSectionWrapperStyle={styles.trainingCoachSectionWrapper}
+                trainingSectionImageStyle={styles.trainingSectionImage}
+                trainingCoachSectionImageStyle={styles.trainingCoachSectionImage}
+                trainingSectionPropertyTextStyle={styles.trainingSectionPropertyText}
+                trainingSectionValueTextStyle={styles.trainingSectionValueText}
+                trainingCapacitySectionWrapper={styles.trainingCapacitySectionWrapper}
+                trainingButtonWrapperStyle={styles.trainingButtonWrapper}
+                trainingButtonWrapperDisabledStyle={styles.trainingButtonWrapperDisabled}
+                trainingButtonWrapperHiddenStyle={styles.trainingButtonWrapperHidden}
+                trainingButtonIconStyle={styles.trainingButtonIcon}
+                trainingDetailsModalWrapperStyle={styles.trainingDetailsModalWrapperStyle}
+                trainingDetailsModalHeaderWrapperStyle={styles.trainingDetailsModalHeaderWrapperStyle}
+                trainingDetailsModalTitleTextStyle={styles.trainingDetailsModalTitleTextStyle}
+                trainingDetailsModalExitButtonWrapperStyle={styles.trainingDetailsModalExitButtonWrapperStyle}
+                trainingDetailsModalExitButtonTextStyle={styles.trainingDetailsModalExitButtonTextStyle}
+                trainingDetailsModalDataRowWrapperStyle={styles.trainingDetailsModalDataRowWrapperStyle}
+                trainingDetailsModalDataWrapperStyle={styles.trainingDetailsModalDataWrapperStyle}
+                trainingDetailsModalDataPropertyTextStyle={styles.trainingDetailsModalDataPropertyTextStyle}
+                trainingDetailsModalDataValueTextStyle={styles.trainingDetailsModalDataValueTextStyle}
               />
           }
         </View>
@@ -125,7 +155,7 @@ function TrainingsPage() {
 }
 
 const styles = StyleSheet.create({
-  trainingsPageWrapper: {
+  wrapper: {
     display: 'flex',
     alignItems: 'center',
 
@@ -138,7 +168,7 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
 
-  trainingsWrapper: {
+  window: {
     width: '100%',
     minHeight: Dimensions.get('window').height - 220,
 
@@ -150,7 +180,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10,
   },
@@ -173,6 +203,205 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  datePickerWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    marginBottom: 20,
+    marginLeft: 5
+  },
+
+  datePickerButtonWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    width: 30,
+    height: 30,
+    
+    borderRadius: 15,
+
+    backgroundColor: '#e04f5f'
+  },
+  datePickerButtonDisabled: {
+    backgroundColor: '#807d7d'
+  },
+  datePickerButtonIcon: {
+    width: 15,
+    height: 15
+  },
+
+  datePickerText: {
+    marginLeft: 10,
+    marginRight: 10,
+
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 16
+  },
+
+  trainingsSectionEmptyMessageWrapper: {
+    width: '100%',
+
+    borderRadius: 10,
+
+    backgroundColor: '#ffffff',
+
+    padding: 9
+  },
+  trainingsSectionEmptyMessageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+
+  trainingWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+
+    width: '100%',
+
+    backgroundColor: '#ffffff',
+
+    marginBottom: 10,
+
+    borderRadius: 10,
+
+    padding: 5
+  },
+
+  trainingDataWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+    flexGrow: 1,
+
+    marginRight: 5
+  },
+  trainingSectionWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  trainingCoachSectionWrapper: {
+    width: 75
+  },
+  trainingSectionImage: {
+    width: 30,
+    height: 30
+  },
+  trainingCoachSectionImage: {
+    borderRadius: 15
+  },
+  trainingSectionPropertyText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 12,
+    textTransform: 'uppercase'
+  },
+  trainingSectionValueText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 14,
+    textTransform: 'uppercase'
+  },
+  trainingCapacitySectionWrapper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  trainingMenuWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    marginLeft: 5
+  },
+  trainingButtonWrapper: {
+    width: 30,
+    height: 30,
+
+    borderRadius: 15,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    marginLeft: 5,
+    marginRight: 5,
+
+    backgroundColor: '#e04f5f'
+  },
+  trainingButtonWrapperDisabled: {
+    backgroundColor: '#807d7d'
+  },
+  trainingButtonWrapperHidden: {
+    opacity: 0
+  },
+  trainingButtonIcon: {
+    width: 20,
+    height: 20
+  },
+
+  trainingDetailsModalWrapperStyle: {
+    backgroundColor: '#ffffff',
+
+    flex: 0,
+
+    padding: 15,
+
+    borderRadius: 10
+  },
+
+  trainingDetailsModalHeaderWrapperStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    marginBottom: 25
+  },
+
+  trainingDetailsModalDataRowWrapperStyle: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  trainingDetailsModalDataWrapperStyle: {
+    width: '50%',
+
+    display: 'flex',
+    justifyContent: 'flex-start',
+
+    marginBottom: 10
+  },
+
+  trainingDetailsModalTitleTextStyle: {
+    fontFamily: 'Ubuntu_700Bold',
+    fontSize: 20,
+    textTransform: 'uppercase',
+  },
+
+  trainingDetailsModalExitButtonWrapperStyle: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f'
+  },
+  trainingDetailsModalExitButtonTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    color: '#ffffff'
+  },
+  trainingDetailsModalDataPropertyTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+  trainingDetailsModalDataValueTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 18
   }
 })
 

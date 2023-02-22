@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import { useRecoilState } from 'recoil'
 
 import store from '../../store'
@@ -16,7 +16,7 @@ import moreIcon from '../../assets/icons/more.png'
 import addReservationIcon from '../../assets/icons/registration.png'
 import removeReservationIcon from '../../assets/icons/remove.png'
 
-function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate, reservationUpdated, changeReservationUpdated, changeLoading }) {
+function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate, reservationUpdated, changeReservationUpdated, changeLoading, wrapperStyle, dataWrapperStyle, menuWrapperStyle, sectionWrapperStyle, coachSectionWrapperStyle, sectionImageStyle, coachSectionImageStyle, sectionPropertyTextStyle, sectionValueTextStyle, capacitySectionWrapper, buttonWrapperStyle, buttonWrapperDisabledStyle, buttonWrapperHiddenStyle, buttonIconStyle, detailsModalWrapperStyle, detailsModalHeaderWrapperStyle, detailsModalTitleTextStyle, detailsModalExitButtonWrapperStyle, detailsModalExitButtonTextStyle, detailsModalDataRowWrapperStyle, detailsModalDataWrapperStyle, detailsModalDataPropertyTextStyle, detailsModalDataValueTextStyle }) {
     const [token] = useRecoilState(store.token)
     const [ownData] = useRecoilState(store.ownData)
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
@@ -53,63 +53,65 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
 
     return (
         <View
-            style={styles.wrapper}
+            style={wrapperStyle}
         >
             <View
-                style={styles.dataWrapper}
+                style={dataWrapperStyle}
             >
                 <TrainingSection
                     image={calendarIcon}
                     property='date'
                     value={date}
-                    wrapperStyle={styles.sectionWrapper}
-                    imageStyle={styles.sectionImage}
-                    propertyTextStyle={styles.propertyText}
-                    valueTextStyle={styles.valueText}
+                    wrapperStyle={sectionWrapperStyle}
+                    imageStyle={sectionImageStyle}
+                    propertyTextStyle={sectionPropertyTextStyle}
+                    valueTextStyle={sectionValueTextStyle}
                 />
                 <TrainingSection
                     image={coachImage}
                     property='coach'
                     value={coachLastName}
-                    wrapperStyle={[styles.sectionWrapper, styles.coachWrapper]}
-                    imageStyle={[styles.sectionImage, styles.coachImage]}
-                    propertyTextStyle={styles.propertyText}
-                    valueTextStyle={styles.valueText}
+                    wrapperStyle={[sectionWrapperStyle, coachSectionWrapperStyle]}
+                    imageStyle={[sectionImageStyle, coachSectionImageStyle]}
+                    propertyTextStyle={sectionPropertyTextStyle}
+                    valueTextStyle={sectionValueTextStyle}
                 />
                 <TrainingSection
                     image={startIcon}
                     property='start'
                     value={start}
-                    wrapperStyle={styles.sectionWrapper}
-                    imageStyle={styles.sectionImage}
-                    propertyTextStyle={styles.propertyText}
-                    valueTextStyle={styles.valueText}
+                    wrapperStyle={sectionWrapperStyle}
+                    imageStyle={sectionImageStyle}
+                    propertyTextStyle={sectionPropertyTextStyle}
+                    valueTextStyle={sectionValueTextStyle}
                 />
                 <TrainingSection
                     image={finishIcon}
                     property='finish'
                     value={finish}
-                    wrapperStyle={styles.sectionWrapper}
-                    imageStyle={styles.sectionImage}
-                    propertyTextStyle={styles.propertyText}
-                    valueTextStyle={styles.valueText}
+                    wrapperStyle={sectionWrapperStyle}
+                    imageStyle={sectionImageStyle}
+                    propertyTextStyle={sectionPropertyTextStyle}
+                    valueTextStyle={sectionValueTextStyle}
                 />
                 <TrainingCapacity
                     numberOfReservations={numberOfReservations}
                     capacity={capacity}
-                    propertyTextStyle={styles.propertyText}
-                    valueTextStyle={styles.valueText}
+                    wrapperStyle={capacitySectionWrapper}
+                    propertyTextStyle={sectionPropertyTextStyle}
+                    valueTextStyle={sectionValueTextStyle}
                 />
             </View>
             <View
-                style={styles.menuWrapper}
+                style={menuWrapperStyle}
             >
                 <TrainingButton
                     work={openTrainingDetailsModal}
                     image={moreIcon}
                     disabled={false}
-                    wrapperStyle={[styles.button, {backgroundColor: '#90ee90'}]}
-                    imageStyle={styles.buttonImage}
+                    wrapperStyle={buttonWrapperStyle}
+                    wrapperDisabledStyle={null}
+                    iconStyle={buttonIconStyle}
                 />
                 {
                     reserved ?
@@ -117,16 +119,18 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                             work={removeReservation}
                             image={removeReservationIcon}
                             disabled={new Date(Date.now()) > new Date(startDate)}
-                            wrapperStyle={[styles.button, {backgroundColor: '#e04f5f'}, new Date(Date.now()) > new Date(startDate) && {opacity: 0}]}
-                            imageStyle={styles.buttonImage}
+                            wrapperStyle={[buttonWrapperStyle, new Date(Date.now()) > new Date(startDate) && buttonWrapperHiddenStyle]}
+                            wrapperDisabledStyle={buttonWrapperDisabledStyle}
+                            iconStyle={buttonIconStyle}
                         />
                         :
                         <TrainingButton
                             work={addReservation}
                             image={addReservationIcon}
                             disabled={new Date(Date.now()) > new Date(startDate) || numberOfReservations === capacity || new Date(new Date(ownData.membership).getTime() + 7*24*60*60*1000) < new Date(startDate)}
-                            wrapperStyle={[styles.button, {backgroundColor: '#90ee90'}, new Date(Date.now()) > new Date(startDate) && {opacity: 0}]}
-                            imageStyle={styles.buttonImage}
+                            wrapperStyle={[buttonWrapperStyle, new Date(Date.now()) > new Date(startDate) && buttonWrapperHiddenStyle]}
+                            wrapperDisabledStyle={buttonWrapperDisabledStyle}
+                            iconStyle={buttonIconStyle}
                         />
                 }
             </View>
@@ -144,86 +148,18 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                 title={title}
                 regime={regime}
                 exercises={exercises}
+                wrapperStyle={detailsModalWrapperStyle}
+                headerWrapperStyle={detailsModalHeaderWrapperStyle}
+                titleTextStyle={detailsModalTitleTextStyle}
+                exitButtonWrapperStyle={detailsModalExitButtonWrapperStyle}
+                exitButtonTextStyle={detailsModalExitButtonTextStyle}
+                dataRowWrapperStyle={detailsModalDataRowWrapperStyle}
+                dataWrapperStyle={detailsModalDataWrapperStyle}
+                dataPropertyTextStyle={detailsModalDataPropertyTextStyle}
+                dataValueTextStyle={detailsModalDataValueTextStyle}
             />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        display: 'flex',
-        flexDirection: 'row',
-
-        width: '100%',
-
-        backgroundColor: '#e6e6e6',
-
-        marginBottom: 10,
-
-        borderRadius: 10,
-
-        padding: 5
-    },
-
-    dataWrapper: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-        flexGrow: 1,
-
-        marginRight: 5
-    },
-    sectionWrapper: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    coachWrapper: {
-        width: 75
-    },
-    sectionImage: {
-        width: 30,
-        height: 30
-    },
-    coachImage: {
-        borderRadius: 15
-    },
-    propertyText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 12,
-        textTransform: 'uppercase'
-    },
-    valueText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 14,
-        textTransform: 'uppercase'
-    },
-
-    menuWrapper: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-
-        marginLeft: 5
-    },
-    button: {
-        width: 30,
-        height: 30,
-
-        borderRadius: 15,
-
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        marginLeft: 5,
-        marginRight: 5
-    },
-    buttonImage: {
-        width: 20,
-        height: 20
-    }
-})
 
 export default Training

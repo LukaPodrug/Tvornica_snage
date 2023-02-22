@@ -1,25 +1,25 @@
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import Title from '../../../../components/title'
 import Button from '../../../../components/button'
 import Info from '../../../../components/info'
 
-function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, date, start, finish, room, capacity, level, title, regime, exercises }) {
+function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, date, start, finish, room, capacity, level, title, regime, exercises, wrapperStyle, headerWrapperStyle, titleTextStyle, exitButtonWrapperStyle, exitButtonTextStyle, dataRowWrapperStyle, dataWrapperStyle, dataPropertyTextStyle, dataValueTextStyle }) {
     return (
         <Modal
             isVisible={isOpen}
             backdropOpacity={1}
         >
             <View
-                style={styles.wrapper}
+                style={wrapperStyle}
             >
                 <View
-                    style={styles.header}
+                    style={headerWrapperStyle}
                 >
                     <Title
                         text='training details'
-                        style={styles.titleText}
+                        textStyle={titleTextStyle}
                     />
                     <Button
                         loading={false}
@@ -28,130 +28,130 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                         work={close}
                         buttonText='close'
                         wrapperStyle={null}
-                        buttonWrapperStyle={styles.buttonWrapper}
-                        buttonTextStyle={styles.buttonText}
+                        buttonWrapperStyle={exitButtonWrapperStyle}
+                        buttonTextStyle={exitButtonTextStyle}
                         messageWrapperStyle={null}
                         messageTextStyle={null}
                     />
                 </View>
                 <View>
                     <View
-                        style={styles.dataRow}
+                        style={dataRowWrapperStyle}
                     >
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='coach'
                                 value={coachFirstName + ' ' + coachLastName}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='date'
                                 value={date}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                     </View>
                     <View
-                        style={styles.dataRow}
+                        style={dataRowWrapperStyle}
                     >
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='start'
                                 value={start}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='finish'
                                 value={finish}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                     </View>
                     <View
-                        style={styles.dataRow}
+                        style={dataRowWrapperStyle}
                     >
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='room'
                                 value={room}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='capacity'
                                 value={capacity}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                     </View>
                     <View
-                        style={styles.dataRow}
+                        style={dataRowWrapperStyle}
                     >
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='level'
                                 value={level}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='title'
                                 value={title}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                     </View>
                     <View
-                        style={styles.dataRow}
+                        style={dataRowWrapperStyle}
                     >
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='regime'
                                 value={regime}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                         <View
-                            style={styles.data}
+                            style={dataWrapperStyle}
                         >
                             <Info
                                 property='exercises'
                                 value={exercises}
-                                labelTextStyle={styles.infoLabelTextStyle}
-                                valueTextStyle={styles.infoValueTextStyle}
+                                propertyTextStyle={dataPropertyTextStyle}
+                                valueTextStyle={dataValueTextStyle}
                             />
                         </View>
                     </View>
@@ -160,68 +160,5 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
         </Modal>
     )
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        backgroundColor: '#ffffff',
-
-        flex: 0,
-
-        padding: 15,
-
-        borderRadius: 10
-    },
-
-    header: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-
-        marginBottom: 25
-    },
-
-    dataRow: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    data: {
-        width: '50%',
-
-        display: 'flex',
-        justifyContent: 'flex-start',
-
-        marginBottom: 10
-    },
-    
-    titleText: {
-        fontFamily: 'Ubuntu_700Bold',
-        fontSize: 20,
-        textTransform: 'uppercase',
-    },
-
-    buttonWrapper: {
-        padding: 10,
-
-        borderRadius: 10,
-
-        backgroundColor: '#e04f5f'
-    },
-    buttonText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 15,
-        textTransform: 'uppercase',
-        color: '#ffffff'
-    },
-    infoLabelTextStyle: {
-        fontFamily: 'Ubuntu_400Regular',
-        textTransform: 'uppercase',
-        fontSize: 14
-    },
-    infoValueTextStyle: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 18
-    }
-})
 
 export default TrainingDetailsModal

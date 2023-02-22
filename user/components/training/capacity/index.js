@@ -1,7 +1,7 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { DonutChart } from 'react-native-circular-chart'
 
-function TrainingCapacity({ numberOfReservations, capacity, propertyTextStyle, valueTextStyle }) {
+function TrainingCapacity({ numberOfReservations, capacity, wrapperStyle, propertyTextStyle, valueTextStyle }) {
 
     const capacityHelp = [
         {
@@ -18,7 +18,7 @@ function TrainingCapacity({ numberOfReservations, capacity, propertyTextStyle, v
 
     return (
         <View
-            style={styles.wrapper}
+            style={wrapperStyle}
         >
             <DonutChart
                 data={capacityHelp}
@@ -44,12 +44,5 @@ function TrainingCapacity({ numberOfReservations, capacity, propertyTextStyle, v
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        display: 'flex',
-        alignItems: 'center'
-    }
-})
 
 export default TrainingCapacity

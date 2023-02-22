@@ -1,18 +1,18 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import moment from 'moment'
 
 import Training from '../../components/training'
 
-function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeReservationUpdated, changeLoading }) {
+function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeReservationUpdated, changeLoading, emptyMessageWrapperStyle, emptyMessageTextStyle, trainingWrapperStyle, trainingDataWrapperStyle, trainingMenuWrapperStyle, trainingSectionWrapperStyle, trainingCoachSectionWrapperStyle, trainingSectionImageStyle, trainingCoachSectionImageStyle, trainingSectionPropertyTextStyle, trainingSectionValueTextStyle, trainingCapacitySectionWrapper, trainingButtonWrapperStyle, trainingButtonWrapperDisabledStyle, trainingButtonWrapperHiddenStyle, trainingButtonIconStyle, trainingDetailsModalWrapperStyle, trainingDetailsModalHeaderWrapperStyle, trainingDetailsModalTitleTextStyle, trainingDetailsModalExitButtonWrapperStyle, trainingDetailsModalExitButtonTextStyle, trainingDetailsModalDataRowWrapperStyle, trainingDetailsModalDataWrapperStyle, trainingDetailsModalDataPropertyTextStyle, trainingDetailsModalDataValueTextStyle }) {
     return (
         <>
             {
                 trainings.length === 0 ?
                     <View
-                        style={styles.emptyWrapper}
+                        style={emptyMessageWrapperStyle}
                     >
                         <Text
-                            style={styles.emptyText}
+                            style={emptyMessageTextStyle}
                         >
                             {emptyMessage}
                         </Text>
@@ -41,6 +41,29 @@ function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeR
                                 reservationUpdated={reservationUpdated}
                                 changeReservationUpdated={changeReservationUpdated}
                                 changeLoading={changeLoading}
+                                wrapperStyle={trainingWrapperStyle}
+                                dataWrapperStyle={trainingDataWrapperStyle}
+                                menuWrapperStyle={trainingMenuWrapperStyle}
+                                sectionWrapperStyle={trainingSectionWrapperStyle}
+                                coachSectionWrapperStyle={trainingCoachSectionWrapperStyle}
+                                sectionImageStyle={trainingSectionImageStyle}
+                                coachSectionImageStyle={trainingCoachSectionImageStyle}
+                                sectionPropertyTextStyle={trainingSectionPropertyTextStyle}
+                                sectionValueTextStyle={trainingSectionValueTextStyle}
+                                capacitySectionWrapper={trainingCapacitySectionWrapper}
+                                buttonWrapperStyle={trainingButtonWrapperStyle}
+                                buttonWrapperDisabledStyle={trainingButtonWrapperDisabledStyle}
+                                buttonWrapperHiddenStyle={trainingButtonWrapperHiddenStyle}
+                                buttonIconStyle={trainingButtonIconStyle}
+                                detailsModalWrapperStyle={trainingDetailsModalWrapperStyle}
+                                detailsModalHeaderWrapperStyle={trainingDetailsModalHeaderWrapperStyle}
+                                detailsModalTitleTextStyle={trainingDetailsModalTitleTextStyle}
+                                detailsModalExitButtonWrapperStyle={trainingDetailsModalExitButtonWrapperStyle}
+                                detailsModalExitButtonTextStyle={trainingDetailsModalExitButtonTextStyle}
+                                detailsModalDataRowWrapperStyle={trainingDetailsModalDataRowWrapperStyle}
+                                detailsModalDataWrapperStyle={trainingDetailsModalDataWrapperStyle}
+                                detailsModalDataPropertyTextStyle={trainingDetailsModalDataPropertyTextStyle}
+                                detailsModalDataValueTextStyle={trainingDetailsModalDataValueTextStyle}
                             />
                         )
                     })
@@ -48,22 +71,5 @@ function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeR
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    emptyWrapper: {
-        width: '100%',
-
-        borderRadius: 10,
-
-        backgroundColor: '#e6e6e6',
-
-        padding: 9
-    },
-    emptyText: {
-        fontFamily: 'Ubuntu_700Bold',
-        textTransform: 'uppercase',
-        fontSize: 14
-    }
-})
 
 export default TrainingsSection

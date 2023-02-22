@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 
-function Info({ property, value, labelTextStyle, valueTextStyle }) {
+function Info({ property, value, propertyTextStyle, valueTextStyle }) {
     return (
         <View>
             <Text
-                style={labelTextStyle}
+                style={propertyTextStyle}
             >
                 {property}
             </Text>

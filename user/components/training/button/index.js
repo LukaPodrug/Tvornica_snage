@@ -1,14 +1,14 @@
 import { TouchableOpacity, Image } from 'react-native'
 
-function TrainingButton({ work, image, disabled, wrapperStyle, imageStyle }) {
+function TrainingButton({ work, image, disabled, wrapperStyle, wrapperDisabledStyle, iconStyle }) {
     return (
         <TouchableOpacity
-            style={[wrapperStyle, disabled && {backgroundColor: '#807d7d'}]}
+            style={[wrapperStyle, disabled && wrapperDisabledStyle]}
             onPress={disabled ? () => {} : () => work()}
             disabled={disabled}
         >
             <Image
-                style={imageStyle}
+                style={iconStyle}
                 source={image}
             />
         </TouchableOpacity>
