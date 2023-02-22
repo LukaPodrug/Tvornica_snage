@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StyleSheet, TouchableOpacity, View, Text, Image } from 'react-native'
+import { TouchableOpacity, View, Text, Image } from 'react-native'
 
 import BlogPostModal from '../../pages/modals/blogPost'
 
@@ -7,7 +7,7 @@ import photoIcon from '../../assets/icons/camera.png'
 import videoIcon from '../../assets/icons/video.png'
 import attachmentIcon from '../../assets/icons/attachment.png'
 
-function BlogPost({ title, categories, content, images, videos, attachments }) {
+function BlogPost({ title, categories, content, images, videos, attachments, wrapperStyle, titleTextStyle, categoriesTextStyle, attachmentsWrapperStyle, attachmentWrapperStyle, attachmentIconStyle, attachmentTextStyle, modalWrapperStyle, modalHeaderWrapperStyle, modalTitleTextStyle, modalExitButtonWrapperStyle, modalExitButtonTextStyle, modalSectionWrapper, modalSubtitleTextStyle, modalContentTextStyle, modalAssetButtonWrapperStyle,  modalAssetButtonTextStyle, modalPhotoGalleryHeaderWrapperStyle, modalVideoGalleryHeaderWrapperStyle, modalGalleryExitButtonWrapperStyle, modalGalleryExitButtonTextStyle }) {
     const [blogPostModalOpen, setBlogPostModalOpen] = useState(false)
 
     function openBlogPostModal() {
@@ -23,56 +23,56 @@ function BlogPost({ title, categories, content, images, videos, attachments }) {
             onPress={() => openBlogPostModal()}
         >
             <View
-                style={styles.blogPostWrapper}
+                style={wrapperStyle}
             >
                 <Text
-                    style={styles.titleText}
+                    style={titleTextStyle}
                 >
                     {title}
                 </Text>
                 <Text
-                    style={styles.categoriesText}
+                    style={categoriesTextStyle}
                 >
                     categories: {categories}
                 </Text>
                 <View
-                    style={styles.numbersWrapper}
+                    style={attachmentsWrapperStyle}
                 >
                     <View
-                        style={styles.numberWrapper}
+                        style={attachmentWrapperStyle}
                     >
                         <Image
-                            style={styles.icon}
+                            style={attachmentIconStyle}
                             source={photoIcon}
                         />
                         <Text
-                            style={styles.numberText}
+                            style={attachmentTextStyle}
                         >
                             {images.length}
                         </Text>
                     </View>
                     <View
-                        style={styles.numberWrapper}
+                        style={attachmentWrapperStyle}
                     >
                         <Image
-                            style={styles.icon}
+                            style={attachmentIconStyle}
                             source={videoIcon}
                         />
                         <Text
-                            style={styles.numberText}
+                            style={attachmentTextStyle}
                         >
                             {videos.length}
                         </Text>
                     </View>
                     <View
-                        style={styles.numberWrapper}
+                        style={attachmentWrapperStyle}
                     >
                         <Image
-                            style={styles.icon}
+                            style={attachmentIconStyle}
                             source={attachmentIcon}
                         />
                         <Text
-                            style={styles.numberText}
+                            style={attachmentTextStyle}
                         >
                             {attachments.length}
                         </Text>
@@ -88,64 +88,23 @@ function BlogPost({ title, categories, content, images, videos, attachments }) {
                 images={images}
                 videos={videos}
                 attachments={attachments}
+                wrapperStyle={modalWrapperStyle}
+                headerWrapperStyle={modalHeaderWrapperStyle}
+                titleTextStyle={modalTitleTextStyle}
+                exitButtonWrapperStyle={modalExitButtonWrapperStyle}
+                exitButtonTextStyle={modalExitButtonTextStyle}
+                sectionWrapper={modalSectionWrapper}
+                subtitleTextStyle={modalSubtitleTextStyle}
+                contentTextStyle={modalContentTextStyle}
+                assetButtonWrapperStyle={modalAssetButtonWrapperStyle}
+                assetButtonTextStyle={modalAssetButtonTextStyle}
+                photoGalleryHeaderWrapperStyle={modalPhotoGalleryHeaderWrapperStyle}
+                videoGalleryHeaderWrapperStyle={modalVideoGalleryHeaderWrapperStyle}
+                galleryExitButtonWrapperStyle={modalGalleryExitButtonWrapperStyle}
+                galleryExitButtonTextStyle={modalGalleryExitButtonTextStyle}
             />
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    blogPostWrapper: {
-        padding: 10,
-
-        backgroundColor: '#e6e6e6',
-
-        borderRadius: 10,
-        
-        marginBottom: 10
-    },
-    titleText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 20,
-
-        marginBottom: 10
-    },
-    categoriesText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 14,
-        textTransform: 'uppercase',
-
-        marginBottom: 10
-    },
-    numbersWrapper: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    numberWrapper: {
-        width: 55,
-
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        padding: 10,
-
-        marginRight: 5,
-
-        backgroundColor: '#90ee90',
-
-        borderRadius: 10
-    },
-    icon: {
-        width: 20,
-        height: 20,
-
-        marginRight: 5
-    },
-    numberText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 16,
-    }
-})
 
 export default BlogPost

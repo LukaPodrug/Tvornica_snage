@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
 
-    marginTop: Constants.statusBarHeight,
+    marginTop: Constants.statusBarHeight + 1,
 
     backgroundColor: '#e6e6e6',
 

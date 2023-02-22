@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 import Modal from 'react-native-modal'
 import * as WebBrowser from 'expo-web-browser'
 
@@ -9,7 +9,7 @@ import AttachmentsSection from '../../../sections/attachments'
 import ImagesSection from '../../../sections/images'
 import VideosSection from '../../../sections/videos'
 
-function BlogPostModal({ isOpen, close, title, categories, content, images, videos, attachments }) {
+function BlogPostModal({ isOpen, close, title, categories, content, images, videos, attachments, wrapperStyle, headerWrapperStyle, titleTextStyle, exitButtonWrapperStyle, exitButtonTextStyle, sectionWrapper, subtitleTextStyle, contentTextStyle, assetButtonWrapperStyle,  assetButtonTextStyle, photoGalleryHeaderWrapperStyle, videoGalleryHeaderWrapperStyle, galleryExitButtonWrapperStyle, galleryExitButtonTextStyle }) {
     const [photoGalleryOpen, setPhotoGalleryOpen] = useState(false)
     const [videoOpen, setVideoOpen] = useState(false)
     const [videoURL, setVideoURL] = useState('')
@@ -47,14 +47,14 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
             backdropOpacity={1}
         >
             <View
-                style={styles.wrapper}
+                style={wrapperStyle}
             >
                 <View
-                    style={styles.header}
+                    style={headerWrapperStyle}
                 >
                     <Title
                         text={title}
-                        style={styles.titleText}
+                        textStyle={titleTextStyle}
                     />
                     <Button
                         loading={false}
@@ -63,19 +63,19 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                         work={close}
                         buttonText='close'
                         wrapperStyle={null}
-                        buttonWrapperStyle={styles.buttonWrapper}
-                        buttonTextStyle={styles.buttonText}
+                        buttonWrapperStyle={exitButtonWrapperStyle}
+                        buttonTextStyle={exitButtonTextStyle}
                         messageWrapperStyle={null}
                         messageTextStyle={null}
                     />
                 </View>
                 <Text
-                    style={styles.subtitleText}
+                    style={subtitleTextStyle}
                 >
                     categories: {categories}
                 </Text>
                 <Text
-                    style={styles.contentText}
+                    style={contentTextStyle}
                 >
                     {content}
                 </Text>
@@ -84,10 +84,10 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                         <AttachmentsSection
                             attachments={attachments}
                             downloadAttachment={downloadAttachment}
-                            wrapperStyle={styles.attachmentSectionWrapper}
-                            subtitleTextStyle={styles.subtitleText}
-                            assetButtonWrapperStyle={styles.assetButtonWrapper}
-                            assetButtonTextStyle={styles.assetButtonText}
+                            wrapperStyle={sectionWrapper}
+                            subtitleTextStyle={subtitleTextStyle}
+                            assetButtonWrapperStyle={assetButtonWrapperStyle}
+                            assetButtonTextStyle={assetButtonTextStyle}
                         />
                 }
                 {
@@ -97,13 +97,13 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                             isPhotoGalleryOpen={photoGalleryOpen}
                             openPhotoGallery={openPhotoGallery}
                             closePhotoGallery={closePhotoGallery}
-                            wrapperStyle={styles.imagesSectionWrapper}
-                            subtitleTextStyle={styles.subtitleText}
-                            assetButtonWrapperStyle={styles.assetButtonWrapper}
-                            assetButtonTextStyle={styles.assetButtonText}
-                            photoGalleryHeaderWrapperStyle={styles.photoGalleryHeader}
-                            photoGalleryHeaderButtonWrapperStyle={styles.buttonWrapper}
-                            photoGalleryHeaderButtonTextStyle={styles.buttonText}
+                            wrapperStyle={sectionWrapper}
+                            subtitleTextStyle={subtitleTextStyle}
+                            assetButtonWrapperStyle={assetButtonWrapperStyle}
+                            assetButtonTextStyle={assetButtonTextStyle}
+                            photoGalleryHeaderWrapperStyle={photoGalleryHeaderWrapperStyle}
+                            photoGalleryHeaderButtonWrapperStyle={galleryExitButtonWrapperStyle}
+                            photoGalleryHeaderButtonTextStyle={galleryExitButtonTextStyle}
                         />
                 }       
                 {
@@ -114,121 +114,18 @@ function BlogPostModal({ isOpen, close, title, categories, content, images, vide
                             closeVideo={closeVideo}
                             isVideoOpen={videoOpen}
                             videoURL={videoURL}
-                            wrapperStyle={styles.videosSectionWrapper}
-                            subtitleTextStyle={styles.subtitleText}
-                            assetButtonWrapperStyle={styles.assetButtonWrapper}
-                            assetButtonTextStyle={styles.assetButtonText}
-                            videoGalleryHeaderWrapperStyle={styles.videoGalleryHeader}
-                            videoGalleryHeaderButtonWrapperStyle={styles.buttonWrapper}
-                            videoGalleryHeaderButtonTextStyle={styles.buttonText}
+                            wrapperStyle={sectionWrapper}
+                            subtitleTextStyle={subtitleTextStyle}
+                            assetButtonWrapperStyle={assetButtonWrapperStyle}
+                            assetButtonTextStyle={assetButtonTextStyle}
+                            videoGalleryHeaderWrapperStyle={videoGalleryHeaderWrapperStyle}
+                            videoGalleryHeaderButtonWrapperStyle={galleryExitButtonWrapperStyle}
+                            videoGalleryHeaderButtonTextStyle={galleryExitButtonTextStyle}
                         />
                 }      
             </View>
         </Modal>
     )
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        backgroundColor: '#ffffff',
-
-        flex: 0,
-
-        padding: 10,
-
-        borderRadius: 10
-    },
-
-    header: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-
-        marginBottom: 5
-    },
-    titleText: {
-        fontFamily: 'Ubuntu_700Bold',
-        fontSize: 20,
-        textTransform: 'uppercase',
-    },
-    buttonWrapper: {
-        padding: 10,
-
-        borderRadius: 10,
-
-        backgroundColor: '#e04f5f',
-    },
-    buttonText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 15,
-        textTransform: 'uppercase',
-        textAlign: 'center',
-        color: '#ffffff'
-    },
-
-    subtitleText: {
-        fontFamily: 'Ubuntu_700Bold',
-        fontSize: 15,
-        textTransform: 'uppercase'
-    },
-
-    contentText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 15,
-
-        marginTop: 10
-    },
-
-    attachmentSectionWrapper: {
-        marginTop: 10
-    },
-
-    imagesSectionWrapper: {
-        marginTop: 10
-    },
-
-    videosSectionWrapper: {
-        marginTop: 10
-    },
-
-    assetButtonWrapper: {
-        padding: 10,
-    
-        borderRadius: 10,
-
-        backgroundColor: '#90ee90',
-
-        marginTop: 5,
-        marginBottom: 5
-    },
-    assetButtonText: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 15,
-        textTransform: 'uppercase',
-        textAlign: 'center',
-        color: '#000000'
-    },
-
-    photoGalleryHeader: {
-        marginTop: 20,
-        marginRight: 20,
-
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-
-    videoGalleryHeader: {
-        marginTop: 20,
-        marginRight: 20,
-
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-
-        width: '100%'
-    }
-})
 
 export default BlogPostModal

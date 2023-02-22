@@ -209,7 +209,7 @@ function ProfilePage() {
           {
             reservationsLoading ? 
               <LoadingSection
-                style={null}
+                wrapperStyle={styles.loadingSectionWrapper}
               />
               :
               <TrainingsSection
@@ -372,6 +372,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
 
     width: '100%'
+  },
+
+  loadingSectionWrapper: {
+    width: '100%',
+    
+    flexGrow: 1,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

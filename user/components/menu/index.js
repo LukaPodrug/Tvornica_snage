@@ -39,7 +39,7 @@ function Menu() {
                 tabBarActiveBackgroundColor: '#e04f5f',
                 
                 tabBarInactiveTintColor: '#000000',
-                tabBarInctiveBackgroundColor: '#e6e6e6'
+                tabBarInactiveBackgroundColor: '#e6e6e6'
             }}
         >
             {
@@ -153,7 +153,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         
         position: 'absolute',
-        bottom: 0
+        bottom: 0,
+
+        backgroundColor: '#e6e6e6'
     },
     tab: {
         display: 'flex',

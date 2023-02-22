@@ -62,19 +62,19 @@ function NewsPage() {
   return (
     <ScrollView>
       <View
-        style={styles.newsPageWrapper}
+        style={styles.wrapper}
       >
         <View
-          style={styles.newsWrapper}
+          style={styles.window}
         >
           <Title
             text='news'
-            style={styles.titleText}
+            textStyle={styles.titleText}
           />
           {
             blogPostsLoading ? 
               <LoadingSection
-                style={null}
+                wrapperStyle={styles.loadingSectionWrapper}
               />
               :
               <BlogsSection
@@ -90,7 +90,7 @@ function NewsPage() {
 }
 
 const styles = StyleSheet.create({
-  newsPageWrapper: {
+  wrapper: {
     minHeight: Dimensions.get('window').height - 100,
 
     backgroundColor: '#000000',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     paddingBottom: 80
   },
 
-  newsWrapper: {
+  window: {
     width: '100%',
     minHeight: Dimensions.get('window').height - 220,
 
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10,
   },
@@ -125,6 +125,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
 
     width: '100%'
+  },
+
+  loadingSectionWrapper: {
+    width: '100%',
+    
+    flexGrow: 1,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

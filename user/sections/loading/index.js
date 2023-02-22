@@ -1,28 +1,16 @@
-import { StyleSheet, View, ActivityIndicator } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 
-function LoadingSection({ style }) {
+function LoadingSection({ wrapperStyle }) {
     return (
         <View
-            style={[styles.loadingSectionWrapper, style && style]}
+            style={wrapperStyle}
         >
             <ActivityIndicator
                 size='large'
-                color='#90ee90'
+                color='#e04f5f'
             />
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    loadingSectionWrapper: {
-        width: '100%',
-        
-        flexGrow: 1,
-
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
 
 export default LoadingSection
