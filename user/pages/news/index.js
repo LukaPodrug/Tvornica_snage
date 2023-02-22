@@ -1,5 +1,5 @@
 import { useEffect,  useState } from 'react'
-import { StyleSheet, ScrollView, View, Text, Dimensions} from 'react-native'
+import { StyleSheet, ScrollView, View, Dimensions} from 'react-native'
 import { useQuery } from '@apollo/client'
 
 import Title from '../../components/title'
@@ -81,6 +81,29 @@ function NewsPage() {
                 blogPosts={blogPosts}
                 totalBlogPosts={totalBlogPosts}
                 loadMore={changeOffset}
+                blogsSectionEmptyMessageWrapperStyle={styles.blogsSectionEmptyMessageWrapper}
+                blogsSectionEmptyMessageTextStyle={styles.blogsSectionEmptyMessageText}
+                blogPostWrapperStyle={styles.blogPostWrapper}
+                blogPostTitleTextStyle={styles.blogPostTitleText}
+                blogPostCategoriesTextStyle={styles.blogPostCategoriesText}
+                blogPostAttachmentsWrapperStyle={styles.blogPostAttachmentsWrapper}
+                blogPostAttachmentWrapperStyle={styles.blogPostAttachmentWrapper}
+                blogPostAttachmentIconStyle={styles.blogPostAttachmentIcon}
+                blogPostAttachmentTextStyle={styles.blogPostAttachmentText}
+                blogPostModalWrapperStyle={styles.blogPostModalWrapper}
+                blogPostModalHeaderWrapperStyle={styles.blogPostModalHeaderWrapper}
+                blogPostModalTitleTextStyle={styles.blogPostModalTitleText}
+                blogPostModalExitButtonWrapperStyle={styles.blogPostModalExitButtonWrapper}
+                blogPostModalExitButtonTextStyle={styles.blogPostModalExitButtonText}
+                blogPostModalSectionWrapper={styles.blogPostModalSectionWrapper}
+                blogPostModalSubtitleTextStyle={styles.blogPostModalSubtitleText}
+                blogPostModalContentTextStyle={styles.blogPostModalContentText}
+                blogPostModalAssetButtonWrapperStyle={styles.blogPostModalAssetButtonWrapper}
+                blogPostModalAssetButtonTextStyle={styles.blogPostModalAssetButtonText}
+                blogPostModalPhotoGalleryHeaderWrapperStyle={styles.blogPostModalPhotoGalleryHeaderWrapper}
+                blogPostModalVideoGalleryHeaderWrapperStyle={styles.blogPostModalVideoGalleryHeaderWrapper}
+                blogPostModalGalleryExitButtonWrapperStyle={styles.blogPostModalGalleryExitButtonWrapper}
+                blogPostModalGalleryExitButtonTextStyle={styles.blogPostModalGalleryExitButtonText}
               />
           }
         </View>
@@ -135,6 +158,190 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  
+  blogsSectionEmptyMessageWrapper: {
+    padding: 10,
+
+    backgroundColor: '#e6e6e6',
+    
+    borderRadius: 10
+  },
+  blogsSectionEmptyMessageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 15,
+  },
+
+  blogsSectionButtonWrapper: {
+    padding: 10,
+    
+    borderRadius: 10,
+
+    backgroundColor: '#90ee90',
+
+    marginTop: 5,
+    marginBottom: 5
+  },
+  blogsSectionButtonText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#000000'
+  },
+
+  blogPostWrapper: {
+    padding: 10,
+
+    backgroundColor: '#ffffff',
+
+    borderRadius: 10,
+    
+    marginBottom: 10
+  },
+  blogPostTitleText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 20,
+
+    marginBottom: 10
+  },
+  blogPostCategoriesText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 14,
+    textTransform: 'uppercase',
+
+    marginBottom: 10
+  },
+  blogPostAttachmentsWrapper: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  blogPostAttachmentWrapper: {
+    width: 55,
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    padding: 10,
+
+    marginRight: 5,
+
+    backgroundColor: '#e04f5f',
+
+    borderRadius: 10
+  },
+  blogPostAttachmentIcon: {
+    width: 20,
+    height: 20,
+
+    marginRight: 5
+  },
+  blogPostAttachmentText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 16,
+  },
+
+  blogPostModalWrapper: {
+    backgroundColor: '#ffffff',
+
+    flex: 0,
+
+    padding: 10,
+
+    borderRadius: 10
+  },
+  blogPostModalHeaderWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    marginBottom: 5
+  },
+  blogPostModalTitleText: {
+    fontFamily: 'Ubuntu_700Bold',
+    fontSize: 20,
+    textTransform: 'uppercase',
+  },
+  blogPostModalExitButtonWrapper: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f',
+  },
+  blogPostModalExitButtonText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#000000'
+  },
+  blogPostModalSubtitleText: {
+    fontFamily: 'Ubuntu_700Bold',
+    fontSize: 15,
+    textTransform: 'uppercase'
+  },
+  blogPostModalContentText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+
+    marginTop: 10
+  },
+  blogPostModalSectionWrapper: {
+    marginTop: 10
+  },
+  blogPostModalAssetButtonWrapper: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f',
+
+    marginTop: 5,
+    marginBottom: 5
+  },
+  blogPostModalAssetButtonText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#000000'
+  },
+  blogPostModalPhotoGalleryHeaderWrapper: {
+    marginTop: 20,
+    marginRight: 20,
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  blogPostModalVideoGalleryHeaderWrapper: {
+    marginTop: 20,
+    marginRight: 20,
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+
+    width: '100%'
+  },
+  blogPostModalGalleryExitButtonWrapper: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f',
+  },
+  blogPostModalGalleryExitButtonText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#000000'
   }
 })
 

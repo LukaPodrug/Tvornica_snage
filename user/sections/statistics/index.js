@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import { DonutChart } from 'react-native-circular-chart'
 
-function StatisticsSection({ statistics, legendWrapperStyle, legendTabStyle, legendLabelTextStyle, legendValueTextStyle }) {
+function StatisticsSection({ statistics, legendWrapperStyle, legendTabWrapperStyle, legendPropertyTextStyle, legendValueTextStyle }) {
     return (
         <>
             <DonutChart
@@ -25,10 +25,10 @@ function StatisticsSection({ statistics, legendWrapperStyle, legendTabStyle, leg
                         return (
                             <View
                                 key={index}
-                                style={[legendTabStyle, {backgroundColor: statistic.color}]}
+                                style={[legendTabWrapperStyle, {backgroundColor: statistic.color}]}
                             >
                                 <Text
-                                    style={legendLabelTextStyle}
+                                    style={legendPropertyTextStyle}
                                 >
                                     {statistic.name}
                                 </Text>

@@ -3,7 +3,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid'
 
 import Info from '../../components/info'
 
-function ProfileSection({ image, firstName, lastName, dateOfBirth, username, membership, level, wrapperStyle, imageStyle, infoWrapperStyle, infoLabelTextStyle, infoValueTextStyle }) {
+function ProfileSection({ image, firstName, lastName, dateOfBirth, username, membership, level, wrapperStyle, imageStyle, infoPropertyTextStyle, infoValueTextStyle }) {
     return (
         <View
             style={wrapperStyle}
@@ -18,7 +18,7 @@ function ProfileSection({ image, firstName, lastName, dateOfBirth, username, mem
                         <Info
                             property='first name'
                             value={firstName}
-                            labelTextStyle={infoLabelTextStyle}
+                            propertyTextStyle={infoPropertyTextStyle}
                             valueTextStyle={infoValueTextStyle}
                         />
                     </Col>
@@ -26,7 +26,7 @@ function ProfileSection({ image, firstName, lastName, dateOfBirth, username, mem
                         <Info
                             property='last name'
                             value={lastName}
-                            labelTextStyle={infoLabelTextStyle}
+                            propertyTextStyle={infoPropertyTextStyle}
                             valueTextStyle={infoValueTextStyle}
                         />
                     </Col>
@@ -36,7 +36,7 @@ function ProfileSection({ image, firstName, lastName, dateOfBirth, username, mem
                         <Info
                             property='date of birth'
                             value={dateOfBirth}
-                            labelTextStyle={infoLabelTextStyle}
+                            propertyTextStyle={infoPropertyTextStyle}
                             valueTextStyle={infoValueTextStyle}
                         />
                     </Col>
@@ -44,7 +44,7 @@ function ProfileSection({ image, firstName, lastName, dateOfBirth, username, mem
                         <Info
                             property='username'
                             value={username}
-                            labelTextStyle={infoLabelTextStyle}
+                            propertyTextStyle={infoPropertyTextStyle}
                             valueTextStyle={infoValueTextStyle}
                         />
                     </Col>
@@ -54,7 +54,7 @@ function ProfileSection({ image, firstName, lastName, dateOfBirth, username, mem
                         <Info
                             property='membership'
                             value={membership}
-                            labelTextStyle={infoLabelTextStyle}
+                            propertyTextStyle={infoPropertyTextStyle}
                             valueTextStyle={infoValueTextStyle}
                         />
                     </Col>
@@ -62,7 +62,7 @@ function ProfileSection({ image, firstName, lastName, dateOfBirth, username, mem
                         <Info
                             property='level'
                             value={level}
-                            labelTextStyle={infoLabelTextStyle}
+                            propertyTextStyle={infoPropertyTextStyle}
                             valueTextStyle={infoValueTextStyle}
                         />
                     </Col>

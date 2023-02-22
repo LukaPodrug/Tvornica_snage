@@ -142,7 +142,7 @@ function ProfilePage() {
       ref={pageRef}
     >
       <View
-        style={styles.profilePageWrapper}
+        style={styles.wrapper}
       >
         <ProfileSection
           image={ownData.image}
@@ -152,16 +152,16 @@ function ProfilePage() {
           username={ownData.username}
           membership={moment(ownData.membership).format('DD/MM/YYYY')}
           level={ownData.level}
-          wrapperStyle={styles.profileSectionWrapper}
-          imageStyle={styles.image}
-          infoLabelTextStyle={styles.infoLabelText}
-          infoValueTextStyle={styles.infoValueText}
+          wrapperStyle={styles.profileSectionWindow}
+          imageStyle={styles.profileSectionImage}
+          infoPropertyTextStyle={styles.profileSectionInfoPropertyText}
+          infoValueTextStyle={styles.profileSectionInfoValueText}
         />
         {
           moment(new Date(ownData.dateOfBirth)).format('DD/MM') === moment(new Date(Date.now())).format('DD/MM') &&
             <Message
               text={`Happy birthday ${ownData.firstName}!`}
-              wrapperStyle={[styles.messageWrapper, {backgroundColor: '#90ee90'}]}
+              wrapperStyle={[styles.messageWrapper, styles.messageWrapperSuccess]}
               textStyle={styles.messageText}
             />
         }
@@ -169,7 +169,7 @@ function ProfilePage() {
           (new Date(ownData.membership) > new Date(Date.now()) && new Date(ownData.membership) < new Date(Date.now() + 5*24*60*60*1000)) &&
             <Message
               text='Your membership is due to expire in 5 days or less. To continue using our gym please renew membership with our staff.'
-              wrapperStyle={[styles.messageWrapper, {backgroundColor: '#fbec5d'}]}
+              wrapperStyle={[styles.messageWrapper, styles.messageWrapperWarning]}
               textStyle={styles.messageText}
             />
         }
@@ -177,34 +177,34 @@ function ProfilePage() {
           new Date(ownData.membership) < new Date(Date.now()) &&
             <Message
               text='Your membership expired. To continue using our gym please renew membership with our staff.'
-              wrapperStyle={[styles.messageWrapper, {backgroundColor: '#e04f5f'}]}
+              wrapperStyle={[styles.messageWrapper, styles.messageWrapperError]}
               textStyle={styles.messageText}
             />
         }
         {
           (ownStatistics[0].value >= 1 || ownStatistics[1].value >= 1 || ownStatistics[2].value >= 1) &&
           <View
-            style={styles.statisticsSectionWrapper}
+            style={styles.statisticsSectionWindow}
           >
             <Title
               text='user statistics'
-              style={styles.titleText}
+              textStyle={styles.titleText}
             />
             <StatisticsSection
               statistics={ownStatistics}
               legendWrapperStyle={styles.chartLegendWrapper}
-              legendTabStyle={styles.chartLegendTab}
-              legendLabelTextStyle={styles.chartLegendLabelText}
-              legendValueTextStyle={styles.chartValueText}
+              legendTabWrapperStyle={styles.chartLegendTabWrapper}
+              legendPropertyTextStyle={styles.chartLegendPropertyText}
+              legendValueTextStyle={styles.chartLegendValueText}
             />
           </View>
         }
         <View
-          style={styles.trainingsSectionWrapper}
+          style={styles.trainingsSectionWindow}
         >
           <Title
             text='active reservations'
-            style={styles.titleText}
+            textStyle={styles.titleText}
           />
           {
             reservationsLoading ? 
@@ -218,6 +218,31 @@ function ProfilePage() {
                 reservationUpdated={reservationUpdated}
                 changeReservationUpdated={setReservationUpdated}
                 changeLoading={setReservationsLoading}
+                emptyMessageWrapperStyle={styles.trainingsSectionEmptyMessageWrapper}
+                emptyMessageTextStyle={styles.trainingsSectionEmptyMessageText}
+                trainingWrapperStyle={styles.trainingWrapper}
+                trainingDataWrapperStyle={styles.trainingDataWrapper}
+                trainingMenuWrapperStyle={styles.trainingMenuWrapper}
+                trainingSectionWrapperStyle={styles.trainingSectionWrapper}
+                trainingCoachSectionWrapperStyle={styles.trainingCoachSectionWrapper}
+                trainingSectionImageStyle={styles.trainingSectionImage}
+                trainingCoachSectionImageStyle={styles.trainingCoachSectionImage}
+                trainingSectionPropertyTextStyle={styles.trainingSectionPropertyText}
+                trainingSectionValueTextStyle={styles.trainingSectionValueText}
+                trainingCapacitySectionWrapper={styles.trainingCapacitySectionWrapper}
+                trainingButtonWrapperStyle={styles.trainingButtonWrapper}
+                trainingButtonWrapperDisabledStyle={styles.trainingButtonWrapperDisabled}
+                trainingButtonWrapperHiddenStyle={styles.trainingButtonWrapperHidden}
+                trainingButtonIconStyle={styles.trainingButtonIcon}
+                trainingDetailsModalWrapperStyle={styles.trainingDetailsModalWrapperStyle}
+                trainingDetailsModalHeaderWrapperStyle={styles.trainingDetailsModalHeaderWrapperStyle}
+                trainingDetailsModalTitleTextStyle={styles.trainingDetailsModalTitleTextStyle}
+                trainingDetailsModalExitButtonWrapperStyle={styles.trainingDetailsModalExitButtonWrapperStyle}
+                trainingDetailsModalExitButtonTextStyle={styles.trainingDetailsModalExitButtonTextStyle}
+                trainingDetailsModalDataRowWrapperStyle={styles.trainingDetailsModalDataRowWrapperStyle}
+                trainingDetailsModalDataWrapperStyle={styles.trainingDetailsModalDataWrapperStyle}
+                trainingDetailsModalDataPropertyTextStyle={styles.trainingDetailsModalDataPropertyTextStyle}
+                trainingDetailsModalDataValueTextStyle={styles.trainingDetailsModalDataValueTextStyle}
               />
           }
         </View>
@@ -230,7 +255,8 @@ const styles = StyleSheet.create({
   loadingPage: {
     paddingBottom: 80
   },
-  profilePageWrapper: {
+
+  wrapper: {
     display: 'flex',
     alignItems: 'center',
 
@@ -243,7 +269,7 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
 
-  profileSectionWrapper: {
+  profileSectionWindow: {
     width: '100%',
     height: 200,
 
@@ -254,7 +280,7 @@ const styles = StyleSheet.create({
 
     marginTop: 20,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10,
 
@@ -262,7 +288,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  image: {
+  profileSectionImage: {
     width: 100,
     height: 100,
 
@@ -270,12 +296,12 @@ const styles = StyleSheet.create({
 
     marginRight: 20
   },
-  infoLabelText: {
+  profileSectionInfoPropertyText: {
     fontFamily: 'Ubuntu_400Regular',
     textTransform: 'uppercase',
     fontSize: 14
   },
-  infoValueText: {
+  profileSectionInfoValueText: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 18
   },
@@ -289,13 +315,22 @@ const styles = StyleSheet.create({
 
     borderRadius: 10
   },
+  messageWrapperSuccess: {
+    backgroundColor: '#90ee90'
+  },
+  messageWrapperWarning: {
+    backgroundColor: '#fbec5d'
+  },
+  messageWrapperError: {
+    backgroundColor: '#e04f5f'
+  },
   messageText: {
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
     fontSize: 14
   },
 
-  statisticsSectionWrapper: {
+  statisticsSectionWindow: {
     width: '100%',
     height: 350,
 
@@ -306,7 +341,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10,
 
@@ -322,7 +357,7 @@ const styles = StyleSheet.create({
 
     marginTop: 20
   },
-  chartLegendTab: {
+  chartLegendTabWrapper: {
     width: '32%',
 
     paddingVertical: 5,
@@ -333,7 +368,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 10
   },
-  chartLegendLabelText: {
+  chartLegendPropertyText: {
     fontFamily: 'Ubuntu_400Regular',
     textTransform: 'uppercase',
     fontSize: 12
@@ -341,10 +376,10 @@ const styles = StyleSheet.create({
   chartLegendValueText: {
     fontFamily: 'Ubuntu_400Regular',
     textTransform: 'uppercase',
-    fontSize: 20
+    fontSize: 15
   },
 
-  trainingsSectionWrapper: {
+  trainingsSectionWindow: {
     width: '100%',
 
     paddingTop: 20,
@@ -355,12 +390,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10,
-  },
-  scroll: {
-    flex: 1
   },
 
   titleText: {
@@ -382,6 +414,168 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  trainingsSectionEmptyMessageWrapper: {
+    width: '100%',
+
+    borderRadius: 10,
+
+    backgroundColor: '#ffffff',
+
+    padding: 9
+  },
+  trainingsSectionEmptyMessageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+
+  trainingWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+
+    width: '100%',
+
+    backgroundColor: '#ffffff',
+
+    marginBottom: 10,
+
+    borderRadius: 10,
+
+    padding: 5
+  },
+
+  trainingDataWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+    flexGrow: 1,
+
+    marginRight: 5
+  },
+  trainingSectionWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  trainingCoachSectionWrapper: {
+    width: 75
+  },
+  trainingSectionImage: {
+    width: 30,
+    height: 30
+  },
+  trainingCoachSectionImage: {
+    borderRadius: 15
+  },
+  trainingSectionPropertyText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 12,
+    textTransform: 'uppercase'
+  },
+  trainingSectionValueText: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 14,
+    textTransform: 'uppercase'
+  },
+  trainingCapacitySectionWrapper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  trainingMenuWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    marginLeft: 5
+  },
+  trainingButtonWrapper: {
+    width: 30,
+    height: 30,
+
+    borderRadius: 15,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    marginLeft: 5,
+    marginRight: 5,
+
+    backgroundColor: '#e04f5f'
+  },
+  trainingButtonWrapperDisabled: {
+    backgroundColor: '#807d7d'
+  },
+  trainingButtonWrapperHidden: {
+    opacity: 0
+  },
+  trainingButtonIcon: {
+    width: 20,
+    height: 20
+  },
+
+  trainingDetailsModalWrapperStyle: {
+    backgroundColor: '#ffffff',
+
+    flex: 0,
+
+    padding: 15,
+
+    borderRadius: 10
+  },
+
+  trainingDetailsModalHeaderWrapperStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    marginBottom: 25
+  },
+
+  trainingDetailsModalDataRowWrapperStyle: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  trainingDetailsModalDataWrapperStyle: {
+    width: '50%',
+
+    display: 'flex',
+    justifyContent: 'flex-start',
+
+    marginBottom: 10
+  },
+
+  trainingDetailsModalTitleTextStyle: {
+    fontFamily: 'Ubuntu_700Bold',
+    fontSize: 20,
+    textTransform: 'uppercase',
+  },
+
+  trainingDetailsModalExitButtonWrapperStyle: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f'
+  },
+  trainingDetailsModalExitButtonTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    color: '#000000'
+  },
+  trainingDetailsModalDataPropertyTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+  trainingDetailsModalDataValueTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 18
   }
 })
 

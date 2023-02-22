@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 15,
     textTransform: 'uppercase',
-    color: '#ffffff'
+    color: '#000000'
   },
   trainingDetailsModalDataPropertyTextStyle: {
     fontFamily: 'Ubuntu_400Regular',
