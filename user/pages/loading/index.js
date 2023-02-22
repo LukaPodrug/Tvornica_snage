@@ -3,18 +3,18 @@ import { StyleSheet, View, ActivityIndicator } from 'react-native'
 function LoadingPage({ style }) {
     return (
         <View
-            style={[styles.loadingPageWrapper, style && style]}
+            style={[styles.wrapper, style && style]}
         >
             <ActivityIndicator
                 size='large'
-                color='#90ee90'
+                color='#e04f5f'
             />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    loadingPageWrapper: {
+    wrapper: {
         width: '100%',
         height: '100%',
 

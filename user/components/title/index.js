@@ -1,9 +1,9 @@
 import { Text } from 'react-native'
 
-function Title({ text, style }) {
+function Title({ text, textStyle }) {
     return (
         <Text
-            style={style}
+            style={textStyle}
         >
             {text}
         </Text>

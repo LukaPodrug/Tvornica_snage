@@ -104,27 +104,27 @@ function RegistrationPage() {
   return (
     <ScrollView>
       <View
-        style={[styles.registrationPageWrapper, (keyboardVisible && styles.registrationPageWrapperWithKeyboard)]}
+        style={[styles.wrapper, (keyboardVisible && styles.wrapperWithKeyboard)]}
       >
         <View
-          style={styles.registrationPageWindow}
+          style={styles.window}
         >
           <Title
             text='registration'
-            style={styles.titleText}
+            textStyle={styles.titleText}
           />
           <View
-            style={styles.imageInput}
+            style={styles.inputImageWrapper}
           >
             <InputImage
               image={image}
               changeImage={uploadImage}
-              wrapperStyle={styles.imageInputWrapper}
-              imageStyle={styles.imageInputImage}
-              buttonStyle={styles.imageInputButton}
-              buttonImageStyle={styles.imageInputButtonImage}
-              cameraButtonStyle={styles.cameraButton}
-              galleryButtonStyle={styles.galleryButton}
+              wrapperStyle={styles.inputImageWindow}
+              imageStyle={styles.inputImageImage}
+              buttonStyle={styles.inputImageButton}
+              buttonImageStyle={styles.inputImageButtonImage}
+              cameraButtonStyle={styles.inputImageCameraButton}
+              galleryButtonStyle={styles.inputImageGalleryButton}
             />
           </View>
           <View
@@ -138,9 +138,9 @@ function RegistrationPage() {
               text={firstName}
               changeText={setFirstName}
               placeholder={null}
-              wrapperStyle={styles.inputWrapper}
-              labelStyle={styles.labelText}
-              inputStyle={styles.input}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextlabelText}
+              inputTextStyle={styles.inputTextInputText}
             />
             <InputText
               removeMessage={removeMessage}
@@ -150,9 +150,9 @@ function RegistrationPage() {
               text={lastName}
               changeText={setLastName}
               placeholder={null}
-              wrapperStyle={styles.inputWrapper}
-              labelStyle={styles.labelText}
-              inputStyle={styles.input}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextlabelText}
+              inputTextStyle={styles.inputTextInputText}
             />
           </View>
           <View
@@ -166,9 +166,9 @@ function RegistrationPage() {
               text={dateOfBirth}
               changeText={setDateOfBirth}
               placeholder='DD/MM/YYYY'
-              wrapperStyle={styles.inputWrapper}
-              labelStyle={styles.labelText}
-              inputStyle={styles.input}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextlabelText}
+              inputTextStyle={styles.inputTextInputText}
             />
             <InputText
               removeMessage={removeMessage}
@@ -178,9 +178,9 @@ function RegistrationPage() {
               text={username}
               changeText={setUsername}
               placeholder={null}
-              wrapperStyle={styles.inputWrapper}
-              labelStyle={styles.labelText}
-              inputStyle={styles.input}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextlabelText}
+              inputTextStyle={styles.inputTextInputText}
             />
           </View>
           <View
@@ -194,9 +194,9 @@ function RegistrationPage() {
               text={password}
               changeText={setPassword}
               placeholder={null}
-              wrapperStyle={styles.inputWrapper}
-              labelStyle={styles.labelText}
-              inputStyle={styles.input}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextlabelText}
+              inputTextStyle={styles.inputTextInputText}
             />
             <InputText
               removeMessage={removeMessage}
@@ -206,9 +206,9 @@ function RegistrationPage() {
               text={rePassword}
               changeText={setRePassword}
               placeholder={null}
-              wrapperStyle={styles.inputWrapper}
-              labelStyle={styles.labelText}
-              inputStyle={styles.input}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextlabelText}
+              inputTextStyle={styles.inputTextInputText}
             />
           </View>
           <Button
@@ -217,10 +217,10 @@ function RegistrationPage() {
             messageText={message}
             work={loading ? () => {} : registration}
             buttonText='submit'
-            wrapperStyle={styles.buttonWrapper}
-            buttonWrapperStyle={styles.button}
+            wrapperStyle={styles.buttonAndMessageWrapper}
+            buttonWrapperStyle={styles.buttonWrapper}
             buttonTextStyle={styles.buttonText}
-            messageWrapperStyle={[styles.message, styles.messageFail, ((message === null) && styles.hidden)]}
+            messageWrapperStyle={[styles.messageWrapper, styles.messageFailWrapper, ((message === null) && styles.messageHiddenWrapper)]}
             messageTextStyle={styles.messageText}
           />
         </View>
@@ -230,7 +230,7 @@ function RegistrationPage() {
 }
 
 const styles = StyleSheet.create({
-  registrationPageWrapper: {
+  wrapper: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -243,19 +243,20 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  registrationPageWrapperWithKeyboard: {
+  wrapperWithKeyboard: {
     justifyContent: 'flex-start',
 
     paddingTop: 20,
     paddingBottom: 0
   },
-  registrationPageWindow: {
+
+  window: {
     width: '100%',
 
     padding: 20,
     paddingTop: 10,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10
   },
@@ -269,13 +270,13 @@ const styles = StyleSheet.create({
     padding: 20
   },
 
-  imageInput: {
+  inputImageWrapper: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  imageInputWrapper: {
-    backgroundColor: '#e6e6e6',
+  inputImageWindow: {
+    backgroundColor: '#ffffff',
 
     width: 100,
     height: 100,
@@ -289,30 +290,30 @@ const styles = StyleSheet.create({
     alignItems: 'center'
 
   },
-  imageInputImage: {
+  inputImageImage: {
     width: 85,
     height: 85,
 
     borderRadius: 43
   },
-  imageInputButton: {
+  inputImageButton: {
     position: 'absolute',
 
-    backgroundColor: '#90ee90',
+    backgroundColor: '#e04f5f',
 
     borderRadius: 15,
 
     padding: 5
   },
-  imageInputButtonImage: {
+  inputImageButtonImage: {
     width: 20,
     height: 20
   },
-  cameraButton: {
+  inputImageCameraButton: {
     top: 70,
     left: 80,
   },
-  galleryButton: {
+  inputImageGalleryButton: {
     top: 0,
     left: 80,
   },
@@ -322,13 +323,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  inputWrapper: {
+
+  inputTextWrapper: {
     marginTop: 7,
     marginBottom: 7,
 
     width: '45%'
   },
-  labelText: {
+  inputTextlabelText: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 15,
     textTransform: 'uppercase',
@@ -336,7 +338,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 10
   },
-  input: {
+  inputTextInputText: {
     width: '100%',
 
     fontFamily: 'Ubuntu_400Regular',
@@ -344,20 +346,20 @@ const styles = StyleSheet.create({
 
     padding: 10,
 
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#ffffff',
 
     borderRadius: 10
   },
 
-  buttonWrapper: {
+  buttonAndMessageWrapper: {
     marginTop: 20,
   },
-  button: {
+  buttonWrapper: {
     padding: 10,
 
     borderRadius: 10,
 
-    backgroundColor: '#90ee90',
+    backgroundColor: '#e04f5f',
 
     minHeight: 42
   },
@@ -367,15 +369,18 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'center'
   },
-  message: {
+  messageWrapper: {
     marginTop: 15,
 
     padding: 10,
 
     borderRadius: 10
   },
-  messageFail: {
+  messageFailWrapper: {
     backgroundColor: '#e04f5f'
+  },
+  messageHiddenWrapper: {
+    opacity: 0
   },
   messageText: {
     fontFamily: 'Ubuntu_400Regular',
@@ -383,9 +388,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'center',
     color: '#ffffff'
-  },
-  hidden: {
-    opacity: 0
   }
 })
 

@@ -36,10 +36,10 @@ function Menu() {
                 tabBarLabelStyle: styles.label,
 
                 tabBarActiveTintColor: '#000000',
-                tabBarActiveBackgroundColor: '#90ee90',
+                tabBarActiveBackgroundColor: '#e04f5f',
                 
                 tabBarInactiveTintColor: '#000000',
-                tabBarInctiveBackgroundColor: '#ffffff'
+                tabBarInctiveBackgroundColor: '#e6e6e6'
             }}
         >
             {

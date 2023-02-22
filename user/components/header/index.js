@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
     marginTop: Constants.statusBarHeight,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10,
 
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   headerTextWord2: {
     fontFamily: 'Norwester',
     fontSize: 45,
-    color: 'red',
+    color: '#e04f5f',
 
     marginLeft: 5
   }

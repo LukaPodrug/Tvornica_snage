@@ -42,7 +42,7 @@ function App() {
     >
       <RecoilRoot>
         <View 
-          style={styles.appWrapper}
+          style={styles.wrapper}
         >
           <Header/>
           <NavigationContainer>
@@ -55,7 +55,7 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-  appWrapper: {
+  wrapper: {
     width: '100%',
     minHeight: '100%',
 

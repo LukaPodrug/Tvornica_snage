@@ -100,14 +100,14 @@ function LoginPage() {
   return (
     <ScrollView>
       <View
-        style={[styles.loginPageWrapper, (keyboardVisible && styles.loginPageWrapperWithKeyboard)]}
+        style={[styles.wrapper, (keyboardVisible && styles.wrapperWithKeyboard)]}
       >
         <View
-          style={styles.loginPageWindow}
+          style={styles.window}
         >
           <Title
             text='login'
-            style={styles.titleText}
+            textStyle={styles.titleText}
           />
           <InputText
             removeMessage={removeMessage}
@@ -117,9 +117,9 @@ function LoginPage() {
             text={username}
             changeText={setUsername}
             placeholder={null}
-            wrapperStyle={styles.inputWrapper}
-            labelStyle={styles.labelText}
-            inputStyle={styles.input}
+            wrapperStyle={styles.inputTextWrapper}
+            labelTextStyle={styles.inputTextLabelText}
+            inputTextStyle={styles.inputTextInputText}
           />
           <InputText
             removeMessage={removeMessage}
@@ -129,9 +129,9 @@ function LoginPage() {
             text={password}
             changeText={setPassword}
             placeholder={null}
-            wrapperStyle={styles.inputWrapper}
-            labelStyle={styles.labelText}
-            inputStyle={styles.input}
+            wrapperStyle={styles.inputTextWrapper}
+            labelTextStyle={styles.inputTextLabelText}
+            inputTextStyle={styles.inputTextInputText}
           />
           <Button
             loading={loading}
@@ -139,10 +139,10 @@ function LoginPage() {
             messageText={message}
             work={loading ? () => {} : login}
             buttonText='submit'
-            wrapperStyle={styles.buttonWrapper}
-            buttonWrapperStyle={styles.button}
+            wrapperStyle={styles.buttonAndMessageWrapper}
+            buttonWrapperStyle={styles.buttonWrapper}
             buttonTextStyle={styles.buttonText}
-            messageWrapperStyle={[styles.message, styles.messageFail, ((message === null) && styles.hidden)]}
+            messageWrapperStyle={[styles.messageWrapper, styles.messageFailWrapper, ((message === null) && styles.messageHiddenWrapper)]}
             messageTextStyle={styles.messageText}
           />
         </View>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     paddingBottom: 80
   },
 
-  loginPageWrapper: {
+  wrapper: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -169,18 +169,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
   },
-  loginPageWrapperWithKeyboard: {
+  wrapperWithKeyboard: {
     justifyContent: 'flex-start',
 
     paddingTop: 20,
     paddingBottom: 0
   },
-  loginPageWindow: {
+
+  window: {
     width: '100%',
 
     padding: 20,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e6e6e6',
 
     borderRadius: 10
   },
@@ -194,11 +195,11 @@ const styles = StyleSheet.create({
     padding: 20
   },
 
-  inputWrapper: {
+  inputTextWrapper: {
     marginTop: 10,
     marginBottom: 10,
   },
-  labelText: {
+  inputTextLabelText: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 18,
     textTransform: 'uppercase',
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 10
   },
-  input: {
+  inputTextInputText: {
     width: '100%',
 
     fontFamily: 'Ubuntu_400Regular',
@@ -214,20 +215,20 @@ const styles = StyleSheet.create({
 
     padding: 10,
 
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#ffffff',
 
     borderRadius: 10
   },
 
-  buttonWrapper: {
+  buttonAndMessageWrapper: {
     marginTop: 20,
   },
-  button: {
+  buttonWrapper: {
     padding: 10,
 
     borderRadius: 10,
 
-    backgroundColor: '#90ee90',
+    backgroundColor: '#e04f5f',
 
     minHeight: 42
   },
@@ -237,15 +238,18 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'center'
   },
-  message: {
+  messageWrapper: {
     marginTop: 15,
 
     padding: 10,
 
     borderRadius: 10
   },
-  messageFail: {
+  messageFailWrapper: {
     backgroundColor: '#e04f5f'
+  },
+  messageHiddenWrapper: {
+    opacity: 0
   },
   messageText: {
     fontFamily: 'Ubuntu_400Regular',
@@ -253,9 +257,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'center',
     color: '#ffffff'
-  },
-  hidden: {
-    opacity: 0
   }
 })
 
