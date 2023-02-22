@@ -1,16 +1,21 @@
-import { StyleSheet, View, Image } from 'react-native'
-
-import logo from '../../assets/images/logo.png'
+import { StyleSheet, View, Text } from 'react-native'
+import Constants from 'expo-constants'
 
 function Header() {
   return (
     <View 
       style={styles.wrapper}
     >
-        <Image
-            style={styles.logo}
-            source={logo}
-        />
+        <Text
+          style={styles.headerTextWord1}
+        >
+          TVORNICA 
+        </Text>
+        <Text
+          style={styles.headerTextWord2}
+        >
+          SNAGE
+        </Text>
     </View>
   )
 }
@@ -21,8 +26,11 @@ const styles = StyleSheet.create({
     height: 100,
 
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems:'center',
+
+    marginTop: Constants.statusBarHeight,
 
     backgroundColor: '#ffffff',
 
@@ -33,9 +41,20 @@ const styles = StyleSheet.create({
 
     elevation: 8
   },
-  logo: {
-    width: 50,
-    height: 70
+
+  headerTextWord1: {
+    fontFamily: 'Norwester',
+    fontSize: 45,
+    color: '#000000',
+
+    marginRight: 5
+  },
+  headerTextWord2: {
+    fontFamily: 'Norwester',
+    fontSize: 45,
+    color: 'red',
+
+    marginLeft: 5
   }
 })
 

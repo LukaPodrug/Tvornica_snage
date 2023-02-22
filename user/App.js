@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, StatusBar, Platform } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { RecoilRoot } from 'recoil'
 import { ApolloProvider } from '@apollo/client'
@@ -17,7 +17,8 @@ function App() {
 
   const [fontsLoaded, error] = useFonts({
     Ubuntu_400Regular,
-    Ubuntu_700Bold
+    Ubuntu_700Bold,
+    Norwester: require('./assets/fonts/norwester.otf')
   })
 
   useEffect(() => {
@@ -57,8 +58,6 @@ const styles = StyleSheet.create({
   appWrapper: {
     width: '100%',
     minHeight: '100%',
-
-    paddingTop: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
 
     backgroundColor: '#000000'
   }

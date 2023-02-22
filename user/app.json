@@ -14,11 +14,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "plugins": [
+      "expo-community-flipper"
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "tvornicaSnageUser"
     },
     "android": {
       "adaptiveIcon": {
