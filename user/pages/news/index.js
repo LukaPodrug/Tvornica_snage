@@ -1,11 +1,13 @@
 import { useEffect,  useState } from 'react'
-import { StyleSheet, ScrollView, View, Dimensions} from 'react-native'
+import { StyleSheet, ScrollView, View, ImageBackground, Dimensions} from 'react-native'
 import { useQuery } from '@apollo/client'
 
 import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
 import BlogsSection from '../../sections/blogs'
 import { blogPostsQuery } from '../../API/graphQL/blogs'
+
+import logo from '../../assets/images/logo.png'
 
 function NewsPage() {
   const blogPostsLimit = 5
@@ -67,45 +69,54 @@ function NewsPage() {
         <View
           style={styles.window}
         >
-          <Title
-            text='news'
-            textStyle={styles.titleText}
-          />
-          {
-            blogPostsLoading ? 
-              <LoadingSection
-                wrapperStyle={styles.loadingSectionWrapper}
-              />
-              :
-              <BlogsSection
-                blogPosts={blogPosts}
-                totalBlogPosts={totalBlogPosts}
-                loadMore={changeOffset}
-                blogsSectionEmptyMessageWrapperStyle={styles.blogsSectionEmptyMessageWrapper}
-                blogsSectionEmptyMessageTextStyle={styles.blogsSectionEmptyMessageText}
-                blogPostWrapperStyle={styles.blogPostWrapper}
-                blogPostTitleTextStyle={styles.blogPostTitleText}
-                blogPostCategoriesTextStyle={styles.blogPostCategoriesText}
-                blogPostAttachmentsWrapperStyle={styles.blogPostAttachmentsWrapper}
-                blogPostAttachmentWrapperStyle={styles.blogPostAttachmentWrapper}
-                blogPostAttachmentIconStyle={styles.blogPostAttachmentIcon}
-                blogPostAttachmentTextStyle={styles.blogPostAttachmentText}
-                blogPostModalWrapperStyle={styles.blogPostModalWrapper}
-                blogPostModalHeaderWrapperStyle={styles.blogPostModalHeaderWrapper}
-                blogPostModalTitleTextStyle={styles.blogPostModalTitleText}
-                blogPostModalExitButtonWrapperStyle={styles.blogPostModalExitButtonWrapper}
-                blogPostModalExitButtonTextStyle={styles.blogPostModalExitButtonText}
-                blogPostModalSectionWrapper={styles.blogPostModalSectionWrapper}
-                blogPostModalSubtitleTextStyle={styles.blogPostModalSubtitleText}
-                blogPostModalContentTextStyle={styles.blogPostModalContentText}
-                blogPostModalAssetButtonWrapperStyle={styles.blogPostModalAssetButtonWrapper}
-                blogPostModalAssetButtonTextStyle={styles.blogPostModalAssetButtonText}
-                blogPostModalPhotoGalleryHeaderWrapperStyle={styles.blogPostModalPhotoGalleryHeaderWrapper}
-                blogPostModalVideoGalleryHeaderWrapperStyle={styles.blogPostModalVideoGalleryHeaderWrapper}
-                blogPostModalGalleryExitButtonWrapperStyle={styles.blogPostModalGalleryExitButtonWrapper}
-                blogPostModalGalleryExitButtonTextStyle={styles.blogPostModalGalleryExitButtonText}
-              />
-          }
+          <ImageBackground
+            style={styles.backgroundImageWrapper}
+            imageStyle={styles.backgroundImage}
+            source={logo}
+            resizeMode='contain'
+          >
+            <Title
+              text='news'
+              textStyle={styles.titleText}
+            />
+            {
+              blogPostsLoading ? 
+                <LoadingSection
+                  wrapperStyle={styles.loadingSectionWrapper}
+                />
+                :
+                <BlogsSection
+                  blogPosts={blogPosts}
+                  totalBlogPosts={totalBlogPosts}
+                  loadMore={changeOffset}
+                  blogsSectionEmptyMessageWrapperStyle={styles.blogsSectionEmptyMessageWrapper}
+                  blogsSectionEmptyMessageTextStyle={styles.blogsSectionEmptyMessageText}
+                  loadMoreBlogsButtonWrapperStyle={styles.loadMoreBlogsButtonWrapperStyle}
+                  loadMoreBlogsButtonTextStyle={styles.loadMoreBlogsButtonTextStyle}
+                  blogPostWrapperStyle={styles.blogPostWrapper}
+                  blogPostTitleTextStyle={styles.blogPostTitleText}
+                  blogPostCategoriesTextStyle={styles.blogPostCategoriesText}
+                  blogPostAttachmentsWrapperStyle={styles.blogPostAttachmentsWrapper}
+                  blogPostAttachmentWrapperStyle={styles.blogPostAttachmentWrapper}
+                  blogPostAttachmentIconStyle={styles.blogPostAttachmentIcon}
+                  blogPostAttachmentTextStyle={styles.blogPostAttachmentText}
+                  blogPostModalWrapperStyle={styles.blogPostModalWrapper}
+                  blogPostModalHeaderWrapperStyle={styles.blogPostModalHeaderWrapper}
+                  blogPostModalTitleTextStyle={styles.blogPostModalTitleText}
+                  blogPostModalExitButtonWrapperStyle={styles.blogPostModalExitButtonWrapper}
+                  blogPostModalExitButtonTextStyle={styles.blogPostModalExitButtonText}
+                  blogPostModalSectionWrapper={styles.blogPostModalSectionWrapper}
+                  blogPostModalSubtitleTextStyle={styles.blogPostModalSubtitleText}
+                  blogPostModalContentTextStyle={styles.blogPostModalContentText}
+                  blogPostModalAssetButtonWrapperStyle={styles.blogPostModalAssetButtonWrapper}
+                  blogPostModalAssetButtonTextStyle={styles.blogPostModalAssetButtonText}
+                  blogPostModalPhotoGalleryHeaderWrapperStyle={styles.blogPostModalPhotoGalleryHeaderWrapper}
+                  blogPostModalVideoGalleryHeaderWrapperStyle={styles.blogPostModalVideoGalleryHeaderWrapper}
+                  blogPostModalGalleryExitButtonWrapperStyle={styles.blogPostModalGalleryExitButtonWrapper}
+                  blogPostModalGalleryExitButtonTextStyle={styles.blogPostModalGalleryExitButtonText}
+                />
+            }
+          </ImageBackground>
         </View>
       </View>
     </ScrollView>
@@ -137,8 +148,17 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#e6e6e6',
 
-    borderRadius: 10,
+    borderRadius: 10
   },
+
+  backgroundImageWrapper: {
+    minHeight: Dimensions.get('window').height - 260,
+  },
+
+  backgroundImage: {
+    opacity: 0.1
+  },
+
   titleText: {
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
@@ -171,6 +191,25 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
     fontSize: 15,
+  },
+
+  loadMoreBlogsButtonWrapperStyle: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f',
+
+    marginTop: 5,
+    marginBottom: 5
+  },
+
+  loadMoreBlogsButtonTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#000000'
   },
 
   blogsSectionButtonWrapper: {
@@ -289,7 +328,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 15,
 
-    marginTop: 10
+    marginTop: 10,
+    marginBottom: 10
   },
   blogPostModalSectionWrapper: {
     marginTop: 10

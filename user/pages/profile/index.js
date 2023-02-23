@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, View, ImageBackground, Dimensions } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
@@ -15,6 +15,8 @@ import TrainingsSection from '../../sections/trainings'
 import { getOwnDataAPI } from '../../API/REST/user'
 import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/REST/reservation'
 import { getAllCoachesDataAPI } from '../../API/REST/coach'
+
+import logo from '../../assets/images/logo.png'
 
 function ProfilePage() {
   const isFocused = useIsFocused()
@@ -186,17 +188,24 @@ function ProfilePage() {
           <View
             style={styles.statisticsSectionWindow}
           >
-            <Title
-              text='user statistics'
-              textStyle={styles.titleText}
-            />
-            <StatisticsSection
-              statistics={ownStatistics}
-              legendWrapperStyle={styles.chartLegendWrapper}
-              legendTabWrapperStyle={styles.chartLegendTabWrapper}
-              legendPropertyTextStyle={styles.chartLegendPropertyText}
-              legendValueTextStyle={styles.chartLegendValueText}
-            />
+            <ImageBackground
+              style={styles.backgroundImageWrapper}
+              imageStyle={styles.backgroundImage}
+              source={logo}
+              resizeMode='contain'
+            >
+              <Title
+                text='user statistics'
+                textStyle={styles.titleText}
+              />
+              <StatisticsSection
+                statistics={ownStatistics}
+                legendWrapperStyle={styles.chartLegendWrapper}
+                legendTabWrapperStyle={styles.chartLegendTabWrapper}
+                legendPropertyTextStyle={styles.chartLegendPropertyText}
+                legendValueTextStyle={styles.chartLegendValueText}
+              />
+            </ImageBackground>
           </View>
         }
         <View
@@ -348,6 +357,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center'
   },
+
+  backgroundImageWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  backgroundImage: {
+    opacity: 0.1
+  },
+
   chartLegendWrapper: {
     width: '100%',
 
@@ -399,6 +419,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
     fontSize: 18,
+    
+    alignSelf: 'flex-start',
 
     marginLeft: 10,
     marginBottom: 20,

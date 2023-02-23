@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView, View, Keyboard, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, View, ImageBackground, Keyboard, Dimensions } from 'react-native'
 import { useRecoilState } from 'recoil'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -9,6 +9,8 @@ import Title from '../../components/title'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
 import { loginAPI, verifyTokenAPI } from '../../API/REST/auth'
+
+import logo from '../../assets/images/logo.png'
 
 function LoginPage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
@@ -105,46 +107,52 @@ function LoginPage() {
         <View
           style={styles.window}
         >
-          <Title
-            text='login'
-            textStyle={styles.titleText}
-          />
-          <InputText
-            removeMessage={removeMessage}
-            password={false}
-            showLabel={true}
-            label='username'
-            text={username}
-            changeText={setUsername}
-            placeholder={null}
-            wrapperStyle={styles.inputTextWrapper}
-            labelTextStyle={styles.inputTextLabelText}
-            inputTextStyle={styles.inputTextInputText}
-          />
-          <InputText
-            removeMessage={removeMessage}
-            password={true}
-            showLabel={true}
-            label='password'
-            text={password}
-            changeText={setPassword}
-            placeholder={null}
-            wrapperStyle={styles.inputTextWrapper}
-            labelTextStyle={styles.inputTextLabelText}
-            inputTextStyle={styles.inputTextInputText}
-          />
-          <Button
-            loading={loading}
-            showMessage={true}
-            messageText={message}
-            work={loading ? () => {} : login}
-            buttonText='submit'
-            wrapperStyle={styles.buttonAndMessageWrapper}
-            buttonWrapperStyle={styles.buttonWrapper}
-            buttonTextStyle={styles.buttonText}
-            messageWrapperStyle={[styles.messageWrapper, styles.messageFailWrapper, ((message === null) && styles.messageHiddenWrapper)]}
-            messageTextStyle={styles.messageText}
-          />
+          <ImageBackground
+            imageStyle={styles.backgroundImage}
+            source={logo}
+            resizeMode='contain'
+          >
+            <Title
+              text='login'
+              textStyle={styles.titleText}
+            />
+            <InputText
+              removeMessage={removeMessage}
+              password={false}
+              showLabel={true}
+              label='username'
+              text={username}
+              changeText={setUsername}
+              placeholder={null}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextLabelText}
+              inputTextStyle={styles.inputTextInputText}
+            />
+            <InputText
+              removeMessage={removeMessage}
+              password={true}
+              showLabel={true}
+              label='password'
+              text={password}
+              changeText={setPassword}
+              placeholder={null}
+              wrapperStyle={styles.inputTextWrapper}
+              labelTextStyle={styles.inputTextLabelText}
+              inputTextStyle={styles.inputTextInputText}
+            />
+            <Button
+              loading={loading}
+              showMessage={true}
+              messageText={message}
+              work={loading ? () => {} : login}
+              buttonText='submit'
+              wrapperStyle={styles.buttonAndMessageWrapper}
+              buttonWrapperStyle={styles.buttonWrapper}
+              buttonTextStyle={styles.buttonText}
+              messageWrapperStyle={[styles.messageWrapper, styles.messageFailWrapper, ((message === null) && styles.messageHiddenWrapper)]}
+              messageTextStyle={styles.messageText}
+            />
+          </ImageBackground>
         </View>
       </View>
     </ScrollView>
@@ -184,6 +192,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6e6e6',
 
     borderRadius: 10
+  },
+
+  backgroundImage: {
+    opacity: 0.1
   },
 
   titleText: {

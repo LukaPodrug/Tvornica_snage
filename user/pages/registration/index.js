@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView, View, Keyboard, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, View, ImageBackground, Keyboard, Dimensions } from 'react-native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -10,6 +10,8 @@ import InputImage from '../../components/input/image'
 import InputText from '../../components/input/text'
 import Button from '../../components/button'
 import { registrationAPI } from '../../API/REST/auth'
+
+import logo from '../../assets/images/logo.png'
 
 function RegistrationPage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
@@ -109,120 +111,126 @@ function RegistrationPage() {
         <View
           style={styles.window}
         >
-          <Title
-            text='registration'
-            textStyle={styles.titleText}
-          />
-          <View
-            style={styles.inputImageWrapper}
+          <ImageBackground
+            imageStyle={styles.backgroundImage}
+            source={logo}
+            resizeMode='contain'
           >
-            <InputImage
-              image={image}
-              changeImage={uploadImage}
-              wrapperStyle={styles.inputImageWindow}
-              imageStyle={styles.inputImageImage}
-              buttonStyle={styles.inputImageButton}
-              buttonImageStyle={styles.inputImageButtonImage}
-              cameraButtonStyle={styles.inputImageCameraButton}
-              galleryButtonStyle={styles.inputImageGalleryButton}
+            <Title
+              text='registration'
+              textStyle={styles.titleText}
             />
-          </View>
-          <View
-            style={styles.formRow}
-          >
-            <InputText
-              removeMessage={removeMessage}
-              password={false}
-              showLabel={true}
-              label='first name'
-              text={firstName}
-              changeText={setFirstName}
-              placeholder={null}
-              wrapperStyle={styles.inputTextWrapper}
-              labelTextStyle={styles.inputTextlabelText}
-              inputTextStyle={styles.inputTextInputText}
+            <View
+              style={styles.inputImageWrapper}
+            >
+              <InputImage
+                image={image}
+                changeImage={uploadImage}
+                wrapperStyle={styles.inputImageWindow}
+                imageStyle={styles.inputImageImage}
+                buttonStyle={styles.inputImageButton}
+                buttonImageStyle={styles.inputImageButtonImage}
+                cameraButtonStyle={styles.inputImageCameraButton}
+                galleryButtonStyle={styles.inputImageGalleryButton}
+              />
+            </View>
+            <View
+              style={styles.formRow}
+            >
+              <InputText
+                removeMessage={removeMessage}
+                password={false}
+                showLabel={true}
+                label='first name'
+                text={firstName}
+                changeText={setFirstName}
+                placeholder={null}
+                wrapperStyle={styles.inputTextWrapper}
+                labelTextStyle={styles.inputTextlabelText}
+                inputTextStyle={styles.inputTextInputText}
+              />
+              <InputText
+                removeMessage={removeMessage}
+                password={false}
+                showLabel={true}
+                label='last name'
+                text={lastName}
+                changeText={setLastName}
+                placeholder={null}
+                wrapperStyle={styles.inputTextWrapper}
+                labelTextStyle={styles.inputTextlabelText}
+                inputTextStyle={styles.inputTextInputText}
+              />
+            </View>
+            <View
+              style={styles.formRow}
+            >
+              <InputText
+                removeMessage={removeMessage}
+                password={false}
+                showLabel={true}
+                label='date of birth'
+                text={dateOfBirth}
+                changeText={setDateOfBirth}
+                placeholder='DD/MM/YYYY'
+                wrapperStyle={styles.inputTextWrapper}
+                labelTextStyle={styles.inputTextlabelText}
+                inputTextStyle={styles.inputTextInputText}
+              />
+              <InputText
+                removeMessage={removeMessage}
+                password={false}
+                showLabel={true}
+                label='username'
+                text={username}
+                changeText={setUsername}
+                placeholder={null}
+                wrapperStyle={styles.inputTextWrapper}
+                labelTextStyle={styles.inputTextlabelText}
+                inputTextStyle={styles.inputTextInputText}
+              />
+            </View>
+            <View
+              style={styles.formRow}
+            >
+              <InputText
+                removeMessage={removeMessage}
+                password={true}
+                showLabel={true}
+                label='password'
+                text={password}
+                changeText={setPassword}
+                placeholder={null}
+                wrapperStyle={styles.inputTextWrapper}
+                labelTextStyle={styles.inputTextlabelText}
+                inputTextStyle={styles.inputTextInputText}
+              />
+              <InputText
+                removeMessage={removeMessage}
+                password={true}
+                showLabel={true}
+                label='re-password'
+                text={rePassword}
+                changeText={setRePassword}
+                placeholder={null}
+                wrapperStyle={styles.inputTextWrapper}
+                labelTextStyle={styles.inputTextlabelText}
+                inputTextStyle={styles.inputTextInputText}
+              />
+            </View>
+            <Button
+              loading={loading}
+              showMessage={true}
+              messageText={message}
+              work={loading ? () => {} : registration}
+              buttonText='submit'
+              wrapperStyle={styles.buttonAndMessageWrapper}
+              buttonWrapperStyle={styles.buttonWrapper}
+              buttonTextStyle={styles.buttonText}
+              messageWrapperStyle={[styles.messageWrapper, styles.messageFailWrapper, ((message === null) && styles.messageHiddenWrapper)]}
+              messageTextStyle={styles.messageText}
             />
-            <InputText
-              removeMessage={removeMessage}
-              password={false}
-              showLabel={true}
-              label='last name'
-              text={lastName}
-              changeText={setLastName}
-              placeholder={null}
-              wrapperStyle={styles.inputTextWrapper}
-              labelTextStyle={styles.inputTextlabelText}
-              inputTextStyle={styles.inputTextInputText}
-            />
-          </View>
-          <View
-            style={styles.formRow}
-          >
-            <InputText
-              removeMessage={removeMessage}
-              password={false}
-              showLabel={true}
-              label='date of birth'
-              text={dateOfBirth}
-              changeText={setDateOfBirth}
-              placeholder='DD/MM/YYYY'
-              wrapperStyle={styles.inputTextWrapper}
-              labelTextStyle={styles.inputTextlabelText}
-              inputTextStyle={styles.inputTextInputText}
-            />
-            <InputText
-              removeMessage={removeMessage}
-              password={false}
-              showLabel={true}
-              label='username'
-              text={username}
-              changeText={setUsername}
-              placeholder={null}
-              wrapperStyle={styles.inputTextWrapper}
-              labelTextStyle={styles.inputTextlabelText}
-              inputTextStyle={styles.inputTextInputText}
-            />
-          </View>
-          <View
-            style={styles.formRow}
-          >
-            <InputText
-              removeMessage={removeMessage}
-              password={true}
-              showLabel={true}
-              label='password'
-              text={password}
-              changeText={setPassword}
-              placeholder={null}
-              wrapperStyle={styles.inputTextWrapper}
-              labelTextStyle={styles.inputTextlabelText}
-              inputTextStyle={styles.inputTextInputText}
-            />
-            <InputText
-              removeMessage={removeMessage}
-              password={true}
-              showLabel={true}
-              label='re-password'
-              text={rePassword}
-              changeText={setRePassword}
-              placeholder={null}
-              wrapperStyle={styles.inputTextWrapper}
-              labelTextStyle={styles.inputTextlabelText}
-              inputTextStyle={styles.inputTextInputText}
-            />
-          </View>
-          <Button
-            loading={loading}
-            showMessage={true}
-            messageText={message}
-            work={loading ? () => {} : registration}
-            buttonText='submit'
-            wrapperStyle={styles.buttonAndMessageWrapper}
-            buttonWrapperStyle={styles.buttonWrapper}
-            buttonTextStyle={styles.buttonText}
-            messageWrapperStyle={[styles.messageWrapper, styles.messageFailWrapper, ((message === null) && styles.messageHiddenWrapper)]}
-            messageTextStyle={styles.messageText}
-          />
+          </ImageBackground>
         </View>
       </View>
     </ScrollView>
@@ -259,6 +267,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6e6e6',
 
     borderRadius: 10
+  },
+
+  backgroundImage: {
+    opacity: 0.1
   },
 
   titleText: {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, ScrollView, View, Dimensions } from 'react-native'
+import { StyleSheet, ScrollView, View, ImageBackground, Dimensions } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
@@ -11,6 +11,8 @@ import LoadingSection from '../../sections/loading'
 import TrainingsSection from '../../sections/trainings'
 import { getTrainingsByDateAPI } from '../../API/REST/training'
 import { getActiveReservationsAPI } from '../../API/REST/reservation'
+
+import logo from '../../assets/images/logo.png'
 
 function TrainingsPage() {
   const isFocused = useIsFocused()
@@ -95,59 +97,66 @@ function TrainingsPage() {
         <View
           style={styles.window}
         >
-          <Title
-            text='all trainings'
-            textStyle={styles.titleText}
-          />
-          <DatePicker
-            dateShow={dateShow}
-            changeDate={changeDate}
-            disabled={trainingsLoading}
-            wrapperStyle={styles.datePickerWrapper}
-            buttonWrapperStyle={styles.datePickerButtonWrapper}
-            buttonDisabledStyle={styles.datePickerButtonDisabled}
-            buttonIconStyle={styles.datePickerButtonIcon}
-            textStyle={styles.datePickerText}
-          />
-          {
-            trainingsLoading ?
-              <LoadingSection
-                wrapperStyle={styles.loadingSectionWrapper}
-              />
-              :
-              <TrainingsSection
-                trainings={trainingsByDate}
-                emptyMessage='no trainings scheduled on this date'
-                reservationUpdated={reservationUpdated}
-                changeReservationUpdated={setReservationUpdated}
-                changeLoading={setTrainingsLoading}
-                emptyMessageWrapperStyle={styles.trainingsSectionEmptyMessageWrapper}
-                emptyMessageTextStyle={styles.trainingsSectionEmptyMessageText}
-                trainingWrapperStyle={styles.trainingWrapper}
-                trainingDataWrapperStyle={styles.trainingDataWrapper}
-                trainingMenuWrapperStyle={styles.trainingMenuWrapper}
-                trainingSectionWrapperStyle={styles.trainingSectionWrapper}
-                trainingCoachSectionWrapperStyle={styles.trainingCoachSectionWrapper}
-                trainingSectionImageStyle={styles.trainingSectionImage}
-                trainingCoachSectionImageStyle={styles.trainingCoachSectionImage}
-                trainingSectionPropertyTextStyle={styles.trainingSectionPropertyText}
-                trainingSectionValueTextStyle={styles.trainingSectionValueText}
-                trainingCapacitySectionWrapper={styles.trainingCapacitySectionWrapper}
-                trainingButtonWrapperStyle={styles.trainingButtonWrapper}
-                trainingButtonWrapperDisabledStyle={styles.trainingButtonWrapperDisabled}
-                trainingButtonWrapperHiddenStyle={styles.trainingButtonWrapperHidden}
-                trainingButtonIconStyle={styles.trainingButtonIcon}
-                trainingDetailsModalWrapperStyle={styles.trainingDetailsModalWrapperStyle}
-                trainingDetailsModalHeaderWrapperStyle={styles.trainingDetailsModalHeaderWrapperStyle}
-                trainingDetailsModalTitleTextStyle={styles.trainingDetailsModalTitleTextStyle}
-                trainingDetailsModalExitButtonWrapperStyle={styles.trainingDetailsModalExitButtonWrapperStyle}
-                trainingDetailsModalExitButtonTextStyle={styles.trainingDetailsModalExitButtonTextStyle}
-                trainingDetailsModalDataRowWrapperStyle={styles.trainingDetailsModalDataRowWrapperStyle}
-                trainingDetailsModalDataWrapperStyle={styles.trainingDetailsModalDataWrapperStyle}
-                trainingDetailsModalDataPropertyTextStyle={styles.trainingDetailsModalDataPropertyTextStyle}
-                trainingDetailsModalDataValueTextStyle={styles.trainingDetailsModalDataValueTextStyle}
-              />
-          }
+          <ImageBackground
+            style={styles.backgroundImageWrapper}
+            imageStyle={styles.backgroundImage}
+            source={logo}
+            resizeMode='contain'
+          >
+            <Title
+              text='all trainings'
+              textStyle={styles.titleText}
+            />
+            <DatePicker
+              dateShow={dateShow}
+              changeDate={changeDate}
+              disabled={trainingsLoading}
+              wrapperStyle={styles.datePickerWrapper}
+              buttonWrapperStyle={styles.datePickerButtonWrapper}
+              buttonDisabledStyle={styles.datePickerButtonDisabled}
+              buttonIconStyle={styles.datePickerButtonIcon}
+              textStyle={styles.datePickerText}
+            />
+            {
+              trainingsLoading ?
+                <LoadingSection
+                  wrapperStyle={styles.loadingSectionWrapper}
+                />
+                :
+                <TrainingsSection
+                  trainings={trainingsByDate}
+                  emptyMessage='no trainings scheduled on this date'
+                  reservationUpdated={reservationUpdated}
+                  changeReservationUpdated={setReservationUpdated}
+                  changeLoading={setTrainingsLoading}
+                  emptyMessageWrapperStyle={styles.trainingsSectionEmptyMessageWrapper}
+                  emptyMessageTextStyle={styles.trainingsSectionEmptyMessageText}
+                  trainingWrapperStyle={styles.trainingWrapper}
+                  trainingDataWrapperStyle={styles.trainingDataWrapper}
+                  trainingMenuWrapperStyle={styles.trainingMenuWrapper}
+                  trainingSectionWrapperStyle={styles.trainingSectionWrapper}
+                  trainingCoachSectionWrapperStyle={styles.trainingCoachSectionWrapper}
+                  trainingSectionImageStyle={styles.trainingSectionImage}
+                  trainingCoachSectionImageStyle={styles.trainingCoachSectionImage}
+                  trainingSectionPropertyTextStyle={styles.trainingSectionPropertyText}
+                  trainingSectionValueTextStyle={styles.trainingSectionValueText}
+                  trainingCapacitySectionWrapper={styles.trainingCapacitySectionWrapper}
+                  trainingButtonWrapperStyle={styles.trainingButtonWrapper}
+                  trainingButtonWrapperDisabledStyle={styles.trainingButtonWrapperDisabled}
+                  trainingButtonWrapperHiddenStyle={styles.trainingButtonWrapperHidden}
+                  trainingButtonIconStyle={styles.trainingButtonIcon}
+                  trainingDetailsModalWrapperStyle={styles.trainingDetailsModalWrapperStyle}
+                  trainingDetailsModalHeaderWrapperStyle={styles.trainingDetailsModalHeaderWrapperStyle}
+                  trainingDetailsModalTitleTextStyle={styles.trainingDetailsModalTitleTextStyle}
+                  trainingDetailsModalExitButtonWrapperStyle={styles.trainingDetailsModalExitButtonWrapperStyle}
+                  trainingDetailsModalExitButtonTextStyle={styles.trainingDetailsModalExitButtonTextStyle}
+                  trainingDetailsModalDataRowWrapperStyle={styles.trainingDetailsModalDataRowWrapperStyle}
+                  trainingDetailsModalDataWrapperStyle={styles.trainingDetailsModalDataWrapperStyle}
+                  trainingDetailsModalDataPropertyTextStyle={styles.trainingDetailsModalDataPropertyTextStyle}
+                  trainingDetailsModalDataValueTextStyle={styles.trainingDetailsModalDataValueTextStyle}
+                />
+            }
+          </ImageBackground>
         </View>
       </View>
     </ScrollView>
@@ -184,6 +193,15 @@ const styles = StyleSheet.create({
 
     borderRadius: 10,
   },
+
+  backgroundImageWrapper: {
+    minHeight: Dimensions.get('window').height - 260,
+  },
+
+  backgroundImage: {
+    opacity: 0.1
+  },
+  
   titleText: {
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',

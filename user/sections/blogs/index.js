@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import BlogPost from '../../components/blogPost'
 import Button from '../../components/button'
 
-function BlogsSection({ blogPosts, totalBlogPosts, loadMore, blogsSectionEmptyMessageWrapperStyle, blogsSectionEmptyMessageTextStyle, blogPostWrapperStyle, blogPostTitleTextStyle, blogPostCategoriesTextStyle, blogPostAttachmentsWrapperStyle, blogPostAttachmentWrapperStyle, blogPostAttachmentIconStyle, blogPostAttachmentTextStyle, blogPostModalWrapperStyle, blogPostModalHeaderWrapperStyle, blogPostModalTitleTextStyle, blogPostModalExitButtonWrapperStyle, blogPostModalExitButtonTextStyle, blogPostModalSectionWrapperStyle, blogPostModalSubtitleTextStyle, blogPostModalContentTextStyle, blogPostModalAssetButtonWrapperStyle,  blogPostModalAssetButtonTextStyle, blogPostModalPhotoGalleryHeaderWrapperStyle, blogPostModalVideoGalleryHeaderWrapperStyle, blogPostModalGalleryExitButtonWrapperStyle, blogPostModalGalleryExitButtonTextStyle }) {
+function BlogsSection({ blogPosts, totalBlogPosts, loadMore, blogsSectionEmptyMessageWrapperStyle, blogsSectionEmptyMessageTextStyle, loadMoreBlogsButtonWrapperStyle, loadMoreBlogsButtonTextStyle, blogPostWrapperStyle, blogPostTitleTextStyle, blogPostCategoriesTextStyle, blogPostAttachmentsWrapperStyle, blogPostAttachmentWrapperStyle, blogPostAttachmentIconStyle, blogPostAttachmentTextStyle, blogPostModalWrapperStyle, blogPostModalHeaderWrapperStyle, blogPostModalTitleTextStyle, blogPostModalExitButtonWrapperStyle, blogPostModalExitButtonTextStyle, blogPostModalSectionWrapperStyle, blogPostModalSubtitleTextStyle, blogPostModalContentTextStyle, blogPostModalAssetButtonWrapperStyle,  blogPostModalAssetButtonTextStyle, blogPostModalPhotoGalleryHeaderWrapperStyle, blogPostModalVideoGalleryHeaderWrapperStyle, blogPostModalGalleryExitButtonWrapperStyle, blogPostModalGalleryExitButtonTextStyle }) {
     return (
         <>
             {
@@ -64,8 +64,8 @@ function BlogsSection({ blogPosts, totalBlogPosts, loadMore, blogsSectionEmptyMe
                                     work={loadMore}
                                     buttonText='load more'
                                     wrapperStyle={null}
-                                    buttonWrapperStyle={styles.buttonWrapper}
-                                    buttonTextStyle={styles.buttonText}
+                                    buttonWrapperStyle={loadMoreBlogsButtonWrapperStyle}
+                                    buttonTextStyle={loadMoreBlogsButtonTextStyle}
                                     messageWrapperStyle={null}
                                     messageTextStyle={null}
                                 />
