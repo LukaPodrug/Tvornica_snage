@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from 'react-native'
+import { Image } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useRecoilState } from 'recoil'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -19,7 +19,7 @@ import logoutIcon from '../../assets/icons/logout.png'
 
 const Tab = createBottomTabNavigator()
 
-function Menu() {
+function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarIconStyle }) {
     const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
     const [, setOwnData] = useRecoilState(store.ownData)
@@ -31,9 +31,9 @@ function Menu() {
                 headerShown: false,
                 tabBarHideOnKeyboard: true,
 
-                tabBarStyle: styles.wrapper,
-                tabBarItemStyle: styles.tab,
-                tabBarLabelStyle: styles.label,
+                tabBarStyle: wrapperStyle,
+                tabBarItemStyle: tabItemWrapperStyle,
+                tabBarLabelStyle: tabBarLabelTextStyle,
 
                 tabBarActiveTintColor: '#000000',
                 tabBarActiveBackgroundColor: '#e04f5f',
@@ -52,7 +52,7 @@ function Menu() {
                                 tabBarLabel: 'profile',
                                 tabBarIcon: () => (
                                     <Image 
-                                        style={styles.icon}
+                                        style={tabBarIconStyle}
                                         source={profileIcon}
                                     />
                                 )
@@ -66,7 +66,7 @@ function Menu() {
                                 tabBarLabel: 'trainings',
                                 tabBarIcon: () => (
                                     <Image 
-                                        style={styles.icon}
+                                        style={tabBarIconStyle}
                                         source={trainingsIcon} 
                                     />
                                 )
@@ -80,7 +80,7 @@ function Menu() {
                                 tabBarLabel: 'news',
                                 tabBarIcon: () => (
                                     <Image 
-                                        style={styles.icon}
+                                        style={tabBarIconStyle}
                                         source={newsIcon} 
                                     />
                                 )
@@ -94,7 +94,7 @@ function Menu() {
                                 tabBarLabel: 'logout',
                                 tabBarIcon: () => (
                                     <Image 
-                                        style={styles.icon}
+                                        style={tabBarIconStyle}
                                         source={logoutIcon} 
                                     />
                                 )
@@ -120,7 +120,7 @@ function Menu() {
                                 tabBarLabel: 'login',
                                 tabBarIcon: () => (
                                     <Image 
-                                        style={styles.icon}
+                                        style={tabBarIconStyle}
                                         source={loginIcon}
                                     />
                                 )
@@ -134,7 +134,7 @@ function Menu() {
                                 tabBarLabel: 'registration',
                                 tabBarIcon: () => (
                                     <Image 
-                                        style={styles.icon}
+                                        style={tabBarIconStyle}
                                         source={registrationIcon}
                                     />
                                 )
@@ -145,37 +145,5 @@ function Menu() {
         </Tab.Navigator>
     )
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        height: 80,
-
-        borderRadius: 10,
-        
-        position: 'absolute',
-        bottom: 0,
-
-        backgroundColor: '#e6e6e6'
-    },
-    tab: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        paddingTop: 15,
-        paddingBottom: 15,
-
-        borderRadius: 10
-    },
-    label: {
-        fontFamily: 'Ubuntu_400Regular',
-        fontSize: 13,
-        textTransform: 'uppercase'
-    },
-    icon: {
-        width: 20,
-        height: 20
-    }
-})
 
 export default Menu
