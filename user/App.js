@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { RecoilRoot } from 'recoil'
 import { ApolloProvider } from '@apollo/client'
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
 
-    marginTop: Constants.statusBarHeight + 1,
+    marginTop: Platform.OS === 'ios' ? Constants.statusBarHeight + 1 : 0,
 
     backgroundColor: '#e6e6e6',
 
