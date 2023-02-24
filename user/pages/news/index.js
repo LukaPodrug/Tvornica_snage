@@ -1,5 +1,5 @@
 import { useEffect,  useState } from 'react'
-import { StyleSheet, ScrollView, View, ImageBackground, Dimensions} from 'react-native'
+import { StyleSheet, ScrollView, View, ImageBackground, Dimensions, Platform } from 'react-native'
 import { useQuery } from '@apollo/client'
 
 import Title from '../../components/title'
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     color: '#000000'
   },
   blogPostModalPhotoGalleryHeaderWrapper: {
-    marginTop: 20,
+    marginTop: Platform.OS === 'ios' ? 40 : 20,
     marginRight: 20,
 
     display: 'flex',
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   blogPostModalVideoGalleryHeaderWrapper: {
-    marginTop: 20,
+    marginTop: Platform.OS === 'ios' ? 40 : 20,
     marginRight: 20,
 
     display: 'flex',

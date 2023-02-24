@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, Platform } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
+import { StatusBar } from 'expo-status-bar'
 import { RecoilRoot } from 'recoil'
 import { ApolloProvider } from '@apollo/client'
 import { persistCache } from 'apollo3-cache-persist'
@@ -42,6 +43,9 @@ function App() {
       client={client}
     >
       <RecoilRoot>
+        <StatusBar
+          style='dark'
+        />
         <View 
           style={styles.wrapper}
         >
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
 
-    marginTop: Platform.OS === 'ios' ? Constants.statusBarHeight + 1 : 0,
+    marginTop: Constants.statusBarHeight + 1,
 
     backgroundColor: '#e6e6e6',
 
