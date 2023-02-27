@@ -1,0 +1,28 @@
+.ps-menuitem-root {
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.ps-menuitem-root:hover > a {
+    background-color: #e04f5f;
+
+    opacity: 0.5;
+}
+
+.ps-menu-button {
+    border-radius: 10px;
+
+    margin-left: 10px;
+
+    max-width: calc(100% - 20px);
+}
+
+.ps-active {
+    max-width: calc(100% - 10px);
+
+    margin-left: 5px;
+}
+
+.ps-active > a {
+    background-color: #e04f5f;
+}

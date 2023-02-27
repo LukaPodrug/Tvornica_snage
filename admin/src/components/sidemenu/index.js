@@ -7,6 +7,7 @@ import store from '../../store'
 import SideMenuHeader from './header'
 import SideMenuIcon from './icon'
 import styles from './style.module.css'
+import './style.css'
 
 import registrationIcon from '../../assets/icons/registration.png'
 import loginIcon from '../../assets/icons/login.png'

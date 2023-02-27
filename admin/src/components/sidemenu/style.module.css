@@ -1,13 +1,13 @@
 .sidebar {
     height: 100vh;
 
-    background-color: #ffffff;
+    background-color: #e6e6e6;
 
     border: none;
 }
 
 .sidebar > div {
-    background-color: #ffffff;
+    background-color: #e6e6e6;
 }
 
 .menuItem {

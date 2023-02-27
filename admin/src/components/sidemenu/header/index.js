@@ -20,9 +20,16 @@ function SideMenuHeader({ collapsed }) {
                     <div
                         className={styles.header}
                     >
-                        TVORNICA
-                        <br/>
-                        SNAGE
+                        <div
+                            className={styles.headerWord1}
+                        >
+                            tvornica
+                        </div>
+                        <div
+                            className={styles.headerWord2}
+                        >
+                            snage
+                        </div>
                     </div>
             }
         </div>
