@@ -34,6 +34,7 @@ function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarI
                 tabBarStyle: wrapperStyle,
                 tabBarItemStyle: tabItemWrapperStyle,
                 tabBarLabelStyle: tabBarLabelTextStyle,
+                tabBarLabelPosition: 'below-icon',
 
                 tabBarActiveTintColor: '#000000',
                 tabBarActiveBackgroundColor: '#e04f5f',

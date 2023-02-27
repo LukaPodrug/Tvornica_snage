@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { RecoilRoot } from 'recoil'
@@ -115,6 +115,8 @@ const styles = StyleSheet.create({
   tabBarWrapper: {
     height: 80,
 
+    marginBottom: Platform.OS === 'ios' ? 20 : 0,
+
     borderRadius: 10,
     
     position: 'absolute',
@@ -129,6 +131,8 @@ const styles = StyleSheet.create({
 
     paddingTop: 15,
     paddingBottom: 15,
+
+    height: 80,
 
     borderRadius: 10
   },
