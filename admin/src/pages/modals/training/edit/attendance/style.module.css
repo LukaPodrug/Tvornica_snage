@@ -12,9 +12,13 @@
     align-items: normal;
     gap: 1em;
 
-    background-color: #ffffff;
+    background-color: #e6e6e6;
 
     border-radius: 10px;
+
+    background-image: url(../../../../../assets/images/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .menu {

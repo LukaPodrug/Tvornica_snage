@@ -11,7 +11,7 @@
 
     border-radius: 10px;
 
-    background-color: #e6e6e6;
+    background-color: #ffffff;
 
     padding: 0 15px;
 }
@@ -19,11 +19,9 @@
 .wrapper:hover {
     cursor: pointer;
 
-    opacity: 0.5;
-
-    box-shadow: 0 0 10px #90EE90;
+    box-shadow: 0 0 10px #e04f5f;
 }
 
 .active {
-    background-color: #90EE90;
+    background-color: #e04f5f;
 }

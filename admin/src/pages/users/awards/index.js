@@ -54,7 +54,7 @@ function AwardsUsersPage() {
                         reduced={false}
                         page={page}
                         showEdit={true}
-                        message='no users wto award'
+                        message='no users with award privileges'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
                         showDelete={false}

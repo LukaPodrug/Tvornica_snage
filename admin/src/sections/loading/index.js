@@ -8,7 +8,7 @@ function LoadingSection() {
             className={styles.wrapper}
         >
             <MoonLoader
-                color='#90EE90'
+                color='#e04f5f'
             />
         </div>
     )
