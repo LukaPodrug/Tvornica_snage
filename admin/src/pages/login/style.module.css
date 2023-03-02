@@ -14,9 +14,13 @@
     display: flex;
     flex-direction: column;
 
-    background-color: #ffffff;
+    background-color: #e6e6e6;
 
     border-radius: 10px;
+        
+    background-image: url(../../assets/images/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .header {
@@ -60,19 +64,19 @@
 }
 
 .input:hover {
-    box-shadow: 0 0 10px #90EE90;
+    box-shadow: 0 0 10px #e04f5f;
 }
 
 .input:focus {
     outline: none;
 
-    box-shadow: 0 0 10px #35c135;
+    box-shadow: 0 0 10px #db0e26;
 }
 
 .button {    
     min-width: 210px;
 
-    background-color: #90EE90;
+    background-color: #e04f5f;
 
     transition: all ease 0.5s;
 }

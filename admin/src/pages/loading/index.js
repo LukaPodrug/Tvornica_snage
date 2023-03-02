@@ -8,7 +8,7 @@ function LoadingPage() {
             className={styles.wrapper}
         >
             <PuffLoader
-                color='#90EE90'
+                color='#e04f5f'
                 size={150}
             />
         </div>
