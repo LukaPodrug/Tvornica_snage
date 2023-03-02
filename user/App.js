@@ -115,8 +115,6 @@ const styles = StyleSheet.create({
   tabBarWrapper: {
     height: 80,
 
-    marginBottom: Platform.OS === 'ios' ? 20 : 0,
-
     borderRadius: 10,
     
     position: 'absolute',
