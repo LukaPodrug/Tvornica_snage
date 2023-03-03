@@ -1,9 +1,8 @@
 import axios from 'axios'
-
-import { REST_API_URL } from '@env'
+import Constants from 'expo-constants'
 
 const axiosBaseURL = axios.create({
-    baseURL: REST_API_URL
+    baseURL: Constants.expoConfig.extra.restApiUrl
 })
 
 export default axiosBaseURL

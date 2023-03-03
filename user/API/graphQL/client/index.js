@@ -1,15 +1,14 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-
-import { CONTENTFUL_SPACE_ID, CONTENTFUL_TOKEN } from '@env'
+import Constants from 'expo-constants'
 
 const cache = new InMemoryCache()
 
 const client = new ApolloClient({
-    uri: `${CONTENTFUL_SPACE_ID}`,
+    uri: `${Constants.expoConfig.extra.contentfulSpaceId}`,
     cache,
     credentials: 'same-origin',
     headers: {
-        Authorization: `Bearer ${CONTENTFUL_TOKEN}`,
+        Authorization: `Bearer ${Constants.expoConfig.extra.contentfulToken}`,
     }
 })
 
