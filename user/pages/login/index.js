@@ -13,6 +13,7 @@ import { loginAPI, verifyTokenAPI } from '../../API/REST/auth'
 import logo from '../../assets/images/logo.png'
 
 function LoginPage() {
+  const [, setLoggedInLoading] = useRecoilState(store.loggedInLoading)
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
   const [, setToken] = useRecoilState(store.token)
 
@@ -31,13 +32,16 @@ function LoginPage() {
           const verifyTokenResponse = await verifyTokenAPI(await AsyncStorage.getItem('token'))
           setToken(verifyTokenResponse.headers.authorization)
           setLoggedIn(true)
+          setLoggedInLoading(false)
           setTokenLoading(false)
         }
         catch(error) {
+          setLoggedInLoading(false)
           setTokenLoading(false)
         }
       }
       else {
+        setLoggedInLoading(false)
         setTokenLoading(false)
       }
     }
@@ -74,13 +78,16 @@ function LoginPage() {
     }
     setLoading(true)
     try {
+      setLoggedInLoading(true)
       const loginResponse = await loginAPI(username, password)
       await AsyncStorage.setItem('token', loginResponse.headers.authorization)
       setToken(loginResponse.headers.authorization)
+      setLoggedInLoading(false)
       setLoggedIn(true)
       setLoading(false)
     }
     catch(error) {
+      setLoggedInLoading(false)
       setLoading(false)
       setMessage(error.response.data)
       return

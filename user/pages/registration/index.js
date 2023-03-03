@@ -14,6 +14,7 @@ import { registrationAPI } from '../../API/REST/auth'
 import logo from '../../assets/images/logo.png'
 
 function RegistrationPage() {
+  const [, setLoggedInLoading] = useRecoilState(store.loggedInLoading)
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
   const [, setToken] = useRecoilState(store.token)
 
@@ -86,13 +87,16 @@ function RegistrationPage() {
     }
     setLoading(true)
     try {
+      setLoggedInLoading(true)
       const registrationResponse = await registrationAPI(image, firstName, lastName, moment(dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD'), username, password)
       await AsyncStorage.setItem('token', registrationResponse.headers.authorization)
       setToken(registrationResponse.headers.authorization)
+      setLoggedInLoading(false)
       setLoggedIn(true)
       setLoading(false)
     }
     catch(error) {
+      setLoggedInLoading(false)
       setLoading(false)
       setMessage(error.response.data)
       return

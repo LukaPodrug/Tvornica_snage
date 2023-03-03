@@ -20,6 +20,7 @@ import logoutIcon from '../../assets/icons/logout.png'
 const Tab = createBottomTabNavigator()
 
 function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarIconStyle }) {
+    const [loggedInLoading] = useRecoilState(store.loggedInLoading)
     const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
     const [, setToken] = useRecoilState(store.token)
     const [, setOwnData] = useRecoilState(store.ownData)
@@ -31,7 +32,7 @@ function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarI
                 headerShown: false,
                 tabBarHideOnKeyboard: true,
 
-                tabBarStyle: wrapperStyle,
+                tabBarStyle: [wrapperStyle, loggedInLoading && {display: 'none'}],
                 tabBarItemStyle: tabItemWrapperStyle,
                 tabBarLabelStyle: tabBarLabelTextStyle,
                 tabBarLabelPosition: 'below-icon',

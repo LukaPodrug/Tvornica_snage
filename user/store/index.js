@@ -1,5 +1,10 @@
 import { atom } from 'recoil'
 
+const loggedInLoading = atom({
+    key: 'loggedInLoading',
+    default: true
+})
+
 const loggedIn = atom({
     key: 'loggedIn',
     default: false
@@ -21,6 +26,7 @@ const allCoachesData = atom({
 })
 
 const atoms = {
+    loggedInLoading,
     loggedIn,
     token,
     ownData,
