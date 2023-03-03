@@ -38,6 +38,10 @@ app.use('/api/user/reservation', userReservationRoute)
 app.use('/api/user/user', userUserRoute)
 app.use('/api/user/coach', userCoachRoute)
 
+app.get('/', (req, res) => {
+  res.status(200).json('App recieved get request')
+})
+
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`)
 })
