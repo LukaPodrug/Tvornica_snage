@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from '../config.js'
 
 async function getAllCoachesDataAPI(token) {
-    const getAllCoachesDataResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/user/coach', {
+    const getAllCoachesDataResponse = await axios.get('/user/coach', {
         headers: {
             'Authorization': token
         }

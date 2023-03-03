@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from '../config.js'
 
 async function getTrainingsByDateAPI(token, date) {
-    const getTrainingsByDateResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/user/training/byDate', {
+    const getTrainingsByDateResponse = await axios.get('/user/training/byDate', {
         params: {
             'date': date
         },

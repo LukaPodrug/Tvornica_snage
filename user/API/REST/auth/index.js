@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from '../config.js'
 
 async function loginAPI(username, password) {
-    const loginResponse = await axios.post('https://tvornica-snage-api-8xrw.onrender.com/api/user/auth/login', {
+    const loginResponse = await axios.post('/user/auth/login', {
         username,
         password
     })
@@ -9,7 +9,7 @@ async function loginAPI(username, password) {
 }
 
 async function verifyTokenAPI(token) {
-    const verifyTokenResponse = await axios.post('https://tvornica-snage-api-8xrw.onrender.com/api/user/auth/verify', {}, {
+    const verifyTokenResponse = await axios.post('/user/auth/verify', {}, {
         headers: {
             'Authorization': token
         }
@@ -18,7 +18,7 @@ async function verifyTokenAPI(token) {
 }
 
 async function registrationAPI(image, firstName, lastName, dateOfBirth, username, password) {
-    const registrationResponse = await axios.post('https://tvornica-snage-api-8xrw.onrender.com/api/user/auth/registration', {
+    const registrationResponse = await axios.post('/user/auth/registration', {
         image,
         firstName,
         lastName,
