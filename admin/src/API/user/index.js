@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from '../config.js'
 
 async function getUsersByFirstNameAndLastNameAPI(token, firstName, lastName) {
-    const getUsersByFirstNameAndLastNameResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user/byName', {
+    const getUsersByFirstNameAndLastNameResponse = await axios.get('/admin/user/byName', {
         params: {
             'firstName': firstName,
             'lastName': lastName
@@ -15,7 +15,7 @@ async function getUsersByFirstNameAndLastNameAPI(token, firstName, lastName) {
 }
 
 async function getNumberOfUsersAPI(token) {
-    const getNumberOfUsersResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user/totalNumber', {
+    const getNumberOfUsersResponse = await axios.get('/admin/user/totalNumber', {
         headers: {
             'Authorization': token
         }
@@ -24,7 +24,7 @@ async function getNumberOfUsersAPI(token) {
 }
 
 async function getUsersByPageAPI(token, page, numberOfUsers) {
-    const getUsersByPageResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user/byPage', {
+    const getUsersByPageResponse = await axios.get('/admin/user/byPage', {
         params: {
             'page': page,
             'numberOfUsers': numberOfUsers
@@ -37,7 +37,7 @@ async function getUsersByPageAPI(token, page, numberOfUsers) {
 }
 
 async function editUserAPI(token, id, membership, level) {
-    const editUserResponse = await axios.patch('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user', {
+    const editUserResponse = await axios.patch('/admin/user', {
         id,
         membership,
         level
@@ -51,7 +51,7 @@ async function editUserAPI(token, id, membership, level) {
 }
 
 async function getUsersByExpiringMembershipsAPI(token) {
-    const getUsersByExpiringMembershipsResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user/byExpiringMembership', {
+    const getUsersByExpiringMembershipsResponse = await axios.get('/admin/user/byExpiringMembership', {
         headers: {
             'Authorization': token
         }
@@ -60,7 +60,7 @@ async function getUsersByExpiringMembershipsAPI(token) {
 }
 
 async function getUsersByBirthdaysAPI(token) {
-    const getUsersByBirthdaysResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user/byBirthdays', {
+    const getUsersByBirthdaysResponse = await axios.get('/admin/user/byBirthdays', {
         headers: {
             'Authorization': token
         }
@@ -69,7 +69,7 @@ async function getUsersByBirthdaysAPI(token) {
 }
 
 async function getUsersByAwardsAPI(token) {
-    const getUsersByAwardsResponse = await axios.get('https://tvornica-snage-api-8xrw.onrender.com/api/admin/user/byAwards', {
+    const getUsersByAwardsResponse = await axios.get('/admin/user/byAwards', {
         headers: {
             'Authorization': token
         }
