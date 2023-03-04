@@ -72,7 +72,7 @@ async function getActiveByUserId(userId) {
 
             select *
             from reservations
-            join trainings on reservations."trainingId" = training.id
+            join trainings on reservations."trainingId" = trainings.id
             join numberOfReservations on reservations."trainingId" = numberOfReservations."trainingId"
             where reservations."userId" = ${userId} and start > ${new Date(Date.now())}
             order by start asc`
