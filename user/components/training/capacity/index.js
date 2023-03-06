@@ -6,12 +6,12 @@ function TrainingCapacity({ numberOfReservations, capacity, wrapperStyle, proper
     const capacityHelp = [
         {
             name: 'number of reservations',
-            value: numberOfReservations === 0 ? 0.000001 : numberOfReservations,
+            value: numberOfReservations === 0 ? 0.1 : numberOfReservations,
             color: '#e04f5f'
         },
         {
             name: 'free space',
-            value: capacity - numberOfReservations === 0 ? 0.000001 : capacity - numberOfReservations,
+            value: capacity - numberOfReservations === 0 ? 0.1 : capacity - numberOfReservations,
             color: '#90ee90'
         }
     ]
