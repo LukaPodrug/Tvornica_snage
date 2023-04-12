@@ -113,6 +113,20 @@ async function checkUserOccupancy(userId , start, finish) {
     }
 }
 
+async function removeByUserId(userId) {
+    try {
+        const removedReservations = await database`
+            delete
+            from reservations
+            where "userId" = ${userId}
+            returning *`
+        return removedReservations
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getByUserIdAndTrainingId,
     getCountByTrainingId,
@@ -120,5 +134,6 @@ module.exports = {
     remove,
     getActiveByUserId,
     getStatisticsByUserId,
-    checkUserOccupancy
+    checkUserOccupancy,
+    removeByUserId
 }

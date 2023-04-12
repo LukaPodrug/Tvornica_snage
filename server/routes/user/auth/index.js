@@ -1,6 +1,8 @@
 const express = require('express')
 
 const authController = require('../../../controllers/user/auth')
+const userController = require('../../../controllers/user/user')
+const reservationController = require('../../../controllers/user/reservation')
 const generalController = require('../../../controllers/user/general')
 
 const { registrationSchema, loginSchema } = require('./schemas')
@@ -78,6 +80,46 @@ router.post('/verify', async(req, res) => {
         return
     }
     res.setHeader('Authorization', token).status(200).json('User successfully logged in')
+})
+
+router.delete('/', async(req, res) => {
+    const token = req.header('Authorization')
+    const tokenValidation = await generalController.verifyJWT(token)
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const user = await userController.getById(tokenValidation.id)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(user)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!user) {
+        res.status(400).json('User does not exist')
+        return
+    }
+    const deletedReservations = await reservationController.removeByUserId(tokenValidation.id)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(deletedReservations)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!deletedReservations) {
+        res.status(500).json('Error with deleting reservations')
+        return
+    }
+    const deletedUser = await userController.remove(tokenValidation.id)
+    const databaseConnection3 = await generalController.checkDatabaseConnection(deletedUser)
+    if(!databaseConnection3) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!deletedUser) {
+        res.status(500).json('Error with deleting user')
+        return
+    }
+    res.status(200).json('User successfully deleted')
 })
 
 module.exports = router
