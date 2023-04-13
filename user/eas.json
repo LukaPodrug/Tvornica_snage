@@ -27,6 +27,10 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../../google_service_key/pc-api-5849953856260690718-834-4b3073aefaea.json"
+      }
+    }
   }
 }

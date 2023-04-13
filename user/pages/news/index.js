@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   blogsSectionEmptyMessageWrapper: {
     padding: 10,
 
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#ffffff',
     
     borderRadius: 10
   },

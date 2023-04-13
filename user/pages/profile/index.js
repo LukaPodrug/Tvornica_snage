@@ -9,10 +9,13 @@ import LoadingPage from '../loading'
 import LoadingSection from '../../sections/loading'
 import Title from '../../components/title'
 import ProfileSection from '../../sections/profile'
+import Button from '../../components/button'
 import Message from '../../components/message'
 import StatisticsSection from '../../sections/statistics'
 import TrainingsSection from '../../sections/trainings'
+import ProfileDeleteModal from '../modals/profile'
 import { getOwnDataAPI } from '../../API/REST/user'
+import { deleteAPI } from '../../API/REST/auth'
 import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/REST/reservation'
 import { getAllCoachesDataAPI } from '../../API/REST/coach'
 
@@ -23,15 +26,19 @@ function ProfilePage() {
 
   const pageRef = useRef(null)
 
-  const [token] = useRecoilState(store.token)
+  const [token, setToken] = useRecoilState(store.token)
+  const [, setLoggedIn] = useRecoilState(store.loggedIn)
   const [ownData, setOwnData] = useRecoilState(store.ownData)
   const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
   const [activeReservations, setActiveReservations] = useState([])
   const [ownStatistics, setOwnStatistics] = useState(null)
 
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+
   const [reservationsLoading, setReservationsLoading] = useState(true)
   const [reservationUpdated, setReservationUpdated] = useState(false)
+  const [accountDeleting, setAccountDeleting] = useState(false)
 
   useEffect(() => {
     async function getOwnData() {
@@ -131,6 +138,31 @@ function ProfilePage() {
     }
   }, [isFocused])
 
+  function openDeleteModal() {
+    setDeleteModalOpen(true)
+  }
+
+  function closeDeleteModal() {
+    setDeleteModalOpen(false)
+  }
+
+  async function deleteAccount() {
+    try {
+      setAccountDeleting(true)
+      await deleteAPI(token)
+      setToken(null)
+      setLoggedIn(false)
+      setOwnData(null)
+      setAllCoachesData(null)
+      await AsyncStorage.removeItem('token')
+      setAccountDeleting(false)
+    }
+    catch(error) {
+      setAccountDeleting(false)
+      return
+    }
+  }
+
   if(!ownData || !ownStatistics) {
     return (
       <LoadingPage 
@@ -158,6 +190,18 @@ function ProfilePage() {
           imageStyle={styles.profileSectionImage}
           infoPropertyTextStyle={styles.profileSectionInfoPropertyText}
           infoValueTextStyle={styles.profileSectionInfoValueText}
+        />
+        <Button
+          loading={false}
+          showMessage={false}
+          messageText={null}
+          work={openDeleteModal}
+          buttonText='delete account'
+          wrapperStyle={styles.deleteButtonMessageWrapper}
+          buttonWrapperStyle={styles.deleteButtonWrapper}
+          buttonTextStyle={styles.deleteButtonText}
+          messageWrapperStyle={null}
+          messageTextStyle={null}
         />
         {
           moment(new Date(ownData.dateOfBirth)).format('DD/MM') === moment(new Date(Date.now())).format('DD/MM') &&
@@ -256,6 +300,20 @@ function ProfilePage() {
           }
         </View>
       </View>
+      <ProfileDeleteModal
+        isOpen={deleteModalOpen}
+        close={closeDeleteModal}
+        remove={deleteAccount}
+        deleting={accountDeleting}
+        wrapperStyle={styles.deleteModalWrapper}
+        headerWrapperStyle={styles.deleteModalHeaderWrapper}
+        titleTextStyle={styles.deleteModalTitleTextStyle}
+        exitButtonWrapperStyle={styles.deleteModalExitButtonWrapperStyle}
+        exitButtonTextStyle={styles.deleteModalExitButtonTextStyle}
+        deleteButtonMessageWrapperStyle={styles.deleteModalDeleteButtonMessageWrapper}
+        deleteButtonWrapperStyle={styles.deleteModalDeleteButtonWrapper}
+        deleteButtonTextStyle={styles.deleteModalDeleteButtonTextStyle}
+      />
     </ScrollView>
   )
 }
@@ -313,6 +371,25 @@ const styles = StyleSheet.create({
   profileSectionInfoValueText: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 18
+  },
+
+  deleteButtonMessageWrapper: {
+    width: '100%'
+  },
+  deleteButtonWrapper: {
+    backgroundColor: '#e04f5f',
+
+    marginTop: 20,
+
+    padding: 20,
+
+    borderRadius: 10
+  },
+  deleteButtonText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    fontSize: 17
   },
 
   messageWrapper: {
@@ -598,6 +675,61 @@ const styles = StyleSheet.create({
   trainingDetailsModalDataValueTextStyle: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 18
+  },
+
+  deleteModalWrapper: {
+    backgroundColor: '#ffffff',
+
+    flex: 0,
+
+    padding: 15,
+
+    borderRadius: 10
+  },
+  deleteModalHeaderWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+    marginBottom: 25
+  },
+  deleteModalTitleTextStyle: {
+    fontFamily: 'Ubuntu_700Bold',
+    fontSize: 20,
+    textTransform: 'uppercase',
+  },
+
+  deleteModalExitButtonWrapperStyle: {
+    padding: 10,
+
+    borderRadius: 10,
+
+    backgroundColor: '#e04f5f'
+  },
+  deleteModalExitButtonTextStyle: {
+    fontFamily: 'Ubuntu_400Regular',
+    fontSize: 15,
+    textTransform: 'uppercase',
+    color: '#000000'
+  },
+  deleteModalDeleteButtonMessageWrapper: {
+    width: '100%'
+  },
+  deleteModalDeleteButtonWrapper: {
+    backgroundColor: '#e04f5f',
+
+    marginTop: 20,
+
+    padding: 20,
+
+    borderRadius: 10
+  },
+  deleteModalDeleteButtonTextStyle: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    fontSize: 17
   }
 })
 

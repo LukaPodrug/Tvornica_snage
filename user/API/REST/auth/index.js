@@ -1,4 +1,6 @@
 import axios from '../config.js'
+import baseAxios from 'axios'
+
 
 async function loginAPI(username, password) {
     const loginResponse = await axios.post('/user/auth/login', {
@@ -29,8 +31,18 @@ async function registrationAPI(image, firstName, lastName, dateOfBirth, username
     return registrationResponse
 }
 
+async function deleteAPI(token) {
+    const deleteResponse = await axios.delete('/user/auth', {
+        headers: {
+            'Authorization': token
+        }
+    })
+    return deleteResponse
+}
+
 export {
     loginAPI,
     verifyTokenAPI,
-    registrationAPI
+    registrationAPI,
+    deleteAPI
 }
