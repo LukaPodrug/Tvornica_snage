@@ -182,7 +182,7 @@ function ProfilePage() {
           image={ownData.image}
           firstName={ownData.firstName}
           lastName={ownData.lastName}
-          dateOfBirth={moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
+          dateOfBirth={ownData.dateOfBirth === null ? '-' : moment(ownData.dateOfBirth).format('DD/MM/YYYY')}
           username={ownData.username}
           membership={moment(ownData.membership).format('DD/MM/YYYY')}
           level={ownData.level}

@@ -15,7 +15,15 @@
       "fallbackToCacheTimeout": 0
     },
     "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Tvornica snage accesses your photos to use photo as profile image",
+          "cameraPermission":  "Tvornica snage accesses your camera to take photo for profile image"
+        }
+      ],
       "expo-community-flipper"
+
     ],
     "assetBundlePatterns": [
       "**/*"

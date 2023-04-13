@@ -61,10 +61,6 @@ function RegistrationPage() {
       setMessage('last name required')
       return
     }
-    if(dateOfBirth === '') {
-      setMessage('date of birth required')
-      return
-    }
     if(username === '') {
       setMessage('username required')
       return
@@ -81,14 +77,14 @@ function RegistrationPage() {
       setMessage('password did not match re-password')
       return
     }
-    if(!moment(dateOfBirth, 'DD/MM/YYYY', true).isValid()) {
+    if(dateOfBirth !== '' && !moment(dateOfBirth, 'DD/MM/YYYY', true).isValid()) {
       setMessage('date format not correct')
       return
     }
     setLoading(true)
     try {
       setLoggedInLoading(true)
-      const registrationResponse = await registrationAPI(image, firstName, lastName, moment(dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD'), username, password)
+      const registrationResponse = await registrationAPI(image, firstName, lastName, dateOfBirth === '' ? '' : moment(dateOfBirth, 'DD/MM/YYYY').format('YYYY-MM-DD'), username, password)
       await AsyncStorage.setItem('token', registrationResponse.headers.authorization)
       setToken(registrationResponse.headers.authorization)
       setLoggedInLoading(false)
@@ -173,7 +169,7 @@ function RegistrationPage() {
                 removeMessage={removeMessage}
                 password={false}
                 showLabel={true}
-                label='date of birth'
+                label='DOB (optional)'
                 text={dateOfBirth}
                 changeText={setDateOfBirth}
                 placeholder='DD/MM/YYYY'
