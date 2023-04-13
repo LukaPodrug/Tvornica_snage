@@ -22,8 +22,6 @@ function SideMenuLoggedIn() {
     const [, setOwnData] = useRecoilState(store.ownData)
     const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
 
-    const [collapsed, setCollapsed] = useState(false)
-
     const location = useLocation()
 
     function logout() {
@@ -40,7 +38,7 @@ function SideMenuLoggedIn() {
             defaultCollapsed={false}
         >
             <SideMenuHeader
-                collapsed={collapsed}
+                collapsed={false}
             />
             <Menu>
                 <MenuItem

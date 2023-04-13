@@ -26,3 +26,37 @@
 .ps-active > a {
     background-color: #e04f5f;
 }
+
+.ps-menu-button > .ps-active {
+    margin-left: 0 !important;
+}
+
+@media only screen and (max-width: 1200px) {
+    
+}
+
+
+@media only screen and (max-width: 1024px) {
+    
+}
+
+
+@media only screen and (max-width: 768px) {
+    
+}
+
+@media only screen and (max-width: 480px) {
+    .ps-menu-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ps-menu-icon {
+        margin-right: 0 !important;
+    }
+
+    .ps-menu-label {
+        display: none
+    }
+}

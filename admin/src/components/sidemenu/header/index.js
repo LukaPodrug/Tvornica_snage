@@ -2,36 +2,33 @@ import styles from './style.module.css'
 
 import logo from '../../../assets/images/logo.png'
 
-function SideMenuHeader({ collapsed }) {
+function SideMenuHeader() {
     return (
         <div
-            className={styles.wrapper + ' ' + (collapsed && styles.wrapperCollapsed)}
+            className={styles.wrapper}
         >
             <div
-                className={styles.logo + ' ' + (collapsed && styles.logoCollapsed)}
+                className={styles.logo}
             >
                 <img
                     src={logo}
                     alt='logo'
                 />
             </div>
-            {
-                !collapsed &&
-                    <div
-                        className={styles.header}
-                    >
-                        <div
-                            className={styles.headerWord1}
-                        >
-                            tvornica
-                        </div>
-                        <div
-                            className={styles.headerWord2}
-                        >
-                            snage
-                        </div>
-                    </div>
-            }
+            <div
+                className={styles.header}
+            >
+                <div
+                    className={styles.headerWord1}
+                >
+                    tvornica
+                </div>
+                <div
+                    className={styles.headerWord2}
+                >
+                    snage
+                </div>
+            </div>
         </div>
     )
 }

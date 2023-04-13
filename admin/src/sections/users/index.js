@@ -24,7 +24,7 @@ function UsersSection({ users, showAwards, showToggle, toggled, changeToggled, r
                             image={user.image}
                             firstName={user.firstName}
                             lastName={user.lastName}
-                            dateOfBirth={moment(user.dateOfBirth).format('DD/MM/YYYY')}
+                            dateOfBirth={user.dateOfBirth === null ? 'unknown' : moment(user.dateOfBirth).format('DD/MM/YYYY')}
                             membership={moment(user.membership).format('DD/MM/YYYY')}
                             level={user.level}
                             reduced={reduced}
