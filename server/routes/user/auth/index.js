@@ -25,7 +25,7 @@ router.post('/registration', async(req, res) => {
         res.status(400).json('Username already in use')
         return
     }
-    const newUser = await authController.addNew(req.body.firstName, req.body.lastName, new Date(req.body.dateOfBirth), req.body.image, req.body.username, req.body.password)
+    const newUser = await authController.addNew(req.body.firstName, req.body.lastName, req.body.dateOfBirth === null ? null : new Date(req.body.dateOfBirth), req.body.image, req.body.username, req.body.password)
     const databaseConnection2 = await generalController.checkDatabaseConnection(newUser)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
@@ -76,6 +76,16 @@ router.post('/verify', async(req, res) => {
     const token = req.header('Authorization')
     const tokenValidation = await generalController.verifyJWT(token)
     if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const user = await userController.getById(tokenValidation.id)
+    const databaseConnection = await generalController.checkDatabaseConnection(user)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!user) {
         res.status(400).json('JWT not valid')
         return
     }

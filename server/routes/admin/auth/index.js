@@ -1,6 +1,7 @@
 const express = require('express')
 
 const authController = require('../../../controllers/admin/auth')
+const coachController = require('../../../controllers/admin/coach')
 const generalController = require('../../../controllers/admin/general')
 
 const { registrationSchema, loginSchema } = require('./schemas')
@@ -74,6 +75,16 @@ router.post('/verify', async(req, res) => {
     const token = req.header('Authorization')
     const tokenValidation = await generalController.verifyJWT(token)
     if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const coach = await coachController.getById(tokenValidation.id)
+    const databaseConnection = await generalController.checkDatabaseConnection(coach)
+    if(!databaseConnection) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!coach) {
         res.status(400).json('JWT not valid')
         return
     }
