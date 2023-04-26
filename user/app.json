@@ -30,9 +30,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "tvornicaSnageUser"
+      "bundleIdentifier": "tvornicaSnageUser",
+      "buildNumber": "3"
     },
     "android": {
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#FFFFFF"

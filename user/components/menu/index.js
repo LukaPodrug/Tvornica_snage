@@ -1,7 +1,6 @@
 import { Image } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useRecoilState } from 'recoil'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import store from '../../store'
 import RegistrationPage from '../../pages/registration'
@@ -15,16 +14,12 @@ import loginIcon from '../../assets/icons/login.png'
 import profileIcon from '../../assets/icons/profile.png'
 import trainingsIcon from '../../assets/icons/trainings.png'
 import newsIcon from '../../assets/icons/news.png'
-import logoutIcon from '../../assets/icons/logout.png'
 
 const Tab = createBottomTabNavigator()
 
 function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarIconStyle }) {
     const [loggedInLoading] = useRecoilState(store.loggedInLoading)
-    const [loggedIn, setLoggedIn] = useRecoilState(store.loggedIn)
-    const [, setToken] = useRecoilState(store.token)
-    const [, setOwnData] = useRecoilState(store.ownData)
-    const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
+    const [loggedIn] = useRecoilState(store.loggedIn)
 
     return (
         <Tab.Navigator
@@ -87,29 +82,6 @@ function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarI
                                     />
                                 )
                             }}
-                        />
-                        <Tab.Screen
-                            name='logout'
-                            component={LoginPage}
-                            options={{
-                                unmountOnBlur: true,
-                                tabBarLabel: 'logout',
-                                tabBarIcon: () => (
-                                    <Image 
-                                        style={tabBarIconStyle}
-                                        source={logoutIcon} 
-                                    />
-                                )
-                            }}
-                            listeners={() => ({
-                                tabPress: async () => {
-                                    setToken(null)
-                                    setLoggedIn(false)
-                                    setOwnData(null)
-                                    setAllCoachesData(null)
-                                    await AsyncStorage.removeItem('token')
-                                }
-                            })}
                         />
                     </>
                     :

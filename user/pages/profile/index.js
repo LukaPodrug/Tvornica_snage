@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView, View, ImageBackground, Dimensions } from 'react
 import { useIsFocused } from '@react-navigation/native'
 import { useRecoilState } from 'recoil'
 import moment from 'moment'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import store from '../../store'
 import LoadingPage from '../loading'
@@ -12,12 +13,14 @@ import ProfileSection from '../../sections/profile'
 import Button from '../../components/button'
 import Message from '../../components/message'
 import StatisticsSection from '../../sections/statistics'
+import PartnersSection from '../../sections/partners'
 import TrainingsSection from '../../sections/trainings'
 import ProfileDeleteModal from '../modals/profile'
 import { getOwnDataAPI } from '../../API/REST/user'
 import { deleteAPI } from '../../API/REST/auth'
 import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/REST/reservation'
 import { getAllCoachesDataAPI } from '../../API/REST/coach'
+import { getPartnersDataAPI } from '../../API/REST/partner'
 
 import logo from '../../assets/images/logo.png'
 
@@ -30,6 +33,7 @@ function ProfilePage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
   const [ownData, setOwnData] = useRecoilState(store.ownData)
   const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
+  const [partnersData, setPartnersData] = useRecoilState(store.partnersData)
 
   const [activeReservations, setActiveReservations] = useState([])
   const [ownStatistics, setOwnStatistics] = useState(null)
@@ -55,6 +59,16 @@ function ProfilePage() {
       try {
         const allCoachesDataResponse = await getAllCoachesDataAPI(token)
         setAllCoachesData(allCoachesDataResponse.data)
+      }
+      catch(error) {
+        return
+      }
+    }
+
+    async function getPartnersData() {
+      try {
+        const partnersDataResponse = await getPartnersDataAPI(token)
+        setPartnersData(partnersDataResponse.data)
       }
       catch(error) {
         return
@@ -113,9 +127,10 @@ function ProfilePage() {
     }
 
     async function fetchAPI() {
-      if(!ownData && !allCoachesData) {
+      if(!ownData && !allCoachesData && !partnersData) {
         await getOwnData()
         await getAllCoachesData()
+        await getPartnersData()
       }
       if(allCoachesData && !ownStatistics) {
         await getOwnStatistics()
@@ -146,6 +161,19 @@ function ProfilePage() {
     setDeleteModalOpen(false)
   }
 
+  async function logout() {
+    try {
+      setToken(null)
+      setLoggedIn(false)
+      setOwnData(null)
+      setAllCoachesData(null)
+      await AsyncStorage.removeItem('token')
+    }
+    catch(error) {
+      return
+    }
+  }
+
   async function deleteAccount() {
     try {
       setAccountDeleting(true)
@@ -163,7 +191,7 @@ function ProfilePage() {
     }
   }
 
-  if(!ownData || !ownStatistics) {
+  if(!ownData || !ownStatistics || !partnersData) {
     return (
       <LoadingPage 
         style={styles.loadingPage}
@@ -190,18 +218,6 @@ function ProfilePage() {
           imageStyle={styles.profileSectionImage}
           infoPropertyTextStyle={styles.profileSectionInfoPropertyText}
           infoValueTextStyle={styles.profileSectionInfoValueText}
-        />
-        <Button
-          loading={false}
-          showMessage={false}
-          messageText={null}
-          work={openDeleteModal}
-          buttonText='delete account'
-          wrapperStyle={styles.deleteButtonMessageWrapper}
-          buttonWrapperStyle={styles.deleteButtonWrapper}
-          buttonTextStyle={styles.deleteButtonText}
-          messageWrapperStyle={null}
-          messageTextStyle={null}
         />
         {
           moment(new Date(ownData.dateOfBirth)).format('DD/MM') === moment(new Date(Date.now())).format('DD/MM') &&
@@ -253,6 +269,22 @@ function ProfilePage() {
           </View>
         }
         <View
+          style={styles.partnersWindow}
+        >
+          <Title
+            text='partners'
+            textStyle={styles.titleText}
+          />
+          <PartnersSection
+            partners={partnersData}
+            emptyMessage='no active partners'
+            emptyMessageWrapperStyle={styles.partnersSectionEmptyMessageWrapper}
+            emptyMessageTextStyle={styles.partnersSectionEmptyMessageText}
+            partnerWrapperStyle={styles.partnerWrapper}
+            partnerTextStyle={styles.partnerText}
+          />
+        </View>
+        <View
           style={styles.trainingsSectionWindow}
         >
           <Title
@@ -299,6 +331,30 @@ function ProfilePage() {
               />
           }
         </View>
+        <Button
+          loading={false}
+          showMessage={false}
+          messageText={null}
+          work={logout}
+          buttonText='logout'
+          wrapperStyle={styles.logoutButtonMessageWrapper}
+          buttonWrapperStyle={styles.logoutButtonWrapper}
+          buttonTextStyle={styles.logoutButtonText}
+          messageWrapperStyle={null}
+          messageTextStyle={null}
+        />
+        <Button
+          loading={false}
+          showMessage={false}
+          messageText={null}
+          work={openDeleteModal}
+          buttonText='delete account'
+          wrapperStyle={styles.deleteButtonMessageWrapper}
+          buttonWrapperStyle={styles.deleteButtonWrapper}
+          buttonTextStyle={styles.deleteButtonText}
+          messageWrapperStyle={null}
+          messageTextStyle={null}
+        />
       </View>
       <ProfileDeleteModal
         isOpen={deleteModalOpen}
@@ -371,25 +427,6 @@ const styles = StyleSheet.create({
   profileSectionInfoValueText: {
     fontFamily: 'Ubuntu_400Regular',
     fontSize: 18
-  },
-
-  deleteButtonMessageWrapper: {
-    width: '100%'
-  },
-  deleteButtonWrapper: {
-    backgroundColor: '#e04f5f',
-
-    marginTop: 20,
-
-    padding: 20,
-
-    borderRadius: 10
-  },
-  deleteButtonText: {
-    fontFamily: 'Ubuntu_700Bold',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    fontSize: 17
   },
 
   messageWrapper: {
@@ -474,6 +511,49 @@ const styles = StyleSheet.create({
     fontFamily: 'Ubuntu_400Regular',
     textTransform: 'uppercase',
     fontSize: 15
+  },
+
+  partnersWindow: {
+    width: '100%',
+
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+
+    marginTop: 20,
+
+    backgroundColor: '#e6e6e6',
+
+    borderRadius: 10,
+  },
+  partnerWrapper: {
+    width: '100%',
+
+    borderRadius: 10,
+
+    backgroundColor: '#ffffff',
+
+    padding: 9
+  },
+  partnerText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+  partnersSectionEmptyMessageWrapper: {
+    width: '100%',
+
+    borderRadius: 10,
+
+    backgroundColor: '#ffffff',
+
+    padding: 9
+  },
+  partnersSectionEmptyMessageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14
   },
 
   trainingsSectionWindow: {
@@ -677,6 +757,45 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 
+  logoutButtonMessageWrapper: {
+    width: '100%'
+  },
+  logoutButtonWrapper: {
+    backgroundColor: '#fbec5d',
+
+    marginBottom: 20,
+
+    padding: 20,
+
+    borderRadius: 10
+  },
+  logoutButtonText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    fontSize: 17
+  },
+
+
+  deleteButtonMessageWrapper: {
+    width: '100%'
+  },
+  deleteButtonWrapper: {
+    backgroundColor: '#e04f5f',
+
+    marginBottom: 20,
+
+    padding: 20,
+
+    borderRadius: 10
+  },
+  deleteButtonText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    fontSize: 17
+  },
+
   deleteModalWrapper: {
     backgroundColor: '#ffffff',
 
@@ -699,7 +818,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textTransform: 'uppercase',
   },
-
   deleteModalExitButtonWrapperStyle: {
     padding: 10,
 
