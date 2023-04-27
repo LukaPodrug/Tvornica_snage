@@ -84,7 +84,7 @@ router.post('/verify', async(req, res) => {
         res.status(500).json('Error with database')
         return
     }
-    if(!coach) {
+    if(coach.length === 0) {
         res.status(400).json('JWT not valid')
         return
     }
