@@ -29,6 +29,8 @@ function App() {
           setToken(verifyTokenResponse.headers.authorization)
         }
         catch(error) {
+          localStorage.removeItem('token')
+          setLoading(false)
           return
         }
       }
