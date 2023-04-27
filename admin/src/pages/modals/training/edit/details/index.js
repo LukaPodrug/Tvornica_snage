@@ -7,6 +7,8 @@ import store from '../../../../../store'
 import ModalHeader from '../../../../../sections/modals/header'
 import DropdownInput from '../../../../../components/input/dropdown'
 import TextInput from '../../../../../components/input/text'
+import DateInput from '../../../../../components/input/date'
+import TimeInput from '../../../../../components/input/time'
 import NumberInput from '../../../../../components/input/number'
 import TextareaInput from '../../../../../components/input/textarea'
 import Button from '../../../../../components/button'
@@ -205,12 +207,12 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TextInput
+                        <DateInput
                             label='date'
                             showPlaceholder={true}
                             placeholder='dd/mm/yyyy'
-                            text={date}
-                            changeText={setDate}
+                            date={date}
+                            changeDate={setDate}
                             error={dateError}
                             changeError={setDateError}
                             message={message}
@@ -218,12 +220,12 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TextInput
+                        <TimeInput
                             label='start'
                             showPlaceholder={true}
                             placeholder='hh:mm'
-                            text={start}
-                            changeText={setStart}
+                            time={start}
+                            changeTime={setStart}
                             error={startError}
                             changeError={setStartError}
                             message={message}
@@ -231,12 +233,12 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TextInput
+                        <TimeInput
                             label='finish'
                             showPlaceholder={true}
                             placeholder='hh:mm'
-                            text={finish}
-                            changeText={setFinish}
+                            time={finish}
+                            changeTime={setFinish}
                             error={finishError}
                             changeError={setFinishError}
                             message={message}

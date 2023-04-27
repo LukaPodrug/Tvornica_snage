@@ -7,7 +7,7 @@ import store from '../../../../store'
 import ModalHeader from '../../../../sections/modals/header'
 import Image from '../../../../components/image'
 import Info from '../../../../components/info'
-import TextInput from '../../../../components/input/text'
+import DateInput from '../../../../components/input/date'
 import DropdownInput from '../../../../components/input/dropdown'
 import Button from '../../../../components/button'
 import { editUserAPI } from '../../../../API/user'
@@ -119,12 +119,12 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
                             property='last name'
                             value={lastName}
                         />
-                        <TextInput
+                        <DateInput
                             label='membership'
                             showPlaceholder={true}
                             placeholder='dd/mm/yyyy'
-                            text={membership}
-                            changeText={setMembership}
+                            date={membership}
+                            changeDate={setMembership}
                             error={membershipError}
                             changeError={setMembershipError}
                             message={message}

@@ -5,6 +5,7 @@ import moment from 'moment'
 import store from '../../store'
 import Image from '../../components/image'
 import TextInput from '../../components/input/text'
+import DateInput from '../../components/input/date'
 import PasswordInput from '../../components/input/password'
 import Button from '../../components/button'
 import { registrationAPI } from '../../API/auth'
@@ -129,12 +130,12 @@ function RegistrationPage() {
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TextInput
+                        <DateInput
                             label='date of birth'
                             showPlaceholder={true}
                             placeholder='dd/mm/yyyy'
-                            text={dateOfBirth}
-                            changeText={setDateOfBirth}
+                            date={dateOfBirth}
+                            changeDate={setDateOfBirth}
                             error={dateOfBirthError}
                             changeError={setDateOfBirthError}
                             message={message}
