@@ -2,7 +2,7 @@
   "expo": {
     "name": "Tvornica snage",
     "slug": "tvornica-snage",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "light",
@@ -31,10 +31,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "tvornicaSnageUser",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#FFFFFF"
