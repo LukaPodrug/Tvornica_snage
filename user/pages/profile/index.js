@@ -167,6 +167,7 @@ function ProfilePage() {
       setLoggedIn(false)
       setOwnData(null)
       setAllCoachesData(null)
+      setPartnersData(null)
       await AsyncStorage.removeItem('token')
     }
     catch(error) {
@@ -182,6 +183,7 @@ function ProfilePage() {
       setLoggedIn(false)
       setOwnData(null)
       setAllCoachesData(null)
+      setPartnersData(null)
       await AsyncStorage.removeItem('token')
       setAccountDeleting(false)
     }

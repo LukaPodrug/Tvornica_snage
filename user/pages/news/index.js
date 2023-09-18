@@ -1,7 +1,9 @@
 import { useEffect,  useState } from 'react'
 import { StyleSheet, ScrollView, View, ImageBackground, Dimensions, Platform } from 'react-native'
 import { useQuery } from '@apollo/client'
+import { useRecoilState } from 'recoil'
 
+import store from '../../store'
 import Title from '../../components/title'
 import LoadingSection from '../../sections/loading'
 import BlogsSection from '../../sections/blogs'
@@ -12,7 +14,9 @@ import logo from '../../assets/images/logo.png'
 function NewsPage() {
   const blogPostsLimit = 5
 
-  const { data, loading, fetchMore } = useQuery(blogPostsQuery, {fetchPolicy: 'no-cache', variables: {limit: blogPostsLimit, offset: blogPostsOffset}})
+  const [ownData] = useRecoilState(store.ownData)
+
+  const { data, loading, fetchMore } = useQuery(blogPostsQuery, {fetchPolicy: 'no-cache', variables: {limit: blogPostsLimit, offset: blogPostsOffset, userId: ownData.id.toString()}})
 
   const [blogPosts, setBlogPosts] = useState([])
   const [blogPostsOffset, setBlogPostsOffset] = useState(0)

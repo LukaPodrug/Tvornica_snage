@@ -20,6 +20,7 @@ const Tab = createBottomTabNavigator()
 function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarIconStyle }) {
     const [loggedInLoading] = useRecoilState(store.loggedInLoading)
     const [loggedIn] = useRecoilState(store.loggedIn)
+    const [ownData] = useRecoilState(store.ownData)
 
     return (
         <Tab.Navigator
@@ -58,6 +59,18 @@ function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarI
                         <Tab.Screen
                             name='trainings'
                             component={TrainingsPage}
+                            listeners={{
+                                tabPress: e => {
+                                    if(ownData) {
+                                        if(new Date(ownData.membership) < new Date(Date.now())) {
+                                            e.preventDefault()
+                                        }
+                                    }
+                                    else {
+                                        e.preventDefault()
+                                    }
+                                }
+                            }}
                             options={{
                                 unmountOnBlur: true,
                                 tabBarLabel: 'trainings',
@@ -72,6 +85,18 @@ function Menu({ wrapperStyle, tabItemWrapperStyle, tabBarLabelTextStyle, tabBarI
                         <Tab.Screen
                             name='blogs'
                             component={NewsPage}
+                            listeners={{
+                                tabPress: e => {
+                                    if(ownData) {
+                                        if(new Date(ownData.membership) < new Date(Date.now())) {
+                                            e.preventDefault()
+                                        }
+                                    }
+                                    else {
+                                        e.preventDefault()
+                                    }
+                                }
+                            }}
                             options={{
                                 unmountOnBlur: true,
                                 tabBarLabel: 'news',
