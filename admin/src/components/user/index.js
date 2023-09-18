@@ -28,6 +28,17 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
                     remove={null}
                     add={null}
                 />
+                <Section
+                    id={null}
+                    image={null}
+                    property='id'
+                    value={id}
+                    button={false}
+                    showText={true}
+                    openModal={null}
+                    remove={null}
+                    add={null}
+                />
                 <div
                     className={styles.name}
                 >
