@@ -116,7 +116,7 @@ async function getByAwards() {
             cast(sum(case when completion = true and manual = false then 1 else 0 end) as integer) as "reservationsDone",
             cast(sum(case when completion = false and manual = false then 1 else 0 end) as integer) as "reservationsSkipped",
             cast(sum(case when completion = true and manual = true then 1 else 0 end) as integer) as "nonReservationsDone",
-            reservations."userId", users.image, users."firstName", users."lastName", users."dateOfBirth", users.membership, users.level
+            reservations."userId" as id, users.image, users."firstName", users."lastName", users."dateOfBirth", users.membership, users.level
             from reservations 
             join trainings on reservations."trainingId" = trainings.id 
             join users on reservations."userId" = users.id
