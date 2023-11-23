@@ -5,6 +5,7 @@ import Section from '../section'
 import TrainingDetailsModal from '../../pages/modals/training/details'
 import EditTrainingDetailsModal from '../../pages/modals/training/edit/details'
 import EditTrainingAttendanceModal from '../../pages/modals/training/edit/attendance'
+import TrainingReservationsModal from '../../pages/modals/training/reservations'
 import styles from './style.module.css'
 
 import calendarIcon from '../../assets/icons/calendar.png'
@@ -15,11 +16,13 @@ import capacityIcon from '../../assets/icons/capacity.png'
 import levelIcon from '../../assets/icons/level.png'
 import moreIcon from '../../assets/icons/more.png'
 import editIcon from '../../assets/icons/edit.png'
+import usersIcon from '../../assets/icons/users.png'
 
 function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, title, regime, exercises, trainingEdited, changeTrainingEdited }) {
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
     const [editTrainingDetailsModalOpen, setEditTrainingDetailsModalOpen] = useState(false)
     const [editTrainingAttendanceModalOpen, setEditTrainingAttendanceModalOpen] = useState(false)
+    const [trainingReservationsModalOpen, setTrainingReservationsModalOpen] = useState(false)
 
     function openEditTrainingModal() {
         if(new Date(Date.now()) < new Date(start)) {
@@ -112,6 +115,14 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                     showText={false}
                     openModal={openEditTrainingModal}
                 />
+                <Section
+                    image={usersIcon}
+                    property={null}
+                    value={null}
+                    button={true}
+                    showText={false}
+                    openModal={setTrainingReservationsModalOpen}
+                />
             </div>
             <TrainingDetailsModal
                 isOpen={trainingDetailsModalOpen}
@@ -156,6 +167,11 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                         id={id}
                     />
             }
+            <TrainingReservationsModal
+                isOpen={trainingReservationsModalOpen}
+                changeIsOpen={setTrainingReservationsModalOpen}
+                id={id}
+            />
         </div>
     )
 }

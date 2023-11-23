@@ -4,6 +4,8 @@ import styles from './style.module.css'
 function ReservationsSection({ users, toggled, changeToggled, page }) {
     return (
         <UsersSection
+            showNumber={false}
+            startNumber={null}
             users={users}
             showAwards={false}
             showToggle={true}

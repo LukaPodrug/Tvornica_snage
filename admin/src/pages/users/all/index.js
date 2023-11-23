@@ -107,6 +107,8 @@ function AllUsersPage() {
                     <LoadingSection/>
                     :
                     <UsersSection
+                        showNumber={filter ? false : true}
+                        startNumber={(page - 1) * 5}
                         users={filter ? filteredUsers.slice((page - 1) * 5, (page - 1) * 5 + 5) : usersByPage}
                         showAwards={false}
                         showToggle={false}

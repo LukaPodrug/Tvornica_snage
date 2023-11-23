@@ -23,6 +23,8 @@ function UnannouncedSection({ allUsers, users, page, removeReservation, reservat
                 messageStyle={null}
             />
             <UsersSection
+                showNumber={false}
+                startNumber={null}
                 users={users}
                 showAwards={false}
                 showToggle={false}

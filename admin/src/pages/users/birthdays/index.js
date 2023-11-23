@@ -46,6 +46,8 @@ function BirthdaysUsersPage() {
                     <LoadingSection/>
                     :
                     <UsersSection
+                        showNumber={false}
+                        startNumber={null}
                         users={birthdayUsers.slice((page - 1) * 6, (page - 1) * 6 + 6)}
                         showAwards={false}
                         showToggle={false}

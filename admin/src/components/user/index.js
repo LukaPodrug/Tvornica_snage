@@ -9,7 +9,7 @@ import editIcon from '../../assets/icons/edit.png'
 import deleteIcon from '../../assets/icons/delete.png'
 import addIcon from '../../assets/icons/add.png'
 
-function User({ id, image, firstName, lastName, dateOfBirth, membership, level, reduced, showAwards, reservationsDone, reservationsSkipped, unannouncedDone, toggled, changeToggled, showToggle, showEdit, showDelete, remove, showAdd, add, index, userEdited, changeUserEdited }) {
+function User({ showNumber, number, id, image, firstName, lastName, dateOfBirth, membership, level, reduced, showAwards, reservationsDone, reservationsSkipped, unannouncedDone, toggled, changeToggled, showToggle, showEdit, showDelete, remove, showAdd, add, index, userEdited, changeUserEdited }) {
     const [editUserDetailsModalOpen, setEditUserDetailsModalOpen] = useState(false)
 
     return (
@@ -17,6 +17,20 @@ function User({ id, image, firstName, lastName, dateOfBirth, membership, level, 
             className={styles.wrapper}
         >
             <div className={styles.data}>
+                {
+                    showNumber && 
+                        <Section
+                            id={null}
+                            image={null}
+                            property='#'
+                            value={number}
+                            button={false}
+                            showText={true}
+                            openModal={null}
+                            remove={null}
+                            add={null}
+                        />
+                }
                 <Section
                     id={null}
                     image={image}

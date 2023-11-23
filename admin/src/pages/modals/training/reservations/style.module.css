@@ -1,0 +1,28 @@
+.wrapper {
+    min-width: 812px;
+    min-height: 520px;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: normal;
+    gap: 1em;
+
+    background-color: #e6e6e6;
+
+    border-radius: 10px;
+
+    background-image: url(../../../../assets/images/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%;
+}
+
+.users {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
