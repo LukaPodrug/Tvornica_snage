@@ -70,7 +70,7 @@ function TrainingReservationsModal({ isOpen, changeIsOpen, id }) {
                             showToggle={false}
                             toggled={null}
                             changeToggled={() => {}}
-                            reduced={false}
+                            reduced={true}
                             page={page}
                             showEdit={false}
                             message='no users found'

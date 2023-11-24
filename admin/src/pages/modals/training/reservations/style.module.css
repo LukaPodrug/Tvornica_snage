@@ -1,6 +1,6 @@
 .wrapper {
-    min-width: 812px;
-    min-height: 520px;
+    min-width: 600px;
+    min-height: 460px;
     width: fit-content;
     height: fit-content;
 
@@ -23,6 +23,6 @@
 }
 
 .users {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 }
