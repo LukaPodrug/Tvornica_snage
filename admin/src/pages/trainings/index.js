@@ -13,6 +13,7 @@ import styles from './style.module.css'
 function TrainingsPage() {
     const [token] = useRecoilState(store.token)
     const [allCoachesData] = useRecoilState(store.allCoachesData)
+    const [programsData] = useRecoilState(store.programsData)
 
     const [date, setDate] = useState(Date.now())
     const [trainingsByDate, setTrainingsByDate] = useState(null)
@@ -22,6 +23,7 @@ function TrainingsPage() {
     const [trainingEdited, setTrainingEdited] = useState(false)
 
     const [dateShow, setDateShow] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
+    const [dateDay, setDateDay] = useState(moment(new Date(date)).format('dddd'))
     const [trainingsLoading, setTrainingsLoading] = useState(true)
 
     useEffect(() => {
@@ -35,6 +37,14 @@ function TrainingsPage() {
                             training.coachImage = coach.image
                             training.coachFirstName = coach.firstName
                             training.coachLastName = coach.lastName
+                            return
+                        }
+                    })
+                    programsData.forEach(program => {
+                        if(training.programId == program.id) {
+                            training.programId = program.id
+                            training.programName = program.name
+                            training.programImage = program.image
                             return
                         }
                     })
@@ -60,6 +70,7 @@ function TrainingsPage() {
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
+        setDateDay(moment(new Date(date)).format('dddd'))
         setPage(1)
     }, [date])
 
@@ -74,6 +85,7 @@ function TrainingsPage() {
                     title='all trainings'
                     dateShow={dateShow}
                     date={date}
+                    dateDay={dateDay}
                     changeDate={setDate}
                     newTrainingAdded={newTrainingAdded}
                     changeNewTrainingAdded={setNewTrainingAdded}

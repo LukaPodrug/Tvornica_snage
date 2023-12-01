@@ -7,6 +7,10 @@
 .date {
     font-family: 'Ubuntu', sans-serif;
     font-size: 1.2em;
+
+    width: 220px;
+
+    text-align: center;
 }
 
 .arrow {

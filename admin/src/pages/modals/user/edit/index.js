@@ -135,6 +135,7 @@ function EditUserModal({ isOpen, changeIsOpen, id, image, firstName, lastName, m
                         <DropdownInput
                             label='level'
                             person={false}
+                            program={false}
                             choices={[1, 2, 3]}
                             value={level}
                             changeValue={setLevel}

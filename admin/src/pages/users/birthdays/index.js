@@ -59,7 +59,7 @@ function BirthdaysUsersPage() {
                         message='no users with birthday tommorow'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
-                        showDelete={false}
+                        showRemove={false}
                         removeReservation={() => {}}
                         showAdd={false}
                         addUser={() => {}}

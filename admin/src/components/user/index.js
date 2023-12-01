@@ -7,10 +7,12 @@ import styles from './style.module.css'
 
 import editIcon from '../../assets/icons/edit.png'
 import deleteIcon from '../../assets/icons/delete.png'
+import removeIcon from '../../assets/icons/remove.png'
 import addIcon from '../../assets/icons/add.png'
 
-function User({ showNumber, number, id, image, firstName, lastName, dateOfBirth, membership, level, reduced, showAwards, reservationsDone, reservationsSkipped, unannouncedDone, toggled, changeToggled, showToggle, showEdit, showDelete, remove, showAdd, add, index, userEdited, changeUserEdited }) {
+function User({ showNumber, number, id, image, firstName, lastName, dateOfBirth, membership, level, reduced, showAwards, reservationsDone, reservationsSkipped, unannouncedDone, toggled, changeToggled, showToggle, showEdit, showDelete, showRemove, remove, showAdd, add, index, userEdited, changeUserEdited, userDeleted, changeUserDeleted }) {
     const [editUserDetailsModalOpen, setEditUserDetailsModalOpen] = useState(false)
+    const [deleteUserModalOpen, setDeleteUserModalOpen] = useState(false)
 
     return (
         <div 
@@ -34,7 +36,7 @@ function User({ showNumber, number, id, image, firstName, lastName, dateOfBirth,
                 <Section
                     id={null}
                     image={image}
-                    property={null}
+                    property='user'
                     value={null}
                     button={false}
                     showText={false}
@@ -185,8 +187,22 @@ function User({ showNumber, number, id, image, firstName, lastName, dateOfBirth,
             {
                 showDelete &&
                     <Section
-                        id={id}
+                        id={null}
                         image={deleteIcon}
+                        property={null}
+                        value={null}
+                        button={true}
+                        showText={false}
+                        openModal={setDeleteUserModalOpen}
+                        remove={null}
+                        add={null}
+                    />
+            }
+            {
+                showRemove &&
+                    <Section
+                        id={id}
+                        image={removeIcon}
                         property={null}
                         value={null}
                         button={true}

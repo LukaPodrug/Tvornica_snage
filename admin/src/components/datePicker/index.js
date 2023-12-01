@@ -3,7 +3,7 @@ import styles from './style.module.css'
 import leftIcon from '../../assets/icons/left.png'
 import rightIcon from '../../assets/icons/right.png'
 
-function DatePicker({ dateShow, date, setDate, disabled }) {
+function DatePicker({ dateShow, date, dateDay, setDate, disabled }) {
     function changeDate(value) {
         setDate(date + value*24*60*60*1000)
     }
@@ -24,7 +24,7 @@ function DatePicker({ dateShow, date, setDate, disabled }) {
             <label
                 className={styles.date}
             >
-                {dateShow}
+                {dateShow} ({dateDay})
             </label>
             <div
                 className={styles.arrow + ' ' + (disabled && styles.disabled)}

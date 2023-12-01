@@ -4,7 +4,7 @@ import ModalHeader from '../../../../sections/modals/header'
 import Info from '../../../../components/info'
 import styles from './style.module.css'
 
-function TrainingDetailsModal({ isOpen, changeIsOpen, coachFirstName, coachLastName, date, start, finish, room, capacity, level, title, regime, exercises }) {
+function TrainingDetailsModal({ isOpen, changeIsOpen, coachFirstName, coachLastName, date, start, finish, room, capacity, level, programName, regime, exercises }) {
     function closeModal() {
         changeIsOpen(false)
     }
@@ -51,8 +51,8 @@ function TrainingDetailsModal({ isOpen, changeIsOpen, coachFirstName, coachLastN
                         value={level}
                     />
                     <Info
-                        property='title'
-                        value={title}
+                        property='program'
+                        value={programName}
                     />
                     <Info
                         property='regime'

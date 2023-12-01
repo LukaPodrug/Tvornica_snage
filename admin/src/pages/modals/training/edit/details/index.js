@@ -16,9 +16,10 @@ import { editTrainingAPI } from '../../../../../API/training'
 import styles from './style.module.css'
 import '../../../style.css'
 
-function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOld, startOld, finishOld, roomOld, capacityOld, levelOld, titleOld, regimeOld, exercisesOld, trainingEdited, changeTrainingEdited }) {
+function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOld, startOld, finishOld, roomOld, capacityOld, levelOld, programIdOld, regimeOld, exercisesOld, trainingEdited, changeTrainingEdited }) {
     const [token] = useRecoilState(store.token)
     const [allCoachesData] = useRecoilState(store.allCoachesData)
+    const [programsData] = useRecoilState(store.programsData)
 
     const [coachIdRecieved, setCoachIdRecieved] = useState(coachIdOld)
     const [dateRecieved, setDateRecieved] = useState(dateOld)
@@ -27,7 +28,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
     const [roomRecieved, setRoomRecieved] = useState(roomOld)
     const [capacityRecieved, setCapacityRecieved] = useState(capacityOld)
     const [levelRecieved, setLevelRecieved] = useState(levelOld)
-    const [titleRecieved, setTitleRecieved] = useState(titleOld)
+    const [programIdRecieved, setProgramIdRecieved] = useState(programIdOld)
     const [regimeRecieved, setRegimeRecieved] = useState(regimeOld)
     const [exercisesRecieved, setExercisesRecieved] = useState(exercisesOld)
 
@@ -38,7 +39,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
     const [room, setRoom] = useState(roomOld)
     const [capacity, setCapacity] = useState(capacityOld)
     const [level, setLevel] = useState(levelOld)
-    const [title, setTitle] = useState(titleOld)
+    const [programId, setProgramId] = useState(programIdOld)
     const [regime, setRegime] = useState(regimeOld)
     const [exercises, setExercises] = useState(exercisesOld)
 
@@ -49,7 +50,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
     const [roomError, setRoomError] = useState(false)
     const [capacityError, setCapacityError] = useState(false)
     const [levelError, setLevelError] = useState(false)
-    const [titleError, setTitleError] = useState(false)
+    const [programIdError, setProgramIdError] = useState(false)
     const [regimeError, setRegimeError] = useState(false)
     const [exercisesError, setExercisesError] = useState(false)
     const [disabled, setDisabled] = useState(true)
@@ -58,13 +59,13 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
     const [success, setSuccess] = useState(false)
 
     useEffect(() => {
-        if(coachId === coachIdRecieved && date === dateRecieved && start === startRecieved && finish === finishRecieved && room === roomRecieved && capacity === capacityRecieved && level === levelRecieved && title === titleRecieved && regime === regimeRecieved && exercises === exercisesRecieved) {
+        if(coachId === coachIdRecieved && date === dateRecieved && start === startRecieved && finish === finishRecieved && room === roomRecieved && capacity === capacityRecieved && level === levelRecieved && programId === programIdRecieved && regime === regimeRecieved && exercises === exercisesRecieved) {
             setDisabled(true)
         }
         else {
             setDisabled(false)
         }
-    }, [coachId, date, start, finish, room, capacity, level, title, regime, exercises])
+    }, [coachId, date, start, finish, room, capacity, level, programId, regime, exercises])
 
     function resetRecievedValues() {
         setCoachIdRecieved(coachId)
@@ -74,7 +75,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
         setRoomRecieved(room)
         setCapacityRecieved(capacity)
         setLevelRecieved(level)
-        setTitleRecieved(title)
+        setProgramIdRecieved(programId)
         setRegimeRecieved(regime)
         setExercisesRecieved(exercises)
     }
@@ -101,8 +102,8 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
         if(level === '') {
             setLevelError(true)
         }
-        if(title === '') {
-            setTitleError(true)
+        if(programId === '') {
+            setProgramIdError(true)
         }
         if(regime === '') {
             setRegimeError(true)
@@ -126,12 +127,12 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
             setMessage('capacity value wrong')
             return
         }
-        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
+        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && programId !== '' && regime !== '' && exercises !== '') {
             try {
                 setLoading(true)
                 const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
                 const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
-                const addTrainingResponse = await editTrainingAPI(token, id, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
+                const addTrainingResponse = await editTrainingAPI(token, id, coachId, startFormatted, finishFormatted, room, capacity, level, programId, regime, exercises)
                 setMessage(addTrainingResponse.data)
                 setSuccess(true)
                 resetRecievedValues()
@@ -162,8 +163,8 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
         setCapacityError(false)
         setLevel('')
         setLevelError(false)
-        setTitle('')
-        setTitleError(false)
+        setProgramId('')
+        setProgramIdError(false)
         setRegime('')
         setRegimeError(false)
         setExercises('')
@@ -197,6 +198,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                         <DropdownInput
                             label='coach'
                             person={true}
+                            program={false}
                             choices={allCoachesData}
                             value={coachId}
                             changeValue={setCoachId}
@@ -249,6 +251,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                         <DropdownInput
                             label='room'
                             person={false}
+                            program={false}
                             choices={[1, 2, 3]}
                             value={room}
                             changeValue={setRoom}
@@ -274,6 +277,7 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                         <DropdownInput
                             label='level'
                             person={false}
+                            program={false}
                             choices={[1, 2, 3]}
                             value={level}
                             changeValue={setLevel}
@@ -284,14 +288,15 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TextInput
-                            label='title'
-                            showPlaceholder={false}
-                            placeholder=''
-                            text={title}
-                            changeText={setTitle}
-                            error={titleError}
-                            changeError={setTitleError}
+                        <DropdownInput
+                            label='program'
+                            person={false}
+                            program={true}
+                            choices={programsData}
+                            value={programId}
+                            changeValue={setProgramId}
+                            error={programIdError}
+                            changeError={setProgramIdError}
                             message={message}
                             changeMessage={setMessage}
                             labelStyle={styles.label}

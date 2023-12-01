@@ -36,7 +36,7 @@ function UnannouncedSection({ allUsers, users, page, removeReservation, reservat
                 showEdit={false}
                 userEdited={null}
                 changeUserEdited={null}
-                showDelete={true}
+                showRemove={true}
                 removeReservation={removeReservation}
                 showAdd={false}
                 add={null}

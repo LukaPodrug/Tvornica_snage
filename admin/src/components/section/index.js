@@ -21,7 +21,7 @@ function Section({ id, image, property, value, button, showText, openModal, remo
             {
                 image && 
                     <div
-                        className={styles.image + ' ' + ((property === 'coach' || (showText === false && button === false)) && styles.profile)}
+                        className={styles.image + ' ' + ((property === 'coach' || property === 'user') && styles.profile)}
                     >
                         <img
                             src={image}

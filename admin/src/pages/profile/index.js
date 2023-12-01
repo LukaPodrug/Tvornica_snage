@@ -15,6 +15,7 @@ function ProfilePage() {
     const [token] = useRecoilState(store.token)
     const [ownData] = useRecoilState(store.ownData)
     const [allCoachesData] = useRecoilState(store.allCoachesData)
+    const [programsData] = useRecoilState(store.programsData)
 
     const [date, setDate] = useState(Date.now())
     const [ownTrainingsByDate, setOwnTrainingsByDate] = useState(null)
@@ -24,6 +25,7 @@ function ProfilePage() {
     const [trainingEdited, setTrainingEdited] = useState(false)
 
     const [dateShow, setDateShow] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
+    const [dateDay, setDateDay] = useState(moment(new Date(date)).format('DD/MM/YYYY'))
     const [trainingsLoading, setTrainingsLoading] = useState(true)
 
     useEffect(() => {
@@ -34,6 +36,14 @@ function ProfilePage() {
                 ownTrainingsByDateSorted.forEach(training => {
                     training.coachFirstName = ownData.firstName
                     training.coachLastName = ownData.lastName
+                    programsData.forEach(program => {
+                        if(training.programId == program.id) {
+                            training.programId = program.id
+                            training.programName = program.name
+                            training.programImage = program.image
+                            return
+                        }
+                    })
                 })
                 setOwnTrainingsByDate(ownTrainingsByDateSorted)
                 setMaxPage(Math.ceil(ownTrainingsByDateSorted.length / 3))
@@ -56,6 +66,7 @@ function ProfilePage() {
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
+        setDateDay(moment(new Date(date)).format('dddd'))
         setPage(1)
     }, [date])
 
@@ -80,6 +91,7 @@ function ProfilePage() {
                         title='my trainings'
                         dateShow={dateShow}
                         date={date}
+                        dateDay={dateDay}
                         changeDate={setDate}
                         newTrainingAdded={newTrainingAdded}
                         changeNewTrainingAdded={setNewTrainingAdded}

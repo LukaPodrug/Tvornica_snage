@@ -8,7 +8,6 @@ import EditTrainingAttendanceModal from '../../pages/modals/training/edit/attend
 import TrainingReservationsModal from '../../pages/modals/training/reservations'
 import styles from './style.module.css'
 
-import calendarIcon from '../../assets/icons/calendar.png'
 import startIcon from '../../assets/icons/start.png'
 import finishIcon from '../../assets/icons/finish.png'
 import roomIcon from '../../assets/icons/room.png'
@@ -18,7 +17,7 @@ import moreIcon from '../../assets/icons/more.png'
 import editIcon from '../../assets/icons/edit.png'
 import usersIcon from '../../assets/icons/users.png'
 
-function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, title, regime, exercises, trainingEdited, changeTrainingEdited }) {
+function Training({ id, programImage, showCoach, coachImage, coachId, coachFirstName, coachLastName, start, finish, room, capacity, level, programId, programName, regime, exercises, trainingEdited, changeTrainingEdited }) {
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
     const [editTrainingDetailsModalOpen, setEditTrainingDetailsModalOpen] = useState(false)
     const [editTrainingAttendanceModalOpen, setEditTrainingAttendanceModalOpen] = useState(false)
@@ -39,11 +38,11 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
         >
             <div className={styles.data}>
                 <Section
-                    image={calendarIcon}
-                    property='date'
-                    value={moment(start).format('DD/MM/YYYY')}
+                    image={programImage}
+                    property='program'
+                    value={null}
                     button={false}
-                    showText={true}
+                    showText={false}
                     openModal={null}
                 />
                 {
@@ -135,7 +134,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                 room={room}
                 capacity={capacity}
                 level={level}
-                title={title}
+                programName={programName}
                 regime={regime}
                 exercises={exercises}
             />
@@ -152,7 +151,7 @@ function Training({ id, showCoach, coachImage, coachId, coachFirstName, coachLas
                         roomOld={room}
                         capacityOld={capacity}
                         levelOld={level}
-                        titleOld={title}
+                        programIdOld={programId}
                         regimeOld={regime}
                         exercisesOld={exercises}
                         trainingEdited={trainingEdited}

@@ -19,6 +19,7 @@ function TrainingsSection({ trainings, showCoach, trainingEdited, changeTraining
                         <Training
                             key={index}
                             id={training.id}
+                            programImage={training.programImage}
                             showCoach={showCoach}
                             coachId={training.coachId}
                             coachImage={training.coachImage}
@@ -29,7 +30,8 @@ function TrainingsSection({ trainings, showCoach, trainingEdited, changeTraining
                             room={training.room}
                             capacity={training.capacity}
                             level={training.level}
-                            title={training.title}
+                            programId={training.programId}
+                            programName={training.programName}
                             regime={training.regime}
                             exercises={training.exercises}
                             trainingEdited={trainingEdited}

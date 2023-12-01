@@ -120,7 +120,7 @@ function AllUsersPage() {
                         message='no users found'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
-                        showDelete={false}
+                        showRemove={false}
                         removeReservation={() => {}}
                         showAdd={false}
                         addUser={() => {}}

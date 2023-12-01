@@ -3,7 +3,7 @@ import moment from 'moment'
 import User from '../../components/user'
 import styles from './style.module.css'
 
-function UsersSection({ showNumber, startNumber, users, showAwards, showToggle, toggled, changeToggled, reduced, page, showEdit, message, userEdited, changeUserEdited, showDelete, removeReservation, showAdd, addUser, maxUsers, style }) {
+function UsersSection({ showNumber, startNumber, users, showAwards, showToggle, toggled, changeToggled, reduced, page, showEdit, message, userEdited, changeUserEdited, showDelete, userDeleted, changeUserDeleted, showRemove, removeReservation, showAdd, addUser, maxUsers, style }) {
     return (
         <div
             className={styles.wrapper + ' ' + style}
@@ -38,7 +38,7 @@ function UsersSection({ showNumber, startNumber, users, showAwards, showToggle, 
                             changeToggled={changeToggled}
                             showToggle={showToggle}
                             showEdit={showEdit}
-                            showDelete={showDelete}
+                            showRemove={showRemove}
                             remove={removeReservation}
                             showAdd={showAdd}
                             add={addUser}

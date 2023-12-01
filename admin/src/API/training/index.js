@@ -25,7 +25,7 @@ async function getTrainingsByDateAPI(token, date) {
     return getTrainingsByDateResponse
 }
 
-async function addTrainingAPI(token, coachId, start, finish, room, capacity, level, title, regime, exercises) {
+async function addTrainingAPI(token, coachId, start, finish, room, capacity, level, programId, regime, exercises) {
     const addTrainingResponse = await axios.post('/admin/training', {
         coachId,
         start,
@@ -33,7 +33,7 @@ async function addTrainingAPI(token, coachId, start, finish, room, capacity, lev
         room,
         capacity,
         level,
-        title,
+        programId,
         regime,
         exercises
     },
@@ -45,7 +45,7 @@ async function addTrainingAPI(token, coachId, start, finish, room, capacity, lev
     return addTrainingResponse
 }
 
-async function editTrainingAPI(token, id, coachId, start, finish, room, capacity, level, title, regime, exercises) {
+async function editTrainingAPI(token, id, coachId, start, finish, room, capacity, level, programId, regime, exercises) {
     const editTrainingResponse = await axios.patch('/admin/training', {
         id,
         coachId,
@@ -54,7 +54,7 @@ async function editTrainingAPI(token, id, coachId, start, finish, room, capacity
         room,
         capacity,
         level,
-        title,
+        programId,
         regime,
         exercises
     },

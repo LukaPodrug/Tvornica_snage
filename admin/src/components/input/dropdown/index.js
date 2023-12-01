@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import ErrorInput from '../error'
 import styles from './style.module.css'
 
-function DropdownInput({ label, person, choices, value, changeValue, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
+function DropdownInput({ label, person, program, choices, value, changeValue, error, changeError, message, changeMessage, labelStyle, inputStyle }) {
     const dropdownInputRef = useRef(null)
 
     function focus() {
@@ -47,11 +47,19 @@ function DropdownInput({ label, person, choices, value, changeValue, error, chan
                                     value={choice.id}
                                 >
                                     {
-                                        person ?
+                                        person &&
                                             <>
                                                 {choice.firstName} {choice.lastName}
                                             </>
-                                            :
+                                    }
+                                    {
+                                        program &&
+                                            <>
+                                                {choice.name}
+                                            </>
+                                    }
+                                    {
+                                        (!person && !program) &&
                                             <>
                                                 {choice}
                                             </>

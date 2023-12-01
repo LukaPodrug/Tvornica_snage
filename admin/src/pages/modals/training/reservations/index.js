@@ -76,7 +76,7 @@ function TrainingReservationsModal({ isOpen, changeIsOpen, id }) {
                             message='no users found'
                             userEdited={false}
                             changeUserEdited={() => {}}
-                            showDelete={false}
+                            showRemove={false}
                             removeReservation={() => {}}
                             showAdd={false}
                             addUser={() => {}}

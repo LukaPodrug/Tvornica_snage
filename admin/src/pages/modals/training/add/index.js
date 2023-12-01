@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import Modal from 'react-modal'
 import moment from 'moment'
@@ -16,18 +16,19 @@ import { addTrainingAPI } from '../../../../API/training'
 import styles from './style.module.css'
 import '../../style.css'
 
-function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTrainingAdded }) {
+function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTrainingAdded, datePickerDate }) {
     const [token] = useRecoilState(store.token)
     const [allCoachesData] = useRecoilState(store.allCoachesData)
+    const [programsData] = useRecoilState(store.programsData)
 
     const [coachId, setCoachId] = useState('')
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState(datePickerDate)
     const [start, setStart] = useState('')
     const [finish, setFinish] = useState('')
     const [room, setRoom] = useState('')
     const [capacity, setCapacity] = useState('')
     const [level, setLevel] = useState('')
-    const [title, setTitle] = useState('')
+    const [programId, setProgramId] = useState('')
     const [regime, setRegime] = useState('')
     const [exercises, setExercises] = useState('')
 
@@ -38,12 +39,16 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
     const [roomError, setRoomError] = useState(false)
     const [capacityError, setCapacityError] = useState(false)
     const [levelError, setLevelError] = useState(false)
-    const [titleError, setTitleError] = useState(false)
+    const [programIdError, setProgramIdError] = useState(false)
     const [regimeError, setRegimeError] = useState(false)
     const [exercisesError, setExercisesError] = useState(false)
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState(null)
     const [success, setSuccess] = useState(false)
+
+    useEffect(() => {
+        setDate(datePickerDate)
+    }, [datePickerDate])
 
     async function addTraining() {
         if(coachId === '') {
@@ -67,8 +72,8 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
         if(level === '') {
             setLevelError(true)
         }
-        if(title === '') {
-            setTitleError(true)
+        if(programId === '') {
+            setProgramIdError(true)
         }
         if(regime === '') {
             setRegimeError(true)
@@ -92,12 +97,12 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
             setMessage('capacity value wrong')
             return
         }
-        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && title !== '' && regime !== '' && exercises !== '') {
+        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && programId !== '' && regime !== '' && exercises !== '') {
             try {
                 setLoading(true)
                 const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
                 const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
-                const addTrainingResponse = await addTrainingAPI(token, coachId, startFormatted, finishFormatted, room, capacity, level, title, regime, exercises)
+                const addTrainingResponse = await addTrainingAPI(token, coachId, startFormatted, finishFormatted, room, capacity, level, programId, regime, exercises)
                 setMessage(addTrainingResponse.data)
                 setSuccess(true)
                 clearForm()
@@ -116,7 +121,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
     function clearForm() {
         setCoachId('')
         setCoachIdError(false)
-        setDate('')
+        setDate(date)
         setDateError(false)
         setStart('')
         setStartError(false)
@@ -128,8 +133,8 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
         setCapacityError(false)
         setLevel('')
         setLevelError(false)
-        setTitle('')
-        setTitleError(false)
+        setProgramId('')
+        setProgramIdError(false)
         setRegime('')
         setRegimeError(false)
         setExercises('')
@@ -163,6 +168,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                         <DropdownInput
                             label='coach'
                             person={true}
+                            program={false}
                             choices={allCoachesData}
                             value={coachId}
                             changeValue={setCoachId}
@@ -215,6 +221,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                         <DropdownInput
                             label='room'
                             person={false}
+                            program={false}
                             choices={[1, 2, 3]}
                             value={room}
                             changeValue={setRoom}
@@ -240,6 +247,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                         <DropdownInput
                             label='level'
                             person={false}
+                            program={false}
                             choices={[1, 2, 3]}
                             value={level}
                             changeValue={setLevel}
@@ -250,14 +258,15 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
                             labelStyle={styles.label}
                             inputStyle={styles.input}
                         />
-                        <TextInput
-                            label='title'
-                            showPlaceholder={false}
-                            placeholder=''
-                            text={title}
-                            changeText={setTitle}
-                            error={titleError}
-                            changeError={setTitleError}
+                        <DropdownInput
+                            label='program'
+                            person={false}
+                            program={true}
+                            choices={programsData}
+                            value={programId}
+                            changeValue={setProgramId}
+                            error={programIdError}
+                            changeError={setProgramIdError}
                             message={message}
                             changeMessage={setMessage}
                             labelStyle={styles.label}

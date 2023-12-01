@@ -59,7 +59,7 @@ function MembershipsUsersPage() {
                         message='no users with expiring memberships'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
-                        showDelete={false}
+                        showRemove={false}
                         removeReservation={() => {}}
                         showAdd={false}
                         addUser={() => {}}
