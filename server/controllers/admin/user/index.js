@@ -131,6 +131,20 @@ async function getByAwards() {
     }
 }
 
+async function remove(id) {
+    try {
+        const removedUser = await database`
+            delete
+            from users
+            where id = ${id}
+            returning *`
+        return removedUser[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getById,
     editDetails,
@@ -140,5 +154,6 @@ module.exports = {
     getTotalNumber,
     getByExpiringMemberships,
     getByBirthdays,
-    getByAwards
+    getByAwards,
+    remove
 }

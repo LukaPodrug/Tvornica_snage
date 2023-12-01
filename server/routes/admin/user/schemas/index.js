@@ -23,9 +23,14 @@ const getUsersByIdsSchema = joi.object().keys({
     ids: joi.array().items(joi.number().integer().min(0)).required()
 })
 
+const deleteUserSchema = joi.object().keys({
+    id: joi.number().integer().min(0).required()
+})
+
 module.exports = {
     editUserSchema,
     getUserByNameSchema,
     getUsersByPageSchema,
-    getUsersByIdsSchema
+    getUsersByIdsSchema,
+    deleteUserSchema
 }

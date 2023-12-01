@@ -1,13 +1,21 @@
 const database = require('../../../database')
 
-async function addNew(coachId, start, finish, room, capacity, level, title, regime, exercises) {
+const programController = require('../program')
+
+async function addNew(coachId, start, finish, room, capacity, level, programId, regime, exercises) {
     try {
+        const programs = await programController.getAll()
+
+        let program = programs.find(program => {
+            return program.id == programId
+        })
+
         const newTraining = await database`
             insert into trainings (
-                "coachId", start, finish, room, capacity, level, title, regime, exercises
+                "coachId", start, finish, room, capacity, level, "programId", regime, exercises, title
             ) 
             values (
-                ${coachId}, ${start}, ${finish}, ${room}, ${capacity}, ${level}, ${title}, ${regime}, ${exercises}
+                ${coachId}, ${start}, ${finish}, ${room}, ${capacity}, ${level}, ${programId}, ${regime}, ${exercises}, ${program.name}
             )
             returning *`
         return newTraining[0]
@@ -30,11 +38,17 @@ async function getById(id) {
     }
 }
 
-async function editDetails(id, coachId, start, finish, room, capacity, level, title, regime, exercises) {
+async function editDetails(id, coachId, start, finish, room, capacity, level, programId, regime, exercises) {
     try {
+        const programs = await programController.getAll()
+
+        let program = programs.find(program => {
+            return program.id == programId
+        })
+
         const updatedTraining = await database`
             update trainings
-            set "coachId" = ${coachId}, start = ${start}, finish = ${finish}, room = ${room}, capacity = ${capacity}, level = ${level}, title = ${title}, regime = ${regime}, exercises = ${exercises}
+            set "coachId" = ${coachId}, start = ${start}, finish = ${finish}, room = ${room}, capacity = ${capacity}, level = ${level}, "programId" = ${programId}, regime = ${regime}, exercises = ${exercises}, title=${program.name}
             where id = ${id}
             returning *`
         return updatedTraining[0]

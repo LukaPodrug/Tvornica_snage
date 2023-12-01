@@ -39,7 +39,7 @@ router.post('/', async(req, res) => {
         res.status(400).json('Coach is occupied at that period')
         return
     }
-    const newTraining = await trainingController.addNew(req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.title, req.body.regime, req.body.exercises)
+    const newTraining = await trainingController.addNew(req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.programId, req.body.regime, req.body.exercises)
     const databaseConnection3 = await generalController.checkDatabaseConnection(newTraining)
     if(!databaseConnection3) {
         res.status(500).json('Error with database')
@@ -107,7 +107,7 @@ router.patch('/', async(req, res) => {
         res.status(400).json('Number of existing reservations is higher than new capacity')
         return
     }
-    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.title, req.body.regime, req.body.exercises)
+    const updatedTraining = await trainingController.editDetails(req.body.id, req.body.coachId, new Date(req.body.start), new Date(req.body.finish), req.body.room, req.body.capacity, req.body.level, req.body.programId, req.body.regime, req.body.exercises)
     const databaseConnection5 = await generalController.checkDatabaseConnection(updatedTraining)
     if(!databaseConnection5) {
         res.status(500).json('Error with database')

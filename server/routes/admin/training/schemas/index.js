@@ -10,7 +10,7 @@ const newTrainingSchema = joi.object().keys({
     room: joi.number().integer().min(1).max(3).required(),
     capacity: joi.number().integer().min(1).required(),
     level: joi.number().integer().min(1).required(),
-    title: joi.string().required(),
+    programId: joi.number().integer().min(1).required(),
     regime: joi.string().required(),
     exercises: joi.string().required()
 })
@@ -23,7 +23,7 @@ const editTrainingSchema = joi.object().keys({
     room: joi.number().integer().min(1).max(3).required(),
     capacity: joi.number().integer().min(1).required(),
     level: joi.number().integer().min(1).required(),
-    title: joi.string().required(),
+    programId: joi.number().integer().min(1).required(),
     regime: joi.string().required(),
     exercises: joi.string().required()
 })

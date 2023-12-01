@@ -3,7 +3,7 @@ const express = require('express')
 const userController = require('../../../controllers/admin/user')
 const generalController = require('../../../controllers/admin/general')
 
-const { editUserSchema, getUserByNameSchema, getUsersByPageSchema, getUsersByIdsSchema } = require('./schemas')
+const { editUserSchema, getUserByNameSchema, getUsersByPageSchema, getUsersByIdsSchema, deleteUserSchema } = require('./schemas')
 
 const router = express.Router()
 
@@ -174,6 +174,40 @@ router.get('/byAwards', async(req, res) => {
         return
     }
     res.status(200).json(awardsUsers)
+})
+
+router.delete('/', async(req, res) => {
+    const tokenValidation = await generalController.verifyJWT(req.header('Authorization'))
+    if(!tokenValidation) {
+        res.status(400).json('JWT not valid')
+        return
+    }
+    const dataValidation = deleteUserSchema.validate(req.body)
+    if(dataValidation.error) {
+        res.status(400).json('Invalid user data')
+        return
+    }
+    const user = await userController.getById(req.body.id)
+    const databaseConnection1 = await generalController.checkDatabaseConnection(user)
+    if(!databaseConnection1) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!user) {
+        res.status(400).json('User does not exist')
+        return
+    }
+    const deletedUser = await userController.remove(req.body.id)
+    const databaseConnection3 = await generalController.checkDatabaseConnection(deletedUser)
+    if(!databaseConnection3) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!deletedUser) {
+        res.status(500).json('Error with deleting user')
+        return
+    }
+    res.status(200).json('User successfully deleted')
 })
 
 module.exports = router
