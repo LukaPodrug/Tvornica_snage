@@ -77,6 +77,18 @@ async function getUsersByAwardsAPI(token) {
     return getUsersByAwardsResponse
 }
 
+async function deleteUserAPI(token, id) {
+    const deleteUserResponse = await axios.delete('/admin/user', {
+        headers: {
+            'Authorization': token
+        },
+        data: {
+            id
+        }
+    })
+    return deleteUserResponse
+}
+
 export {
     getUsersByFirstNameAndLastNameAPI,
     getNumberOfUsersAPI,
@@ -84,5 +96,6 @@ export {
     editUserAPI,
     getUsersByExpiringMembershipsAPI,
     getUsersByBirthdaysAPI,
-    getUsersByAwardsAPI
+    getUsersByAwardsAPI,
+    deleteUserAPI
 }

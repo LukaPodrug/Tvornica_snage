@@ -38,6 +38,7 @@ function UsersSection({ showNumber, startNumber, users, showAwards, showToggle, 
                             changeToggled={changeToggled}
                             showToggle={showToggle}
                             showEdit={showEdit}
+                            showDelete={showDelete}
                             showRemove={showRemove}
                             remove={removeReservation}
                             showAdd={showAdd}
@@ -45,6 +46,8 @@ function UsersSection({ showNumber, startNumber, users, showAwards, showToggle, 
                             index={index + (page - 1) * maxUsers}
                             userEdited={userEdited}
                             changeUserEdited={changeUserEdited}
+                            userDeleted={userDeleted}
+                            changeUserDeleted={changeUserDeleted}
                         />
                     )
                 })

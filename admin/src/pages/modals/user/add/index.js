@@ -109,6 +109,9 @@ function AddUserModal({ isOpen, changeIsOpen, userAdded, changeUserAdded, disabl
                             message='no users found'
                             userEdited={false}
                             changeUserEdited={() => {}}
+                            showDelete={false}
+                            userDeleted={null}
+                            changeUserDeleted={() => {}}
                             showRemove={false}
                             removeReservation={() => {}}
                             showAdd={true}

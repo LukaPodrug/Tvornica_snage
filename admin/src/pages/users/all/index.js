@@ -21,6 +21,7 @@ function AllUsersPage() {
     const [filteredUsers, setFilteredUsers] = useState([])
 
     const [userEdited, setUserEdited] = useState(false)
+    const [userDeleted, setUserDeleted] = useState(false)
     const [usersLoading, setUsersLoading] = useState(true)
 
     useEffect(() => {
@@ -55,6 +56,34 @@ function AllUsersPage() {
     }, [page, userEdited, filter])
 
     useEffect(() => {
+        async function getUsersByPage() {
+            try {
+                const getNumberOfUsersResponse = await getNumberOfUsersAPI(token)
+                const getUsersByPageResponse = await getUsersByPageAPI(token, page, 5)
+                if(getNumberOfUsersResponse.data != 0 && getUsersByPageResponse.data.length == 0) {
+                    setPage(page - 1)
+                }
+                else {
+                    setUsersByPage(getUsersByPageResponse.data)
+                }
+                setMaxPage(Math.ceil(getNumberOfUsersResponse.data / 5))
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            setUsersLoading(true)
+            await getUsersByPage()
+            setUsersLoading(false)
+        }
+        if(!filter) {
+            fetchAPI()
+        }
+    }, [userDeleted])
+
+    useEffect(() => {
         async function getUsersByFirstNameAndLastName() {
             try {
                 const getUsersByFirstNameAndLastNameResponse = await getUsersByFirstNameAndLastNameAPI(token, firstName, lastName)
@@ -76,6 +105,32 @@ function AllUsersPage() {
             fetchAPI()
         }
     }, [userEdited])
+
+    useEffect(() => {
+        async function getUsersByFirstNameAndLastName() {
+            try {
+                const getUsersByFirstNameAndLastNameResponse = await getUsersByFirstNameAndLastNameAPI(token, firstName, lastName)
+                if(getUsersByFirstNameAndLastNameResponse.data.length % 5 == 0) {
+                    setPage(page - 1)
+                }
+                setFilteredUsers(getUsersByFirstNameAndLastNameResponse.data)
+                setMaxPage(Math.ceil(getUsersByFirstNameAndLastNameResponse.data.length / 5))
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            setUsersLoading(true)
+            await getUsersByFirstNameAndLastName()
+            setUsersLoading(false)
+        }
+
+        if(filter) {
+            fetchAPI()
+        }
+    }, [userDeleted])
 
     async function searchByFirstNameAndLastName() {
         try {
@@ -120,6 +175,9 @@ function AllUsersPage() {
                         message='no users found'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
+                        showDelete={true}
+                        userDeleted={userDeleted}
+                        changeUserDeleted={setUserDeleted}
                         showRemove={false}
                         removeReservation={() => {}}
                         showAdd={false}

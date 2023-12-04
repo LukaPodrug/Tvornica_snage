@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Section from '../section'
 import SwitchInput from '../input/switch'
 import EditUserModal from '../../pages/modals/user/edit'
+import DeleteUserModal from '../../pages/modals/user/delete'
 import styles from './style.module.css'
 
 import editIcon from '../../assets/icons/edit.png'
@@ -239,6 +240,16 @@ function User({ showNumber, number, id, image, firstName, lastName, dateOfBirth,
                         levelOld={level}
                         userEdited={userEdited}
                         changeUserEdited={changeUserEdited}
+                    />
+            }
+            {
+                deleteUserModalOpen &&
+                    <DeleteUserModal
+                        isOpen={true}
+                        changeIsOpen={setDeleteUserModalOpen}
+                        id={id}
+                        userDeleted={userDeleted}
+                        changeUserDeleted={changeUserDeleted}
                     />
             }
         </div>

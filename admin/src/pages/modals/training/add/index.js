@@ -75,12 +75,6 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
         if(programId === '') {
             setProgramIdError(true)
         }
-        if(regime === '') {
-            setRegimeError(true)
-        }
-        if(exercises === '') {
-            setExercisesError(true)
-        }
         if(date !== '' && !moment(date, 'DD/MM/YYYY', true).isValid()) {
             setMessage('date format not correct')
             return
@@ -97,7 +91,7 @@ function AddTrainingModal({ isOpen, changeIsOpen, newTrainingAdded, changeNewTra
             setMessage('capacity value wrong')
             return
         }
-        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && programId !== '' && regime !== '' && exercises !== '') {
+        if(coachId !== '' && date !== '' && start !== '' && finish !== '' && room !== '' && capacity !== '' && level !== '' && programId !== '') {
             try {
                 setLoading(true)
                 const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start

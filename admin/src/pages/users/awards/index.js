@@ -59,6 +59,9 @@ function AwardsUsersPage() {
                         message='no users with award privileges'
                         userEdited={userEdited}
                         changeUserEdited={setUserEdited}
+                        showDelete={false}
+                        userDeleted={null}
+                        changeUserDeleted={() => {}}
                         showRemove={false}
                         removeReservation={() => {}}
                         showAdd={false}

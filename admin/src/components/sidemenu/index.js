@@ -21,6 +21,7 @@ function SideMenuLoggedIn() {
     const [, setToken] = useRecoilState(store.token)
     const [, setOwnData] = useRecoilState(store.ownData)
     const [, setAllCoachesData] = useRecoilState(store.allCoachesData)
+    const [, setProgramsData] = useRecoilState(store.programsData)
 
     const location = useLocation()
 
@@ -29,6 +30,7 @@ function SideMenuLoggedIn() {
         setToken(null)
         setOwnData(null)
         setAllCoachesData(null)
+        setProgramsData(null)
         localStorage.removeItem('token')
     }
 
