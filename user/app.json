@@ -31,10 +31,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "tvornicaSnageUser",
-      "buildNumber": "6"
+      "buildNumber": "7"
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#FFFFFF"
