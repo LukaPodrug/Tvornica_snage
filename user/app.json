@@ -32,13 +32,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "tvornicaSnageUser",
-      "buildNumber": "7"
+      "buildNumber": "8"
     },
     "android": {
       "compileSdkVersion": 33,
       "targetSdkVersion": 33,
       "buildToolsVersion": "33.0.0",
-      "versionCode": 7,
+      "versionCode": 8,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#FFFFFF"
