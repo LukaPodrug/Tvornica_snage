@@ -16,7 +16,9 @@ const userTrainingRoute = require('./routes/user/training')
 const userReservationRoute = require('./routes/user/reservation')
 const userUserRoute = require('./routes/user/user')
 const userCoachRoute = require('./routes/user/coach')
+const userProgramRoute = require('./routes/user/program')
 const userPartnerRoute = require('./routes/user/partner')
+const userPromotionRoute = require('./routes/user/promotion')
 
 const { PORT } = process.env
 
@@ -40,7 +42,9 @@ app.use('/api/user/training', userTrainingRoute)
 app.use('/api/user/reservation', userReservationRoute)
 app.use('/api/user/user', userUserRoute)
 app.use('/api/user/coach', userCoachRoute)
+app.use('/api/user/program', userProgramRoute)
 app.use('/api/user/partner', userPartnerRoute)
+app.use('/api/user/promotion', userPromotionRoute)
 
 app.get('/', (req, res) => {
   res.status(200).json('App recieved get request')

@@ -99,13 +99,14 @@ async function getStatisticsByUserId(userId) {
     }
 }
 
-async function checkUserOccupancy(userId , start, finish) {
+async function checkUserOccupancy(userId, start, finish) {
     try {
         const userOccupancy = await database`
             select *
             from reservations join trainings on reservations."trainingId" = trainings.id
             where (reservations."userId" = ${userId} and ${start} >= trainings.start and ${start} < trainings.finish)
-            or (reservations."userId" = ${userId} and ${finish} > trainings.start and ${finish} <= trainings.finish)`
+            or (reservations."userId" = ${userId} and ${finish} > trainings.start and ${finish} <= trainings.finish)
+            or (reservations."userId" = ${userId} and ${start} < trainings.start and ${finish} > trainings.finish)`
         return userOccupancy[0]
     }
     catch(error) {

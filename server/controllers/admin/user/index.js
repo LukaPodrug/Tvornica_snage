@@ -104,7 +104,6 @@ async function getByBirthdays() {
         return birthdayUsers
     }
     catch(error) {
-        console.log(error)
         return error
     }
 }

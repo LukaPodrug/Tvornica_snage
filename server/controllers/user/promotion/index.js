@@ -2,10 +2,10 @@ const database = require('../../../database')
 
 async function getAll() {
     try {
-        const partners = await database`
-            select id, name, link
-            from partners`
-        return partners
+        const promotions = await database`
+            select id, "partnerId", code, description
+            from promotions`
+        return promotions
     }
     catch(error) {
         return error

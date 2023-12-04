@@ -1,6 +1,7 @@
 const express = require('express')
 
 const userController = require('../../../controllers/admin/user')
+const reservationController = require('../../../controllers/admin/reservation')
 const generalController = require('../../../controllers/admin/general')
 
 const { editUserSchema, getUserByNameSchema, getUsersByPageSchema, getUsersByIdsSchema, deleteUserSchema } = require('./schemas')
@@ -195,6 +196,16 @@ router.delete('/', async(req, res) => {
     }
     if(!user) {
         res.status(400).json('User does not exist')
+        return
+    }
+    const deletedReservations = await reservationController.removeByUserId(user.id)
+    const databaseConnection2 = await generalController.checkDatabaseConnection(deletedReservations)
+    if(!databaseConnection2) {
+        res.status(500).json('Error with database')
+        return
+    }
+    if(!deletedReservations) {
+        res.status(500).json('Error with deleting reservations')
         return
     }
     const deletedUser = await userController.remove(req.body.id)

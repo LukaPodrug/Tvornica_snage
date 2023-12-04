@@ -11,8 +11,8 @@ const newTrainingSchema = joi.object().keys({
     capacity: joi.number().integer().min(1).required(),
     level: joi.number().integer().min(1).required(),
     programId: joi.number().integer().min(1).required(),
-    regime: joi.string().required(),
-    exercises: joi.string().required()
+    regime: joi.string().required().allow(''),
+    exercises: joi.string().required().allow('')
 })
 
 const editTrainingSchema = joi.object().keys({
@@ -24,8 +24,8 @@ const editTrainingSchema = joi.object().keys({
     capacity: joi.number().integer().min(1).required(),
     level: joi.number().integer().min(1).required(),
     programId: joi.number().integer().min(1).required(),
-    regime: joi.string().required(),
-    exercises: joi.string().required()
+    regime: joi.string().required().allow(''),
+    exercises: joi.string().required().allow('')
 })
 
 const getTrainingsByDateSchema = joi.object().keys({

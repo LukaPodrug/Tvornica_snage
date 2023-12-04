@@ -100,6 +100,20 @@ async function getNumberOfReservationsByTrainingId(trainingId) {
     }
 }
 
+async function removeByUserId(userId) {
+    try {
+        const removedReservations = await database`
+            delete
+            from reservations
+            where "userId" = ${userId}
+            returning *`
+        return removedReservations
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     removeByTrainingId,
     getByUserIdAndTrainingId,
@@ -107,5 +121,6 @@ module.exports = {
     editCompletion,
     getByTrainingId,
     removeByUserIdAndTrainingId,
-    getNumberOfReservationsByTrainingId
+    getNumberOfReservationsByTrainingId,
+    removeByUserId
 }
