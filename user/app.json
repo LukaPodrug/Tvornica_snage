@@ -22,7 +22,8 @@
           "cameraPermission":  "Tvornica snage accesses your camera to take photo for profile image"
         }
       ],
-      "expo-community-flipper"
+      "expo-community-flipper",
+      "expo-build-properties"
 
     ],
     "assetBundlePatterns": [
@@ -34,6 +35,9 @@
       "buildNumber": "7"
     },
     "android": {
+      "compileSdkVersion": 33,
+      "targetSdkVersion": 33,
+      "buildToolsVersion": "33.0.0",
       "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
