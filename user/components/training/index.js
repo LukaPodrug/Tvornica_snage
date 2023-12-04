@@ -16,7 +16,7 @@ import moreIcon from '../../assets/icons/more.png'
 import addReservationIcon from '../../assets/icons/registration.png'
 import removeReservationIcon from '../../assets/icons/remove.png'
 
-function Training({ id, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate, reservationUpdated, changeReservationUpdated, changeLoading, wrapperStyle, dataWrapperStyle, menuWrapperStyle, sectionWrapperStyle, coachSectionWrapperStyle, sectionImageStyle, coachSectionImageStyle, sectionPropertyTextStyle, sectionValueTextStyle, capacitySectionWrapper, buttonWrapperStyle, buttonWrapperDisabledStyle, buttonWrapperHiddenStyle, buttonIconStyle, detailsModalWrapperStyle, detailsModalHeaderWrapperStyle, detailsModalTitleTextStyle, detailsModalExitButtonWrapperStyle, detailsModalExitButtonTextStyle, detailsModalDataRowWrapperStyle, detailsModalDataWrapperStyle, detailsModalDataPropertyTextStyle, detailsModalDataValueTextStyle }) {
+function Training({ trainingPage, dateReservation, id, programImage, reserved, date, coachImage, coachFirstName, coachLastName, start, finish, numberOfReservations, room, capacity, level, title, regime, exercises, startDate, reservationUpdated, changeReservationUpdated, changeLoading, wrapperStyle, dataWrapperStyle, menuWrapperStyle, sectionWrapperStyle, coachSectionWrapperStyle, programSectionWrapperStyle, sectionImageStyle, coachSectionImageStyle, sectionPropertyTextStyle, sectionValueTextStyle, capacitySectionWrapper, buttonWrapperStyle, buttonWrapperDisabledStyle, buttonWrapperHiddenStyle, buttonIconStyle, detailsModalWrapperStyle, detailsModalHeaderWrapperStyle, detailsModalTitleTextStyle, detailsModalExitButtonWrapperStyle, detailsModalExitButtonTextStyle, detailsModalDataRowWrapperStyle, detailsModalDataHalfRowWrapperStyle, detailsModalDataWholeRowWrapperStyle, detailsModalDataPropertyTextStyle, detailsModalDataValueTextStyle }) {
     const [token] = useRecoilState(store.token)
     const [ownData] = useRecoilState(store.ownData)
     const [trainingDetailsModalOpen, setTrainingDetailsModalOpen] = useState(false)
@@ -59,15 +59,30 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                 style={dataWrapperStyle}
             >
                 <TrainingSection
-                    image={calendarIcon}
-                    property='date'
-                    value={date}
-                    wrapperStyle={sectionWrapperStyle}
+                    showText={false}
+                    image={programImage}
+                    property={null}
+                    value={null}
+                    wrapperStyle={[sectionWrapperStyle, programSectionWrapperStyle]}
                     imageStyle={sectionImageStyle}
-                    propertyTextStyle={sectionPropertyTextStyle}
-                    valueTextStyle={sectionValueTextStyle}
+                    propertyTextStyle={null}
+                    valueTextStyle={null}
                 />
+                {     
+                    !trainingPage &&   
+                        <TrainingSection
+                            showText={true}
+                            image={calendarIcon}
+                            property='date'
+                            value={date}
+                            wrapperStyle={sectionWrapperStyle}
+                            imageStyle={sectionImageStyle}
+                            propertyTextStyle={sectionPropertyTextStyle}
+                            valueTextStyle={sectionValueTextStyle}
+                        />
+                }
                 <TrainingSection
+                    showText={true}
                     image={coachImage}
                     property='coach'
                     value={coachLastName}
@@ -77,6 +92,7 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                     valueTextStyle={sectionValueTextStyle}
                 />
                 <TrainingSection
+                    showText={true}
                     image={startIcon}
                     property='start'
                     value={start}
@@ -86,6 +102,7 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                     valueTextStyle={sectionValueTextStyle}
                 />
                 <TrainingSection
+                    showText={true}
                     image={finishIcon}
                     property='finish'
                     value={finish}
@@ -94,13 +111,16 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                     propertyTextStyle={sectionPropertyTextStyle}
                     valueTextStyle={sectionValueTextStyle}
                 />
-                <TrainingCapacity
-                    numberOfReservations={numberOfReservations}
-                    capacity={capacity}
-                    wrapperStyle={capacitySectionWrapper}
-                    propertyTextStyle={sectionPropertyTextStyle}
-                    valueTextStyle={sectionValueTextStyle}
-                />
+                {
+                    trainingPage &&
+                        <TrainingCapacity
+                            numberOfReservations={numberOfReservations}
+                            capacity={capacity}
+                            wrapperStyle={capacitySectionWrapper}
+                            propertyTextStyle={sectionPropertyTextStyle}
+                            valueTextStyle={sectionValueTextStyle}
+                        />
+                }
             </View>
             <View
                 style={menuWrapperStyle}
@@ -127,7 +147,7 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                         <TrainingButton
                             work={addReservation}
                             image={addReservationIcon}
-                            disabled={new Date(Date.now()) > new Date(startDate) || numberOfReservations === capacity || new Date(new Date(ownData.membership).getTime() + 7*24*60*60*1000) < new Date(startDate)}
+                            disabled={dateReservation || new Date(Date.now()) > new Date(startDate) || numberOfReservations === capacity || new Date(new Date(ownData.membership).getTime() + 7*24*60*60*1000) < new Date(startDate)}
                             wrapperStyle={[buttonWrapperStyle, new Date(Date.now()) > new Date(startDate) && buttonWrapperHiddenStyle]}
                             wrapperDisabledStyle={buttonWrapperDisabledStyle}
                             iconStyle={buttonIconStyle}
@@ -154,7 +174,8 @@ function Training({ id, reserved, date, coachImage, coachFirstName, coachLastNam
                 exitButtonWrapperStyle={detailsModalExitButtonWrapperStyle}
                 exitButtonTextStyle={detailsModalExitButtonTextStyle}
                 dataRowWrapperStyle={detailsModalDataRowWrapperStyle}
-                dataWrapperStyle={detailsModalDataWrapperStyle}
+                dataHalfRowWrapperStyle={detailsModalDataHalfRowWrapperStyle}
+                dataWholeRowWrapperStyle={detailsModalDataWholeRowWrapperStyle}
                 dataPropertyTextStyle={detailsModalDataPropertyTextStyle}
                 dataValueTextStyle={detailsModalDataValueTextStyle}
             />

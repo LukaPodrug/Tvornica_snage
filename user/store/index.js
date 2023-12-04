@@ -25,8 +25,18 @@ const allCoachesData = atom({
     default: null
 })
 
+const programsData = atom({
+    key: 'programsData',
+    default: null
+})
+
 const partnersData = atom({
     key: 'partnersData',
+    default: null
+})
+
+const promotionsData = atom({
+    key: 'promotionsData',
     default: null
 })
 
@@ -36,7 +46,9 @@ const atoms = {
     token,
     ownData,
     allCoachesData,
-    partnersData
+    programsData,
+    partnersData,
+    promotionsData
 }
 
 export default atoms

@@ -14,13 +14,16 @@ import Button from '../../components/button'
 import Message from '../../components/message'
 import StatisticsSection from '../../sections/statistics'
 import PartnersSection from '../../sections/partners'
+import PromotionsSection from '../../sections/promotions'
 import TrainingsSection from '../../sections/trainings'
 import ProfileDeleteModal from '../modals/profile'
 import { getOwnDataAPI } from '../../API/REST/user'
 import { deleteAPI } from '../../API/REST/auth'
 import { getActiveReservationsAPI, getOwnStatisticsAPI } from '../../API/REST/reservation'
 import { getAllCoachesDataAPI } from '../../API/REST/coach'
+import { getProgramsDataAPI } from '../../API/REST/program'
 import { getPartnersDataAPI } from '../../API/REST/partner'
+import { getPromotionsDataAPI } from '../../API/REST/promotion'
 
 import logo from '../../assets/images/logo.png'
 
@@ -33,7 +36,9 @@ function ProfilePage() {
   const [, setLoggedIn] = useRecoilState(store.loggedIn)
   const [ownData, setOwnData] = useRecoilState(store.ownData)
   const [allCoachesData, setAllCoachesData] = useRecoilState(store.allCoachesData)
+  const [programsData, setProgramsData] = useRecoilState(store.programsData)
   const [partnersData, setPartnersData] = useRecoilState(store.partnersData)
+  const [promotionsData, setPromotionsData] = useRecoilState(store.promotionsData)
 
   const [activeReservations, setActiveReservations] = useState([])
   const [ownStatistics, setOwnStatistics] = useState(null)
@@ -65,10 +70,38 @@ function ProfilePage() {
       }
     }
 
+    async function getProgramsData() {
+      try {
+        const programsDataResponse = await getProgramsDataAPI(token)
+        setProgramsData(programsDataResponse.data)
+      }
+      catch(error) {
+        return
+      }
+    }
+
     async function getPartnersData() {
       try {
         const partnersDataResponse = await getPartnersDataAPI(token)
         setPartnersData(partnersDataResponse.data)
+      }
+      catch(error) {
+        return
+      }
+    }
+    
+    async function getPromotionsData() {
+      try {
+        const promotionsDataResponse = await getPromotionsDataAPI(token)
+        promotionsDataResponse.data.forEach(promotion => {
+          partnersData.forEach(partner => {
+            if(promotion.partnerId === partner.id) {
+              promotion.partnerName = partner.name
+              return
+            }
+          })
+        })
+        setPromotionsData(promotionsDataResponse.data)
       }
       catch(error) {
         return
@@ -81,18 +114,18 @@ function ProfilePage() {
         const statisticsHelp = [
           {
             name: 'done',
-            value: ownStatisticsResponse.data[0].reservationsDone === 0 ? 0.0000001 : ownStatisticsResponse.data[0].reservationsDone,
-            color: '#90ee90'
+            value: ownStatisticsResponse.data[0].reservationsDone,
+            color: '#acc8d7'
           },
           {
             name: 'skipped',
-            value: ownStatisticsResponse.data[0].reservationsSkipped === 0 ? 0.0000001 : ownStatisticsResponse.data[0].reservationsSkipped,
-            color: '#e04f5f'
+            value: ownStatisticsResponse.data[0].reservationsSkipped,
+            color: '#779eb2'
           },
           {
             name: 'unnanounced',
-            value: ownStatisticsResponse.data[0].nonReservationsDone === 0 ? 0.0000001 : ownStatisticsResponse.data[0].nonReservationsDone,
-            color: '#fbec5d'
+            value: ownStatisticsResponse.data[0].nonReservationsDone,
+            color: '#537d90'
           },
         ]
         setOwnStatistics(statisticsHelp)
@@ -115,6 +148,12 @@ function ProfilePage() {
               reservation.coachLastName = coach.lastName
             }
           })
+          programsData.forEach(program => {
+            if(reservation.programId === program.id) {
+              reservation.programImage = program.image
+              return
+            }
+          })
           activeReservationsHelp.push(reservation)
         })
         setActiveReservations(activeReservationsHelp)
@@ -127,14 +166,19 @@ function ProfilePage() {
     }
 
     async function fetchAPI() {
-      if(!ownData && !allCoachesData && !partnersData) {
+      if(!ownData && !allCoachesData && !programsData && !partnersData && !promotionsData) {
         await getOwnData()
         await getAllCoachesData()
+        await getProgramsData()
         await getPartnersData()
+      }
+      if(partnersData && !promotionsData) {
+        await getPromotionsData()
       }
       if(allCoachesData && !ownStatistics) {
         await getOwnStatistics()
       }
+      
       setReservationsLoading(true)
       await getActiveReservations()
     }
@@ -142,7 +186,7 @@ function ProfilePage() {
     if(isFocused) {
       fetchAPI()
     }
-  }, [isFocused, allCoachesData, reservationUpdated])
+  }, [isFocused, allCoachesData, partnersData, reservationUpdated])
 
   useEffect(() => {
     if(isFocused && pageRef.current) {
@@ -167,7 +211,9 @@ function ProfilePage() {
       setLoggedIn(false)
       setOwnData(null)
       setAllCoachesData(null)
+      setProgramsData(null)
       setPartnersData(null)
+      setPromotionsData(null)
       await AsyncStorage.removeItem('token')
     }
     catch(error) {
@@ -183,7 +229,9 @@ function ProfilePage() {
       setLoggedIn(false)
       setOwnData(null)
       setAllCoachesData(null)
+      setProgramsData(null)
       setPartnersData(null)
+      setPromotionsData(null)
       await AsyncStorage.removeItem('token')
       setAccountDeleting(false)
     }
@@ -193,7 +241,7 @@ function ProfilePage() {
     }
   }
 
-  if(!ownData || !ownStatistics || !partnersData) {
+  if(!ownData || !ownStatistics || !programsData || !partnersData || !promotionsData) {
     return (
       <LoadingPage 
         style={styles.loadingPage}
@@ -238,7 +286,7 @@ function ProfilePage() {
             />
         }
         {
-          new Date(ownData.membership) < new Date(Date.now()) &&
+          new Date(ownData.membership) <= new Date(Date.now()) &&
             <Message
               text='Your membership expired. To continue using our gym please renew membership with our staff.'
               wrapperStyle={[styles.messageWrapper, styles.messageWrapperError]}
@@ -286,6 +334,25 @@ function ProfilePage() {
             partnerTextStyle={styles.partnerText}
           />
         </View>
+        {
+          new Date(ownData.membership) > new Date(Date.now()) &&
+            <View
+              style={styles.promotionsWindow}
+            >
+              <Title
+                text='promo codes'
+                textStyle={styles.titleText}
+              />
+              <PromotionsSection
+                promotions={promotionsData}
+                emptyMessage='no active promo codes'
+                emptyMessageWrapperStyle={styles.promotionsSectionEmptyMessageWrapper}
+                emptyMessageTextStyle={styles.promotionsSectionEmptyMessageText}
+                promotionWrapperStyle={styles.promotionWrapper}
+                promotionTextStyle={styles.promotionText}
+              />
+            </View>
+        }
         <View
           style={styles.trainingsSectionWindow}
         >
@@ -300,6 +367,7 @@ function ProfilePage() {
               />
               :
               <TrainingsSection
+                trainingPage={false}
                 trainings={activeReservations}
                 emptyMessage='no active reservations'
                 reservationUpdated={reservationUpdated}
@@ -312,6 +380,7 @@ function ProfilePage() {
                 trainingMenuWrapperStyle={styles.trainingMenuWrapper}
                 trainingSectionWrapperStyle={styles.trainingSectionWrapper}
                 trainingCoachSectionWrapperStyle={styles.trainingCoachSectionWrapper}
+                trainingProgramSectionWrapperStyle={styles.trainingProgramSectionWrapper}
                 trainingSectionImageStyle={styles.trainingSectionImage}
                 trainingCoachSectionImageStyle={styles.trainingCoachSectionImage}
                 trainingSectionPropertyTextStyle={styles.trainingSectionPropertyText}
@@ -327,7 +396,8 @@ function ProfilePage() {
                 trainingDetailsModalExitButtonWrapperStyle={styles.trainingDetailsModalExitButtonWrapperStyle}
                 trainingDetailsModalExitButtonTextStyle={styles.trainingDetailsModalExitButtonTextStyle}
                 trainingDetailsModalDataRowWrapperStyle={styles.trainingDetailsModalDataRowWrapperStyle}
-                trainingDetailsModalDataWrapperStyle={styles.trainingDetailsModalDataWrapperStyle}
+                trainingDetailsModalDataHalfRowWrapperStyle={styles.trainingDetailsModalDataHalfRowWrapperStyle}
+                trainingDetailsModalDataWholeRowWrapperStyle={styles.trainingDetailsModalDataWholeRowWrapperStyle}
                 trainingDetailsModalDataPropertyTextStyle={styles.trainingDetailsModalDataPropertyTextStyle}
                 trainingDetailsModalDataValueTextStyle={styles.trainingDetailsModalDataValueTextStyle}
               />
@@ -534,14 +604,15 @@ const styles = StyleSheet.create({
 
     borderRadius: 10,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000000',
 
     padding: 9
   },
   partnerText: {
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
-    fontSize: 14
+    fontSize: 14,
+    color: '#ffffff'
   },
   partnersSectionEmptyMessageWrapper: {
     width: '100%',
@@ -553,6 +624,54 @@ const styles = StyleSheet.create({
     padding: 9
   },
   partnersSectionEmptyMessageText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14
+  },
+
+  promotionsWindow: {
+    width: '100%',
+
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+
+    marginTop: 20,
+
+    backgroundColor: '#e6e6e6',
+
+    borderRadius: 10,
+  },
+  promotionWrapper: {
+    width: '100%',
+
+    borderRadius: 10,
+
+    backgroundColor: '#000000',
+
+    padding: 9,
+
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  promotionText: {
+    fontFamily: 'Ubuntu_700Bold',
+    textTransform: 'uppercase',
+    fontSize: 14,
+    color: '#ffffff'
+  },
+  promotionsSectionEmptyMessageWrapper: {
+    width: '100%',
+
+    borderRadius: 10,
+
+    backgroundColor: '#ffffff',
+
+    padding: 9
+  },
+  promotionsSectionEmptyMessageText: {
     fontFamily: 'Ubuntu_700Bold',
     textTransform: 'uppercase',
     fontSize: 14
@@ -644,6 +763,13 @@ const styles = StyleSheet.create({
   trainingCoachSectionWrapper: {
     width: 75
   },
+  trainingProgramSectionWrapper: {
+    padding: 5,
+    
+    backgroundColor: '#e6e6e6',
+
+    borderRadius: 5
+  },
   trainingSectionImage: {
     width: 30,
     height: 30
@@ -721,8 +847,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row'
   },
-  trainingDetailsModalDataWrapperStyle: {
+  trainingDetailsModalDataHalfRowWrapperStyle: {
     width: '50%',
+
+    display: 'flex',
+    justifyContent: 'flex-start',
+
+    marginBottom: 10
+  },
+  trainingDetailsModalDataWholeRowWrapperStyle: {
+    width: '100%',
 
     display: 'flex',
     justifyContent: 'flex-start',
@@ -763,7 +897,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   logoutButtonWrapper: {
-    backgroundColor: '#fbec5d',
+    backgroundColor: '#e04f5f',
 
     marginBottom: 20,
 
@@ -783,7 +917,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   deleteButtonWrapper: {
-    backgroundColor: '#e04f5f',
+    backgroundColor: '#e6e6e6',
 
     marginBottom: 20,
 

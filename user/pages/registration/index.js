@@ -138,6 +138,7 @@ function RegistrationPage() {
               style={styles.formRow}
             >
               <InputText
+                date={false}
                 removeMessage={removeMessage}
                 password={false}
                 showLabel={true}
@@ -150,6 +151,7 @@ function RegistrationPage() {
                 inputTextStyle={styles.inputTextInputText}
               />
               <InputText
+                date={false}
                 removeMessage={removeMessage}
                 password={false}
                 showLabel={true}
@@ -166,6 +168,7 @@ function RegistrationPage() {
               style={styles.formRow}
             >
               <InputText
+                date={true}
                 removeMessage={removeMessage}
                 password={false}
                 showLabel={true}
@@ -178,6 +181,7 @@ function RegistrationPage() {
                 inputTextStyle={styles.inputTextInputText}
               />
               <InputText
+                date={false}
                 removeMessage={removeMessage}
                 password={false}
                 showLabel={true}
@@ -194,6 +198,7 @@ function RegistrationPage() {
               style={styles.formRow}
             >
               <InputText
+                date={false}
                 removeMessage={removeMessage}
                 password={true}
                 showLabel={true}
@@ -206,6 +211,7 @@ function RegistrationPage() {
                 inputTextStyle={styles.inputTextInputText}
               />
               <InputText
+                date={false}
                 removeMessage={removeMessage}
                 password={true}
                 showLabel={true}

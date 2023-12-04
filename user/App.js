@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View, Platform } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar'
 import { RecoilRoot } from 'recoil'
@@ -19,8 +19,7 @@ function App() {
 
   const [fontsLoaded, error] = useFonts({
     Ubuntu_400Regular,
-    Ubuntu_700Bold,
-    Norwester: require('./assets/fonts/norwester.otf')
+    Ubuntu_700Bold
   })
 
   useEffect(() => {
@@ -51,8 +50,8 @@ function App() {
         >
           <Header
             wrapperStyle={styles.headerWrapper}
-            text1Style={styles.headerText1}
-            text2Style={styles.headerText2}
+            headerImageWrapperStyle={styles.headerImageWrapper}
+            headerImageStyle={styles.headerImage}
           />
           <NavigationContainer>
             <Menu
@@ -92,24 +91,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
 
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e6e6e6',
+    borderBottomColor: '#000000',
 
     elevation: 8
   },
-
-  headerText1: {
-    fontFamily: 'Norwester',
-    fontSize: 45,
-    color: '#000000',
-
-    marginRight: 5
-  },
-  headerText2: {
-    fontFamily: 'Norwester',
-    fontSize: 45,
-    color: '#e04f5f',
-
-    marginLeft: 5
+  headerImage: {
+    resizeMode: "stretch",
+    width: '100%',
+    height: 100
   },
 
   tabBarWrapper: {

@@ -1,17 +1,17 @@
 import { View, Text } from 'react-native'
-import { DonutChart } from 'react-native-circular-chart'
+import PieChart from 'react-native-pie-chart'
 
 function TrainingCapacity({ numberOfReservations, capacity, wrapperStyle, propertyTextStyle, valueTextStyle }) {
 
     const capacityHelp = [
         {
             name: 'number of reservations',
-            value: numberOfReservations === 0 ? 0.1 : numberOfReservations,
+            value: numberOfReservations,
             color: '#e04f5f'
         },
-        {
+        { 
             name: 'free space',
-            value: capacity - numberOfReservations === 0 ? 0.1 : capacity - numberOfReservations,
+            value: capacity - numberOfReservations,
             color: '#90ee90'
         }
     ]
@@ -20,18 +20,12 @@ function TrainingCapacity({ numberOfReservations, capacity, wrapperStyle, proper
         <View
             style={wrapperStyle}
         >
-            <DonutChart
-                data={capacityHelp}
-                strokeWidth={4}
-                radius={12}
-                type='round'
-                startAngle={0}
-                endAngle={360}
-                animationType='fade'
-                containerWidth={30}
-                containerHeight={30}
-                labelTitleStyle={{display: 'none'}}
-                labelValueStyle={{display: 'none'}}
+            <PieChart
+                widthAndHeight={30}
+                series={[capacityHelp[0].value, capacityHelp[1].value]}
+                sliceColor={[capacityHelp[0].color, capacityHelp[1].color]}
+                coverRadius={0.65}
+                coverFill={null}
             />
             <Text
                 style={propertyTextStyle}

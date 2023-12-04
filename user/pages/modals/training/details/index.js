@@ -5,7 +5,7 @@ import Title from '../../../../components/title'
 import Button from '../../../../components/button'
 import Info from '../../../../components/info'
 
-function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, date, start, finish, room, capacity, level, title, regime, exercises, wrapperStyle, headerWrapperStyle, titleTextStyle, exitButtonWrapperStyle, exitButtonTextStyle, dataRowWrapperStyle, dataWrapperStyle, dataPropertyTextStyle, dataValueTextStyle }) {
+function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, date, start, finish, room, capacity, level, title, regime, exercises, wrapperStyle, headerWrapperStyle, titleTextStyle, exitButtonWrapperStyle, exitButtonTextStyle, dataRowWrapperStyle, dataHalfRowWrapperStyle, dataWholeRowWrapperStyle, dataPropertyTextStyle, dataValueTextStyle }) {
     return (
         <Modal
             isVisible={isOpen}
@@ -40,7 +40,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                             style={dataRowWrapperStyle}
                         >
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='coach'
@@ -50,7 +50,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                                 />
                             </View>
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='date'
@@ -64,7 +64,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                             style={dataRowWrapperStyle}
                         >
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='start'
@@ -74,7 +74,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                                 />
                             </View>
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='finish'
@@ -88,7 +88,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                             style={dataRowWrapperStyle}
                         >
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='room'
@@ -98,7 +98,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                                 />
                             </View>
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='capacity'
@@ -112,7 +112,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                             style={dataRowWrapperStyle}
                         >
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='level'
@@ -122,7 +122,7 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                                 />
                             </View>
                             <View
-                                style={dataWrapperStyle}
+                                style={dataHalfRowWrapperStyle}
                             >
                                 <Info
                                     property='title'
@@ -132,30 +132,40 @@ function TrainingDetailsModal({ isOpen, close, coachFirstName, coachLastName, da
                                 />
                             </View>
                         </View>
-                        <View
-                            style={dataRowWrapperStyle}
-                        >
-                            <View
-                                style={dataWrapperStyle}
-                            >
-                                <Info
-                                    property='regime'
-                                    value={regime}
-                                    propertyTextStyle={dataPropertyTextStyle}
-                                    valueTextStyle={dataValueTextStyle}
-                                />
-                            </View>
-                            <View
-                                style={dataWrapperStyle}
-                            >
-                                <Info
-                                    property='exercises'
-                                    value={exercises}
-                                    propertyTextStyle={dataPropertyTextStyle}
-                                    valueTextStyle={dataValueTextStyle}
-                                />
-                            </View>
-                        </View>
+                        {
+                            regime.length != 0 &&
+                                <View
+                                    style={dataRowWrapperStyle}
+                                >
+                                    <View
+                                        style={dataWholeRowWrapperStyle}
+                                    >
+                                        <Info
+                                            property='regime'
+                                            value={regime}
+                                            propertyTextStyle={dataPropertyTextStyle}
+                                            valueTextStyle={dataValueTextStyle}
+                                        />
+                                    </View>
+                                </View>
+                        }
+                        {
+                            exercises.length != 0 &&
+                                <View
+                                    style={dataRowWrapperStyle}
+                                >
+                                    <View
+                                        style={dataWholeRowWrapperStyle}
+                                    >
+                                        <Info
+                                            property='exercises'
+                                            value={exercises}
+                                            propertyTextStyle={dataPropertyTextStyle}
+                                            valueTextStyle={dataValueTextStyle}
+                                        />
+                                    </View>
+                                </View>
+                        }
                     </View>
                 </View>
             </ScrollView>

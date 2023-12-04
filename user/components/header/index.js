@@ -1,20 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Image } from 'react-native'
 
-function Header({ wrapperStyle, text1Style, text2Style }) {
+import header from '../../assets/images/header.png'
+
+function Header({ wrapperStyle, headerImageStyle }) {
   return (
     <View 
       style={wrapperStyle}
     >
-        <Text
-          style={text1Style}
-        >
-          TVORNICA 
-        </Text>
-        <Text
-          style={text2Style}
-        >
-          SNAGE
-        </Text>
+      <Image
+        style={headerImageStyle}
+        source={header}
+      />
     </View>
   )
 }

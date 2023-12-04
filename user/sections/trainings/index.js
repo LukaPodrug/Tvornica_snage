@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import Training from '../../components/training'
 
-function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeReservationUpdated, changeLoading, emptyMessageWrapperStyle, emptyMessageTextStyle, trainingWrapperStyle, trainingDataWrapperStyle, trainingMenuWrapperStyle, trainingSectionWrapperStyle, trainingCoachSectionWrapperStyle, trainingSectionImageStyle, trainingCoachSectionImageStyle, trainingSectionPropertyTextStyle, trainingSectionValueTextStyle, trainingCapacitySectionWrapper, trainingButtonWrapperStyle, trainingButtonWrapperDisabledStyle, trainingButtonWrapperHiddenStyle, trainingButtonIconStyle, trainingDetailsModalWrapperStyle, trainingDetailsModalHeaderWrapperStyle, trainingDetailsModalTitleTextStyle, trainingDetailsModalExitButtonWrapperStyle, trainingDetailsModalExitButtonTextStyle, trainingDetailsModalDataRowWrapperStyle, trainingDetailsModalDataWrapperStyle, trainingDetailsModalDataPropertyTextStyle, trainingDetailsModalDataValueTextStyle }) {
+function TrainingsSection({ trainingPage, dateReservation, trainings, emptyMessage, reservationUpdated, changeReservationUpdated, changeLoading, emptyMessageWrapperStyle, emptyMessageTextStyle, trainingWrapperStyle, trainingDataWrapperStyle, trainingMenuWrapperStyle, trainingSectionWrapperStyle, trainingCoachSectionWrapperStyle, trainingProgramSectionWrapperStyle, trainingSectionImageStyle, trainingCoachSectionImageStyle, trainingSectionPropertyTextStyle, trainingSectionValueTextStyle, trainingCapacitySectionWrapper, trainingButtonWrapperStyle, trainingButtonWrapperDisabledStyle, trainingButtonWrapperHiddenStyle, trainingButtonIconStyle, trainingDetailsModalWrapperStyle, trainingDetailsModalHeaderWrapperStyle, trainingDetailsModalTitleTextStyle, trainingDetailsModalExitButtonWrapperStyle, trainingDetailsModalExitButtonTextStyle, trainingDetailsModalDataRowWrapperStyle, trainingDetailsModalDataHalfRowWrapperStyle, trainingDetailsModalDataWholeRowWrapperStyle, trainingDetailsModalDataPropertyTextStyle, trainingDetailsModalDataValueTextStyle }) {
     return (
         <>
             {
@@ -22,7 +22,10 @@ function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeR
                         return (
                             <Training
                                 key={index}
+                                trainingPage={trainingPage}
+                                dateReservation={dateReservation}
                                 id={training.id}
+                                programImage={training.programImage}
                                 reserved={training.reserved}
                                 date={moment(training.start).format('DD/MM')}
                                 coachImage={training.coachImage}
@@ -46,6 +49,7 @@ function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeR
                                 menuWrapperStyle={trainingMenuWrapperStyle}
                                 sectionWrapperStyle={trainingSectionWrapperStyle}
                                 coachSectionWrapperStyle={trainingCoachSectionWrapperStyle}
+                                programSectionWrapperStyle={trainingProgramSectionWrapperStyle}
                                 sectionImageStyle={trainingSectionImageStyle}
                                 coachSectionImageStyle={trainingCoachSectionImageStyle}
                                 sectionPropertyTextStyle={trainingSectionPropertyTextStyle}
@@ -61,7 +65,8 @@ function TrainingsSection({ trainings, emptyMessage, reservationUpdated, changeR
                                 detailsModalExitButtonWrapperStyle={trainingDetailsModalExitButtonWrapperStyle}
                                 detailsModalExitButtonTextStyle={trainingDetailsModalExitButtonTextStyle}
                                 detailsModalDataRowWrapperStyle={trainingDetailsModalDataRowWrapperStyle}
-                                detailsModalDataWrapperStyle={trainingDetailsModalDataWrapperStyle}
+                                detailsModalDataHalfRowWrapperStyle={trainingDetailsModalDataHalfRowWrapperStyle}
+                                detailsModalDataWholeRowWrapperStyle={trainingDetailsModalDataWholeRowWrapperStyle}
                                 detailsModalDataPropertyTextStyle={trainingDetailsModalDataPropertyTextStyle}
                                 detailsModalDataValueTextStyle={trainingDetailsModalDataValueTextStyle}
                             />

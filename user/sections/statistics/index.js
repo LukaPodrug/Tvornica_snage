@@ -1,21 +1,15 @@
 import { View, Text } from 'react-native'
-import { DonutChart } from 'react-native-circular-chart'
+import PieChart from 'react-native-pie-chart'
 
 function StatisticsSection({ statistics, legendWrapperStyle, legendTabWrapperStyle, legendPropertyTextStyle, legendValueTextStyle }) {
     return (
         <>
-            <DonutChart
-                data={statistics}
-                strokeWidth={20}
-                radius={90}
-                type='round'
-                startAngle={0}
-                endAngle={360}
-                animationType='fade'
-                containerWidth={200}
-                containerHeight={200}
-                labelTitleStyle={{display: 'none'}}
-                labelValueStyle={{display: 'none'}}
+            <PieChart
+                widthAndHeight={200}
+                series={[statistics[0].value, statistics[1].value, statistics[2].value]}
+                sliceColor={[statistics[0].color, statistics[1].color, statistics[2].color]}
+                coverRadius={0.65}
+                coverFill={null}
             />
             <View
                 style={legendWrapperStyle}

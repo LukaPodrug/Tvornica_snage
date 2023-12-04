@@ -19,11 +19,14 @@ function TrainingsPage() {
 
   const [token] = useRecoilState(store.token)
   const [allCoachesData] = useRecoilState(store.allCoachesData)
+  const [programsData] = useRecoilState(store.programsData)
 
   const [date, setDate] = useState(new Date(Date.now()))
   const [trainingsByDate, setTrainingsByDate] = useState([])
+  const [dateReservation, setDateReservation] = useState(false)
 
   const [dateShow, setDateShow] = useState(moment(date).format('DD/MM/YYYY'))
+  const [dateDay, setDateDay] = useState(moment(new Date(date)).format('dddd'))
   const [trainingsLoading, setTrainingsLoading] = useState(true)
   const [reservationUpdated, setReservationUpdated] = useState(false)
 
@@ -40,6 +43,7 @@ function TrainingsPage() {
           activeReservations.forEach(reservation => {
             if(training.id === reservation.trainingId) {
               training.reserved = true
+              setDateReservation(true)
             }
           })
 
@@ -48,6 +52,13 @@ function TrainingsPage() {
               training.coachImage = coach.image
               training.coachFirstName = coach.firstName
               training.coachLastName = coach.lastName
+            }
+          })
+
+          programsData.forEach(program => {
+            if(training.programId === program.id) {
+              training.programImage = program.image
+              return
             }
           })
         })
@@ -72,6 +83,7 @@ function TrainingsPage() {
 
     async function fetchAPI() {
       setTrainingsLoading(true)
+      setDateReservation(false)
       const activeReservations = await getActiveReservations()
       await getTrainingsByDate(activeReservations)
     }
@@ -83,6 +95,7 @@ function TrainingsPage() {
 
   useEffect(() => {
     setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))
+    setDateDay(moment(new Date(date)).format('dddd'))
   }, [date])
 
   function changeDate(value) {
@@ -109,6 +122,7 @@ function TrainingsPage() {
             />
             <DatePicker
               dateShow={dateShow}
+              dateDay={dateDay}
               changeDate={changeDate}
               disabled={trainingsLoading}
               wrapperStyle={styles.datePickerWrapper}
@@ -124,6 +138,8 @@ function TrainingsPage() {
                 />
                 :
                 <TrainingsSection
+                  trainingPage={true}
+                  dateReservation={dateReservation}
                   trainings={trainingsByDate}
                   emptyMessage='no trainings scheduled on this date'
                   reservationUpdated={reservationUpdated}
@@ -136,6 +152,7 @@ function TrainingsPage() {
                   trainingMenuWrapperStyle={styles.trainingMenuWrapper}
                   trainingSectionWrapperStyle={styles.trainingSectionWrapper}
                   trainingCoachSectionWrapperStyle={styles.trainingCoachSectionWrapper}
+                  trainingProgramSectionWrapperStyle={styles.trainingProgramSectionWrapper}
                   trainingSectionImageStyle={styles.trainingSectionImage}
                   trainingCoachSectionImageStyle={styles.trainingCoachSectionImage}
                   trainingSectionPropertyTextStyle={styles.trainingSectionPropertyText}
@@ -151,7 +168,8 @@ function TrainingsPage() {
                   trainingDetailsModalExitButtonWrapperStyle={styles.trainingDetailsModalExitButtonWrapperStyle}
                   trainingDetailsModalExitButtonTextStyle={styles.trainingDetailsModalExitButtonTextStyle}
                   trainingDetailsModalDataRowWrapperStyle={styles.trainingDetailsModalDataRowWrapperStyle}
-                  trainingDetailsModalDataWrapperStyle={styles.trainingDetailsModalDataWrapperStyle}
+                  trainingDetailsModalDataHalfRowWrapperStyle={styles.trainingDetailsModalDataHalfRowWrapperStyle}
+                  trainingDetailsModalDataWholeRowWrapperStyle={styles.trainingDetailsModalDataWholeRowWrapperStyle}
                   trainingDetailsModalDataPropertyTextStyle={styles.trainingDetailsModalDataPropertyTextStyle}
                   trainingDetailsModalDataValueTextStyle={styles.trainingDetailsModalDataValueTextStyle}
                 />
@@ -224,12 +242,16 @@ const styles = StyleSheet.create({
   },
 
   datePickerWrapper: {
+    width: 270,
+
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
 
     marginBottom: 20,
-    marginLeft: 5
+    marginLeft: 5,
+    marginRight: 5,
   },
 
   datePickerButtonWrapper: {
@@ -306,6 +328,13 @@ const styles = StyleSheet.create({
   },
   trainingCoachSectionWrapper: {
     width: 75
+  },
+  trainingProgramSectionWrapper: {
+    padding: 5,
+    
+    backgroundColor: '#e6e6e6',
+
+    borderRadius: 5
   },
   trainingSectionImage: {
     width: 30,
@@ -384,8 +413,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row'
   },
-  trainingDetailsModalDataWrapperStyle: {
+  trainingDetailsModalDataHalfRowWrapperStyle: {
     width: '50%',
+
+    display: 'flex',
+    justifyContent: 'flex-start',
+
+    marginBottom: 10
+  },
+  trainingDetailsModalDataWholeRowWrapperStyle: {
+    width: '100%',
 
     display: 'flex',
     justifyContent: 'flex-start',
