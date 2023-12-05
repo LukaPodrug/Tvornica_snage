@@ -14,7 +14,7 @@ router.post('/registration', async(req, res) => {
         res.status(400).json('Invalid registration data')
         return
     }
-    const admin = await authController.getByUsername(req.body.username)
+    const admin = await coachController.getByUsername(req.body.username)
     const databaseConnection1 = await generalController.checkDatabaseConnection(admin)
     if(!databaseConnection1) {
         res.status(500).json('Error with database')
@@ -24,7 +24,7 @@ router.post('/registration', async(req, res) => {
         res.status(400).json('Username already in use')
         return
     }
-    const newAdmin = await authController.addNew(req.body.firstName, req.body.lastName, new Date(req.body.dateOfBirth), req.body.image, req.body.username, req.body.password)
+    const newAdmin = await coachController.addNew(req.body.firstName, req.body.lastName, new Date(req.body.dateOfBirth), req.body.image, req.body.username, req.body.password)
     const databaseConnection2 = await generalController.checkDatabaseConnection(newAdmin)
     if(!databaseConnection2) {
         res.status(500).json('Error with database')
@@ -48,7 +48,7 @@ router.post('/login', async(req, res) => {
         res.status(400).json('Invalid login data')
         return
     }
-    const admin = await authController.getByUsername(req.body.username)
+    const admin = await coachController.getByUsername(req.body.username)
     const databaseConnection = await generalController.checkDatabaseConnection(admin)
     if(!databaseConnection) {
         res.status(500).json('Error with database')

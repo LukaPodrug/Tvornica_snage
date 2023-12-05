@@ -6,39 +6,6 @@ const { SALT_ROUNDS, JWT_SECRET } = process.env
 
 const database = require('../../../database')
 
-async function getByUsername(username) {
-    try {
-        const user = await database`
-            select *
-            from users
-            where username = ${username}`
-        return user[0]
-    }
-    catch(error) {
-        return error
-    }
-}
-
-async function addNew(firstName, lastName, dateOfBirth, image, username, password) {
-    try {
-        const passwordHash = await generatePasswordHash(password)
-        const membership = new Date(Date.now() + 3600*1000*24*7)
-        const level = 1
-        const registration = await database`
-            insert into users (
-                "firstName", "lastName", "dateOfBirth", image, username, password, membership, level
-            ) 
-            values (
-                ${firstName}, ${lastName}, ${dateOfBirth}, ${image}, ${username}, ${passwordHash}, ${membership}, ${level}
-            )
-            returning *`
-        return registration[0]
-    }
-    catch(error) {
-        return error
-    }
-}
-
 async function generatePasswordHash(passwordText) {
     const salt = await bcrypt.genSalt(parseInt(SALT_ROUNDS))
     const passwordHash = await bcrypt.hash(passwordText, salt)
@@ -61,8 +28,6 @@ async function passwordValidation(passwordText, passwordHash) {
 }
 
 module.exports = {
-    getByUsername,
-    addNew,
     generateJWT,
     passwordValidation
 }

@@ -27,7 +27,42 @@ async function remove(id) {
     }
 }
 
+async function getByUsername(username) {
+    try {
+        const user = await database`
+            select *
+            from users
+            where username = ${username}`
+        return user[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
+async function addNew(firstName, lastName, dateOfBirth, image, username, password) {
+    try {
+        const passwordHash = await generatePasswordHash(password)
+        const membership = new Date(Date.now() + 3600*1000*24*7)
+        const level = 1
+        const registration = await database`
+            insert into users (
+                "firstName", "lastName", "dateOfBirth", image, username, password, membership, level
+            ) 
+            values (
+                ${firstName}, ${lastName}, ${dateOfBirth}, ${image}, ${username}, ${passwordHash}, ${membership}, ${level}
+            )
+            returning *`
+        return registration[0]
+    }
+    catch(error) {
+        return error
+    }
+}
+
 module.exports = {
     getById,
-    remove
+    remove,
+    addNew,
+    getByUsername
 }
