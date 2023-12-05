@@ -18,17 +18,7 @@ async function getAllCoachesDataAPI(token) {
     return getAllCoachesDataResponse
 }
 
-async function getProgramsDataAPI(token) {
-    const getProgramsDataResponse = await axios.get('/admin/program', {
-        headers: {
-            'Authorization': token
-        }
-    })
-    return getProgramsDataResponse
-}
-
 export {
     getOwnDataAPI,
-    getAllCoachesDataAPI,
-    getProgramsDataAPI
+    getAllCoachesDataAPI
 }

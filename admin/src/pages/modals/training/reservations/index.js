@@ -44,6 +44,11 @@ function TrainingReservationsModal({ isOpen, changeIsOpen, id }) {
         return Math.ceil(reservationsByTrainingId.length / 5)
     }
 
+    function closeModal() {
+        changeIsOpen(false)
+        setPage(1)
+    }
+
     return (
         <Modal
             isOpen={isOpen}
@@ -54,7 +59,7 @@ function TrainingReservationsModal({ isOpen, changeIsOpen, id }) {
             >
                 <ModalHeader
                     title='training reservations'
-                    closeModal={changeIsOpen}
+                    closeModal={closeModal}
                 />
                 {
                     reservationsLoading &&

@@ -9,8 +9,11 @@ import LoginPage from './pages/login'
 import ProfilePage from './pages/profile'
 import TrainingsPage from './pages/trainings'
 import UsersPage from './pages/users'
+import ProgramsPage from './pages/programs'
+import PartnersPage from './pages/partners'
 import { verifyTokenAPI } from './API/auth'
-import { getOwnDataAPI, getAllCoachesDataAPI, getProgramsDataAPI } from './API/coach'
+import { getOwnDataAPI, getAllCoachesDataAPI } from './API/coach'
+import { getProgramsDataAPI } from './API/program'
 import './App.css'
 
 function App() {
@@ -117,6 +120,14 @@ function App() {
             <Route
               path='/users'
               element={ loggedIn ? <UsersPage/> : <Navigate to='/login'/> }
+            />
+            <Route
+              path='/programs'
+              element={ loggedIn ? <ProgramsPage/> : <Navigate to='/login'/> }
+            />
+            <Route
+              path='/partners'
+              element={ loggedIn ? <PartnersPage/> : <Navigate to='/login'/> }
             />
             <Route
               path='/'

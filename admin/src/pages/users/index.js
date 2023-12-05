@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import LoadingPage from '../loading'
 import Header from '../../components/header'
 import Menu from '../../components/menu'
 import AllUsersPage from './all'

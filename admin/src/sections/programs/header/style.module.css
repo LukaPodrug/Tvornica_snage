@@ -1,0 +1,25 @@
+.wrapper {
+    width: fill-available;
+
+    margin: 0 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    background-color: #e04f5f;
+}
+
+.button:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}

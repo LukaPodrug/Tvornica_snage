@@ -6,7 +6,6 @@ import moment from 'moment'
 import store from '../../../../../store'
 import ModalHeader from '../../../../../sections/modals/header'
 import DropdownInput from '../../../../../components/input/dropdown'
-import TextInput from '../../../../../components/input/text'
 import DateInput from '../../../../../components/input/date'
 import TimeInput from '../../../../../components/input/time'
 import NumberInput from '../../../../../components/input/number'
@@ -126,8 +125,8 @@ function EditTrainingDetailsModal({ isOpen, changeIsOpen, id, coachIdOld, dateOl
                 setLoading(true)
                 const startFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + start
                 const finishFormatted = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + ' ' + finish
-                const addTrainingResponse = await editTrainingAPI(token, id, coachId, startFormatted, finishFormatted, room, capacity, level, programId, regime, exercises)
-                setMessage(addTrainingResponse.data)
+                const editTrainingResponse = await editTrainingAPI(token, id, coachId, startFormatted, finishFormatted, room, capacity, level, programId, regime, exercises)
+                setMessage(editTrainingResponse.data)
                 setSuccess(true)
                 resetRecievedValues()
                 setLoading(false)

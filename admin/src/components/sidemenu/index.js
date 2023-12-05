@@ -14,6 +14,8 @@ import loginIcon from '../../assets/icons/login.png'
 import profileIcon from '../../assets/icons/profile.png'
 import trainingsIcon from '../../assets/icons/trainings.png'
 import usersIcon from '../../assets/icons/users.png'
+import programsIcon from '../../assets/icons/programs.png'
+import partnersIcon from '../../assets/icons/partners.png'
 import logoutIcon from '../../assets/icons/logout.png'
 
 function SideMenuLoggedIn() {
@@ -66,6 +68,22 @@ function SideMenuLoggedIn() {
                     active={location.pathname.includes('users')}
                 >
                     users
+                </MenuItem>
+                <MenuItem
+                    className={styles.menuItem}
+                    component={ <Link to="/programs"/> }
+                    icon={ <SideMenuIcon icon={programsIcon}/> }
+                    active={location.pathname.includes('programs')}
+                >
+                    programs
+                </MenuItem>
+                <MenuItem
+                    className={styles.menuItem}
+                    component={ <Link to="/partners"/> }
+                    icon={ <SideMenuIcon icon={partnersIcon}/> }
+                    active={location.pathname.includes('partners')}
+                >
+                    partners
                 </MenuItem>
                 <MenuItem
                     className={styles.menuItem}
