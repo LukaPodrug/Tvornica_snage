@@ -1,14 +1,10 @@
-import { useState } from 'react'
-
 import PromotionsSectionHeader from '../../../sections/promotions/header'
 import LoadingSection from '../../../sections/loading'
 import PromotionsSection from '../../../sections/promotions'
 import Pagination from '../../../components/pagination'
 import styles from './style.module.css'
 
-function PromotionsPartnersPage({ promotions, partnersData, newPromotionAdded, changeNewPromotionAdded, promotionEdited, changePromotionEdited, promotionDeleted, changePromotionDeleted, promotionsLoading, maxPage }) {
-    const [page, setPage] = useState(1)
-
+function PromotionsPartnersPage({ promotions, partnersData, newPromotionAdded, changeNewPromotionAdded, promotionEdited, changePromotionEdited, promotionDeleted, changePromotionDeleted, promotionsLoading, page, changePage, maxPage }) {
     return (
         <div
             className={styles.wrapper}
@@ -34,7 +30,7 @@ function PromotionsPartnersPage({ promotions, partnersData, newPromotionAdded, c
             }
             <Pagination
                 page={page}
-                changePage={setPage}
+                changePage={changePage}
                 maxPage={maxPage}
                 disabled={promotionsLoading}
             />

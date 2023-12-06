@@ -1,14 +1,10 @@
-import { useState } from 'react'
-
 import PartnersSectionHeader from '../../../sections/partners/header'
 import LoadingSection from '../../../sections/loading'
 import PartnersSection from '../../../sections/partners'
 import Pagination from '../../../components/pagination'
 import styles from './style.module.css'
 
-function PartnersPartnersPage({ partners, newPartnerAdded, changeNewPartnerAdded, partnerEdited, changePartnerEdited, partnerDeleted, changePartnerDeleted, partnersLoading, maxPage }) {
-    const [page, setPage] = useState(1)
-
+function PartnersPartnersPage({ partners, newPartnerAdded, changeNewPartnerAdded, partnerEdited, changePartnerEdited, partnerDeleted, changePartnerDeleted, partnersLoading, page, changePage, maxPage }) {
     return (
         <div
             className={styles.wrapper}
@@ -32,7 +28,7 @@ function PartnersPartnersPage({ partners, newPartnerAdded, changeNewPartnerAdded
             }
             <Pagination
                 page={page}
-                changePage={setPage}
+                changePage={changePage}
                 maxPage={maxPage}
                 disabled={partnersLoading}
             />

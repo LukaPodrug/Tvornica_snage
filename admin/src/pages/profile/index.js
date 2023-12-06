@@ -62,7 +62,46 @@ function ProfilePage() {
         if(ownData && allCoachesData) {
             fetchAPI()
         }
-    }, [date, newTrainingAdded, trainingEdited, ownData, allCoachesData])
+    }, [date, newTrainingAdded, ownData, allCoachesData])
+
+    useEffect(() => {
+        async function getOwnTrainingsByDate() {
+            try {
+                const getOwnTrainingsByDateResponse = await getOwnTrainingsByDateAPI(token, date)
+                const ownTrainingsByDateSorted = getOwnTrainingsByDateResponse.data.sort((training1, training2) => new Date(training1.start) - new Date(training2.start))
+                ownTrainingsByDateSorted.forEach(training => {
+                    training.coachFirstName = ownData.firstName
+                    training.coachLastName = ownData.lastName
+                    programsData.forEach(program => {
+                        if(training.programId == program.id) {
+                            training.programId = program.id
+                            training.programName = program.name
+                            training.programImage = program.image
+                            return
+                        }
+                    })
+                })
+                if(ownTrainingsByDateSorted.length % 3 === 0 && ownTrainingsByDateSorted.length > 0 && page !== 1) {
+                    setPage(page - 1)
+                }
+                setOwnTrainingsByDate(ownTrainingsByDateSorted)
+                setMaxPage(Math.ceil(ownTrainingsByDateSorted.length / 3))
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            setTrainingsLoading(true)
+            await getOwnTrainingsByDate()
+            setTrainingsLoading(false)
+        }
+
+        if(ownData && allCoachesData) {
+            fetchAPI()
+        }
+    }, [trainingEdited, ownData, allCoachesData])
 
     useEffect(() => {
         setDateShow(moment(new Date(date)).format('DD/MM/YYYY'))

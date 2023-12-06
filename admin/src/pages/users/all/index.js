@@ -60,7 +60,7 @@ function AllUsersPage() {
             try {
                 const getNumberOfUsersResponse = await getNumberOfUsersAPI(token)
                 const getUsersByPageResponse = await getUsersByPageAPI(token, page, 5)
-                if(getNumberOfUsersResponse.data !== 0 && getUsersByPageResponse.data.length === 0) {
+                if(getNumberOfUsersResponse.data !== 0 && getUsersByPageResponse.data.length === 0 && page !== 1) {
                     setPage(page - 1)
                 }
                 else {

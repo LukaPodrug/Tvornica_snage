@@ -15,10 +15,12 @@ function PartnersPage() {
 
     const [token] = useRecoilState(store.token)
 
-    const [partners, setPartners] = useState(null)
-    const [promotions, setPromotions] = useState(null)
+    const [partners, setPartners] = useState([])
+    const [promotions, setPromotions] = useState([])
 
+    const [partnersPage, setPartnersPage] = useState(1)
     const [partnersMaxPage, setPartnersMaxPage] = useState(1)
+    const [promotionsPage, setPromotionsPage] = useState(1)
     const [promotionsMaxPage, setPromotionsMaxPage] = useState(1)
     const [activeTab, setActiveTab] = useState(0)
 
@@ -36,7 +38,7 @@ function PartnersPage() {
             try {
                 const getPartnersDataResponse = await getPartnersDataAPI(token)
                 setPartners(getPartnersDataResponse.data)
-                setPartnersMaxPage(Math.ceil(getPartnersDataResponse.data.length / 5))
+                setPartnersMaxPage(Math.ceil(getPartnersDataResponse.data.length / 6))
             }
             catch(error) {
                 return
@@ -50,7 +52,31 @@ function PartnersPage() {
         }
 
         fetchAPI()
-    }, [newPartnerAdded, partnerEdited, partnerDeleted])
+    }, [newPartnerAdded, partnerEdited])
+
+    useEffect(() => {
+        async function getPartnersData() {
+            try {
+                const getPartnersDataResponse = await getPartnersDataAPI(token)
+                if(getPartnersDataResponse.data.length % 6 === 0 && getPartnersDataResponse.data.length > 0 && partnersPage !== 1) {
+                    setPartnersPage(partnersPage - 1)
+                }
+                setPartners(getPartnersDataResponse.data)
+                setPartnersMaxPage(Math.ceil(getPartnersDataResponse.data.length / 6))
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            setPartnersLoading(true)
+            await getPartnersData()
+            setPartnersLoading(false)
+        }
+
+        fetchAPI()
+    }, [partnerDeleted])
 
     useEffect(() => {
         async function getPromotionsData() {
@@ -64,7 +90,7 @@ function PartnersPage() {
                     })
                 })
                 setPromotions(getPromotionsDataResponse.data)
-                setPromotionsMaxPage(Math.ceil(getPromotionsDataResponse.data.length / 5))
+                setPromotionsMaxPage(Math.ceil(getPromotionsDataResponse.data.length / 6))
             }
             catch(error) {
                 return
@@ -80,7 +106,40 @@ function PartnersPage() {
         if(partners) {
             fetchAPI()
         }
-    }, [newPromotionAdded, promotionEdited, promotionDeleted, partners])
+    }, [newPromotionAdded, promotionEdited, partners])
+
+    useEffect(() => {
+        async function getPromotionsData() {
+            try {
+                const getPromotionsDataResponse = await getPromotionsDataAPI(token)
+                getPromotionsDataResponse.data.forEach(promotion => {
+                    partners.forEach(partner => {
+                        if(promotion.partnerId === partner.id) {
+                            promotion.partnerName = partner.name
+                        }
+                    })
+                })
+                if(getPromotionsDataResponse.data.length % 6 === 0 && getPromotionsDataResponse.data.length > 0 && promotionsPage !== 1) {
+                    setPromotionsPage(promotionsPage - 1)
+                }
+                setPromotions(getPromotionsDataResponse.data)
+                setPromotionsMaxPage(Math.ceil(getPromotionsDataResponse.data.length / 6))
+            }
+            catch(error) {
+                return
+            }
+        }
+
+        async function fetchAPI() {
+            setPromotionsLoading(true)
+            await getPromotionsData()
+            setPromotionsLoading(false)
+        }
+
+        if(partners) {
+            fetchAPI()
+        }
+    }, [promotionDeleted])
 
     return (
         <div
@@ -102,7 +161,7 @@ function PartnersPage() {
                 {
                     activeTab === 0 &&
                         <PartnersPartnersPage
-                            partners={partners}
+                            partners={partners.slice((partnersPage - 1) * 6, (partnersPage - 1) * 6 + 6)}
                             newPartnerAdded={newPartnerAdded}
                             changeNewPartnerAdded={setNewPartnerAdded}
                             partnerEdited={partnerEdited}
@@ -110,13 +169,15 @@ function PartnersPage() {
                             partnerDeleted={partnerDeleted}
                             changePartnerDeleted={setPartnerDeleted}
                             partnersLoading={partnersLoading}
+                            page={partnersPage}
+                            changePage={setPartnersPage}
                             maxPage={partnersMaxPage}
                         />
                 }
                 {
                     activeTab === 1 &&
                         <PromotionsPartnersPage
-                            promotions={promotions}
+                            promotions={promotions.slice((promotionsPage - 1) * 6, (promotionsPage - 1) * 6 + 6)}
                             partnersData={partners}
                             newPromotionAdded={newPromotionAdded}
                             changeNewPromotionAdded={setNewPromotionAdded}
@@ -125,6 +186,8 @@ function PartnersPage() {
                             promotionDeleted={promotionDeleted}
                             changePromotionDeleted={setPromotionDeleted}
                             promotionsLoading={promotionsLoading}
+                            page={promotionsPage}
+                            changePage={setPromotionsPage}
                             maxPage={promotionsMaxPage}
                         />
                 }
