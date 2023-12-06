@@ -60,7 +60,7 @@ function AllUsersPage() {
             try {
                 const getNumberOfUsersResponse = await getNumberOfUsersAPI(token)
                 const getUsersByPageResponse = await getUsersByPageAPI(token, page, 5)
-                if(getNumberOfUsersResponse.data != 0 && getUsersByPageResponse.data.length == 0) {
+                if(getNumberOfUsersResponse.data !== 0 && getUsersByPageResponse.data.length === 0) {
                     setPage(page - 1)
                 }
                 else {
@@ -110,7 +110,7 @@ function AllUsersPage() {
         async function getUsersByFirstNameAndLastName() {
             try {
                 const getUsersByFirstNameAndLastNameResponse = await getUsersByFirstNameAndLastNameAPI(token, firstName, lastName)
-                if(getUsersByFirstNameAndLastNameResponse.data.length % 5 == 0) {
+                if(getUsersByFirstNameAndLastNameResponse.data.length % 5 === 0) {
                     setPage(page - 1)
                 }
                 setFilteredUsers(getUsersByFirstNameAndLastNameResponse.data)

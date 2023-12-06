@@ -1,0 +1,88 @@
+.wrapper {
+    width: 550px;
+    height: fit-content;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+
+    background-color: #e6e6e6;
+
+    border-radius: 10px;
+
+    background-image: url(../../../../assets/images/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.form {
+    width: fit-content;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.image img {
+    width: 250px;
+    height: 250px;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1em;
+}
+
+.label {
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.input {
+    border: none;
+}
+
+.input:hover {
+    box-shadow: 0 0 10px #e04f5f;
+}
+
+.input:focus {    
+    outline: none;
+
+    box-shadow: 0 0 10px #db0e26;
+}
+
+.input:active {
+    outline: none;
+
+    box-shadow: 0 0 10px #db0e26;
+}
+
+.button {    
+    width: 210px;
+
+    background-color: #e04f5f;
+
+    transition: all ease 0.5s;
+}
+
+.button:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+
+.messageSuccess {
+    background-color: #90EE90;
+}
+
+.messageFail {
+    background-color: #E04F5F;
+}

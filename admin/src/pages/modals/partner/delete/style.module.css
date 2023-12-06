@@ -1,0 +1,42 @@
+.wrapper {
+    width: 500px;
+    height: fit-content;
+
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+
+    background-color: #e6e6e6;
+
+    border-radius: 10px;
+
+    background-image: url(../../../../assets/images/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button {    
+    min-width: 210px;
+
+    background-color: #e04f5f;
+
+    transition: all ease 0.5s;
+}
+
+.button:hover {
+    cursor: pointer;
+
+    opacity: 0.5;
+}
+
+.messageSuccess {
+    background-color: #90ee90;
+}
+
+.messageFail {
+    background-color: #e04f5f;
+}
