@@ -1,5 +1,7 @@
 const database = require('../../../database')
 
+const authController = require('../auth')
+
 async function getById(id) {
     try {
         const user = await database`
@@ -42,7 +44,7 @@ async function getByUsername(username) {
 
 async function addNew(firstName, lastName, dateOfBirth, image, username, password) {
     try {
-        const passwordHash = await generatePasswordHash(password)
+        const passwordHash = await authController.generatePasswordHash(password)
         const membership = new Date(Date.now() + 3600*1000*24*7)
         const level = 1
         const registration = await database`

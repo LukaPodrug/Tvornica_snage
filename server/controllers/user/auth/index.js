@@ -28,6 +28,7 @@ async function passwordValidation(passwordText, passwordHash) {
 }
 
 module.exports = {
+    generatePasswordHash,
     generateJWT,
     passwordValidation
 }
